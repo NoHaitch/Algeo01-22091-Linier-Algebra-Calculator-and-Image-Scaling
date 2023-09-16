@@ -1,9 +1,12 @@
 <div align="center">
-<h1>Tugas Besar 1 IF2123 - Aljabar Linier dan Geometri ITB  </h1>
+<h1>Tugas Besar 1 IF2123 - Aljabar Linier dan Geometri ITB</h1>
 <h3>TOPIK : Sistem Persamaan Linier, Determinan, dan Aplikasinya</h3>
 </div>
-</br>
 
+Berisi Program mengenai Sistem Persamaan Linier(SPL), Determinan, Interpolasi Polinomial, Regresi Linier Berganda, dan Bicubic Spline Interpolation.
+Untuk cara penyelasaian SPL, menggunakan Metode Eliminiasi Gauss.    
+  
+  
 ## Kelompok : Panci Bolong
 
 - 13522091 Raden Francisco Trianto Bratadiningrat
@@ -16,12 +19,12 @@
 - [Link Data Kelompok](https://docs.google.com/spreadsheets/d/1Lnc1Bf3rv3uHc4vgUdWsJcf4bDzlSIeslEvdyR90I3U/edit#gid=0)
 - [Link Pengumpulan](https://forms.gle/af2dFUL4EMNd5ye8A)
 
-# Name of the project
 
-> Additional information or tagline
+</br>
+</br>
 
-A brief description of your project, what it is used for and how does life get
-awesome when someone starts to use it.
+
+# ============ Template for README.md ============
 
 ## Installing / Getting started
 
