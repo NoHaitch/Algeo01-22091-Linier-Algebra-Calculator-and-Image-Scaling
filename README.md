@@ -6,33 +6,28 @@
 Berisi Program mengenai Sistem Persamaan Linier(SPL), Determinan, Interpolasi Polinomial, Regresi Linier Berganda, dan Bicubic Spline Interpolation.
 Untuk cara penyelasaian SPL, menggunakan Metode Eliminiasi Gauss, Gauss-Jordan, Matriks balikan, dan Kaidah Cramer.
 
-## Kelompok : Panci Bolong
+## Kelompok 20 : Panci Bolong
 
-- 13522091 Raden Francisco Trianto Bratadiningrat
-- 13522093 Matthew Vladimir Hutabarat
-- 13522098 Suthasoma Mahardhika Munthe
+| NIM | Nama |
+| :---: | :---: |
+| 13522091 | Raden Francisco Trianto Bratadiningrat |
+| 13522093 | Matthew Vladimir Hutabarat |
+| 13522098 | Suthasoma Mahardhika Munthe |
 
 ## CARA COMPILE BIAR MASUK KE BIN
 
 Untuk Kompile
-`javac Main.java -d ../bin`
+
+```shell
+cd src                       // agar masuk ke directory file .java
+javac Main.java -d ../bin    // agar hasil compile masuk ke folder bin
+```
 
 ## TEMP LINKS
 
 - [Link Spesifikasi](https://docs.google.com/document/d/1evaYvI5PfDij2UlA_mkqUCLK0mg4hbRzbcA461FFnwg/edit)
 - [Link Data Kelompok](https://docs.google.com/spreadsheets/d/1Lnc1Bf3rv3uHc4vgUdWsJcf4bDzlSIeslEvdyR90I3U/edit#gid=0)
 - [Link Pengumpulan](https://forms.gle/af2dFUL4EMNd5ye8A)
-
-## Developing
-
-Here's a brief intro about what a developer must do in order to start developing
-the project further:
-
-```shell
-git clone https://github.com/your/awesome-project.git
-cd awesome-project/
-packagemanager install
-```
 
 </br>
 </br>
