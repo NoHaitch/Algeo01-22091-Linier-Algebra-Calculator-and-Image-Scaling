@@ -4,14 +4,18 @@
 </div>
 
 Berisi Program mengenai Sistem Persamaan Linier(SPL), Determinan, Interpolasi Polinomial, Regresi Linier Berganda, dan Bicubic Spline Interpolation.
-Untuk cara penyelasaian SPL, menggunakan Metode Eliminiasi Gauss.    
-  
-  
+Untuk cara penyelasaian SPL, menggunakan Metode Eliminiasi Gauss, Gauss-Jordan, Matriks balikan, dan Kaidah Cramer.
+
 ## Kelompok : Panci Bolong
 
 - 13522091 Raden Francisco Trianto Bratadiningrat
 - 13522093 Matthew Vladimir Hutabarat
 - 13522098 Suthasoma Mahardhika Munthe
+
+## CARA COMPILE BIAR MASUK KE BIN
+
+Untuk Kompile
+`javac Main.java -d ../bin`
 
 ## TEMP LINKS
 
@@ -19,10 +23,19 @@ Untuk cara penyelasaian SPL, menggunakan Metode Eliminiasi Gauss.
 - [Link Data Kelompok](https://docs.google.com/spreadsheets/d/1Lnc1Bf3rv3uHc4vgUdWsJcf4bDzlSIeslEvdyR90I3U/edit#gid=0)
 - [Link Pengumpulan](https://forms.gle/af2dFUL4EMNd5ye8A)
 
+## Developing
+
+Here's a brief intro about what a developer must do in order to start developing
+the project further:
+
+```shell
+git clone https://github.com/your/awesome-project.git
+cd awesome-project/
+packagemanager install
+```
 
 </br>
 </br>
-
 
 # ============ Template for README.md ============
 
