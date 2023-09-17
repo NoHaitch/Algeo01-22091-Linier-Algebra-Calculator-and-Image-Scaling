@@ -32,7 +32,7 @@ javac Main.java -d ../bin    // agar hasil compile masuk ke folder bin
 </br>
 </br>
 
-# ============ Template for README.md ============
+# ===== Template for README.md =====
 
 ## Installing / Getting started
 
