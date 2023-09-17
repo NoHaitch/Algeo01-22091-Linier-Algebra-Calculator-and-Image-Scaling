@@ -25,9 +25,15 @@ javac Main.java -d ../bin    // agar hasil compile masuk ke folder bin
 
 ## TEMP LINKS
 
-- [Link Spesifikasi](https://docs.google.com/document/d/1evaYvI5PfDij2UlA_mkqUCLK0mg4hbRzbcA461FFnwg/edit)
+- [Link Spesifikasi](https://docs.google.com/document/d/1evaYvI5PfDij2UlA_mkqUCLK0mg4hbRzbcA461FFnwg)
 - [Link Data Kelompok](https://docs.google.com/spreadsheets/d/1Lnc1Bf3rv3uHc4vgUdWsJcf4bDzlSIeslEvdyR90I3U/edit#gid=0)
 - [Link Pengumpulan](https://forms.gle/af2dFUL4EMNd5ye8A)
+
+## Links
+
+- Repository: https://github.com/NoHaitch/Tubes_Algeo_1/  
+- Spesifikasi Tugas : https://docs.google.com/document/d/1evaYvI5PfDij2UlA_mkqUCLK0mg4hbRzbcA461FFnwg  
+
 
 </br>
 </br>
