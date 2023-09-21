@@ -8,11 +8,11 @@ Untuk cara penyelasaian SPL, menggunakan Metode Eliminiasi Gauss, Gauss-Jordan, 
 
 ## Kelompok 20 : Panci Bolong
 
-| NIM | Nama |
-| :---: | :---: |
+|   NIM    |                  Nama                  |
+| :------: | :------------------------------------: |
 | 13522091 | Raden Francisco Trianto Bratadiningrat |
-| 13522093 | Matthew Vladimir Hutabarat |
-| 13522098 | Suthasoma Mahardhika Munthe |
+| 13522093 |       Matthew Vladimir Hutabarat       |
+| 13522098 |      Suthasoma Mahardhika Munthe       |
 
 ## CARA COMPILE BIAR MASUK KE BIN
 
@@ -31,9 +31,8 @@ javac Main.java -d ../bin    // agar hasil compile masuk ke folder bin
 
 ## Links
 
-- Repository: https://github.com/NoHaitch/Tubes_Algeo_1/  
-- Spesifikasi Tugas : https://docs.google.com/document/d/1evaYvI5PfDij2UlA_mkqUCLK0mg4hbRzbcA461FFnwg  
-
+- Repository: https://github.com/NoHaitch/Tubes_Algeo_1/
+- Spesifikasi Tugas : https://docs.google.com/document/d/1evaYvI5PfDij2UlA_mkqUCLK0mg4hbRzbcA461FFnwg
 
 </br>
 </br>
