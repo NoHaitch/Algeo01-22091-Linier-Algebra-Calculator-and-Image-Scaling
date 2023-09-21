@@ -28,6 +28,7 @@ javac Main.java -d ../bin    // agar hasil compile masuk ke folder bin
 - [Link Spesifikasi](https://docs.google.com/document/d/1evaYvI5PfDij2UlA_mkqUCLK0mg4hbRzbcA461FFnwg)
 - [Link Data Kelompok](https://docs.google.com/spreadsheets/d/1Lnc1Bf3rv3uHc4vgUdWsJcf4bDzlSIeslEvdyR90I3U/edit#gid=0)
 - [Link Pengumpulan](https://forms.gle/af2dFUL4EMNd5ye8A)
+- [Link Laporan](https://itbdsti-my.sharepoint.com/:w:/g/personal/13522091_mahasiswa_itb_ac_id/EWyly9bYWAtOrKQvzYmuzSABl3QzUu26pgnH_ExqqanbPA?e=2zeHK9)
 
 ## Links
 
