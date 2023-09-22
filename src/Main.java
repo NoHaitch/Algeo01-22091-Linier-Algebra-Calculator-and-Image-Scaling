@@ -8,5 +8,7 @@ public class Main {
         Point P = new Point();
         P.readPoint();
         P.printPoint();
+
+
     }
 }

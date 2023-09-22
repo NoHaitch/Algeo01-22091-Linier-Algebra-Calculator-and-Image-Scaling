@@ -37,7 +37,7 @@ public class Point {
         }
     }
     public void printPoint() {
-        /* Print <x,y> withouht \n */
+        /* Print <x,y> without \n */
         System.out.printf("<%f,", x);
         System.out.printf("%f>", y);
     }
@@ -101,5 +101,4 @@ public class Point {
         // Prekondisi : Point this != Point P
         return Math.sqrt((x*x) + (y*y));
     }
-
 }
