@@ -1,128 +1,189 @@
 package operations;
 
 public class OBE {
-    /* global variable */
-    private Matrix M;
-    private int[] indeksUtama = new int[1000];
+    private Matrix Augmented;
+    private int[] indexMain = new int[1000];
+    private double[] solusi = new double[1000];
+    private String[] parameter = new String[1000];
+    private boolean solusiUnik = false;
+    private boolean noSolusi = false;
 
-    /*-------------- Konstruktor --------------*/
-    public OBE(Matrix M) {
-        this.M = M;
-        setIndeksUtama(M);
+    public OBE(){ // Konstruktor
+        this(0,0);
     }
 
-    /*-------------- Selektor --------------*/
-    public int[] getIndeksUtama(){
-        return indeksUtama;
+    public OBE(int row, int col){
+        this.Augmented = new Matrix(row, col);
     }
 
-    public int getIndeksUtamaElmt(int idx){
-        return indeksUtama[idx];
+    public int getMatrixRow(){
+        return Augmented.getRowEff();
     }
 
-    public void setIndeksUtamaElmt(int idx, int val){
-        indeksUtama[idx] = val;
+    public int getMatrixCol(){
+        return Augmented.getColEff();
     }
 
-    public void setIndeksUtama(){
-        /* I.S. : indeksUtama terdefinisi */
-        /* F.S. : indeksUtama terisi indeks utama setiap baris */
-        /* Indeks utama adalah array berisi indeks kolom terdepan yang bukan bernilai 0
-        *  contoh : matriks 3 x 4
-        *           | 4 2 0 1 |
-        *           | 1 0 3 3 | maka indeks utamanya = [0,0,2,1]
-        *           | 0 0 2 3 |
-        *           | 0 3 4 2 |
-        * */
-        for(int i = 0; i < M.getRowEff(); i++){
-            int j = 0;
-            while(M.getELMT(i,j) == 0 && j < M.getColEff()){
-                j++;
+    public double getMElmt(int i, int j){
+        return Augmented.getElmt(i, j);
+    }
+    public void setMElmt(double val, int i, int j){
+        Augmented.setElmt(val, i, j);
+    }
+
+    public int getIndexMain(int i){
+        return indexMain[i];
+    }
+    public void setIndexMain(int val, int i){
+        indexMain[i] = val;
+    }
+
+    public double getSolutions(int i){
+        return solusi[i];
+    }
+    public void setSolutions(double val, int i){
+        solusi[i] = val;
+    }
+
+    public String getParameter(int i){
+        return parameter[i];
+    }
+    public void setParameter(String s, int i){
+        parameter[i] = s;
+    }
+
+    public boolean getSolusiUnik(){
+        return solusiUnik;
+    }
+    public void setSolusiUnik(boolean cond){
+        solusiUnik = cond;
+    }
+
+    public boolean getNoSolusi(){
+        return noSolusi;
+    }
+    public void setNoSolusi(boolean cond){
+        noSolusi = cond;
+    }
+
+    public void printAugmented(){
+        Augmented.displayMatrix();
+    }
+
+    public int findIdxMain(int row){
+        for (int i = 0; i < getMatrixCol(); i++){
+            if (getMElmt(row, i) != 0){
+                if (i < getMatrixCol()-1){
+                    setIndexMain(i, row);
+                    return i;
+                }
+                setIndexMain(-1, row);
+                setNoSolusi(true);
+                return -1;
             }
-            setIndeksUtamaElmt(i,j);
+        }
+        setSolusiUnik(false);
+        setIndexMain(getMatrixCol(), row);
+        return getMatrixCol();
+    }
+
+    public void refreshIdxMain(int i){
+        for (int j = i; j < getMatrixRow(); j++){
+            findIdxMain(j);
         }
     }
 
-    /*-------------- Primitf --------------*/
-    public void sortMatriksOBE(){
-        /* I.S. : Matriks M dan IndeksUtama bernilai */
-        /* F.S. : Matriks M terurut barisnya berdasarkan nilai IndeksUtama
-        *         Indeks Utama terurut */
+    public void substractRow(int row1, int row2){
+        int idx = findIdxMain(row2);
+        double mainVal = getMElmt(row2, idx);
+        double tempVal = getMElmt(row1, idx);
+        for (int i = idx; i < getMatrixCol(); i++){
+            setMElmt(getMElmt(row1, i)-(getMElmt(row2, i)*tempVal/mainVal), row1, i);
+        }
+        int nextIdx = findIdxMain(row1);
+        if (nextIdx < getMatrixCol()-1){
+            double temp = getMElmt(row1, nextIdx);
+            for (int i = nextIdx; i < getMatrixCol(); i++){
+                setMElmt(getMElmt(row1, i)/temp, row1, i);
+            }
+        }
+        System.out.printf("   R%d - (%f/%f)R%d\n", row1,tempVal,mainVal , row2);
+    }
 
-        /* sorting array indeksUtama */
-        for(int j = 0; j < M.getRowEff(); j++){
-            for(int k = j+1; k < M.getRowEff(); k++){
-                /* swap nilai IndeksUtama dan swap baris Matriks */
-                if(indeksUtama[j] > indeksUtama[k]){
-                    /* swap nilai indeksUtama */
-                    int tempIdx = indeksUtama[j];
-                    indeksUtama[j] = indeksUtama[k];
-                    indeksUtama[k] = tempIdx;
+    public void swapRow(int row1, int row2){
+        double temp;
+        for (int i = 0; i < getMatrixCol(); i++){
+            temp = getMElmt(row1, i);
+            setMElmt(getMElmt(row2, i), row1, i);
+            setMElmt(temp, row2, i);
+        }
+        int tmpIdx = getIndexMain(row1);
+        setIndexMain(getIndexMain(row2), row1);
+        setIndexMain(tmpIdx, row2);
+        System.out.printf("   R%d <--> R%d\n", row1, row2);
+    }
 
-                    /* swap baris matriks */
-                    double[] tempRow = M.getRow(j);
-                    M.setRow(M.getRow(k),j);
-                    M.setRow(tempRow,k);
+    public void sortIdxMain(int start){
+        for (int i = start; i < getMatrixRow()-1; i++){
+            int temp = getIndexMain(i);
+            int idx = i;
+            for (int j = i+1; j < getMatrixRow(); j++){
+                if (temp > getIndexMain(j)){
+                    temp = getIndexMain(j);
+                    idx = j;
+                }
+            }
+            if (idx != i){
+                swapRow(idx, i);
+            }
+        }
+    }
+
+    public void mkOneMain(int row){
+        int idx = findIdxMain(row);
+        if (idx != getMatrixCol()){
+            double temp = getMElmt(row, idx);
+            for (int i = idx; i < getMatrixCol(); i++){
+                setMElmt(getMElmt(row, i)/temp, row, i);
+            }
+        }
+    }
+
+    public boolean isContinue(){
+        for (int i = 0; i < getMatrixRow()-1; i++){
+            int temp = getIndexMain(i);
+            if (temp == -1){
+                setNoSolusi(true);
+                return false;
+            }
+            for (int j = i+1; j < getMatrixRow(); j++){
+                if (temp == getIndexMain(j)){
+                    return true;
                 }
             }
         }
+        return false;
     }
 
-    public boolean cekBersolusi(){
-        /* Mengembalikan apakah matriks memiliki solusi atau tidak */
-        int i = 0;
-        boolean noSolution = false;
-        while(i < M.getRowEff() && !noSolution){
-
-            if(getIndeksUtamaElmt(i) == M.getRowEff()-1){
-                /* karena indeks utama ada pada kolom b pada ax=b, */
-                /* maka tidak ada solusi sebab 0 = k, dengan k bilangan Real */
-                noSolution = true;
-            }
-            i++;
-        }
-        return !noSolution;
-    }
-
-    public void OperasiOBE() {
-        /* I.S. : Matrix M bernilai */
-        /* F.S. : Matrix M dilakukan operasi OBE hingga ditemukan tidak
-                  bersolusi atau hingga matrix menjadi matrix eselon baris */
-        boolean bersolusi = true;
-        int i = 0;
-
-        while(i < M.getRow() && bersolusi) {
-            /* Mensiapkan Matriks untuk operasi */
-            getIndeksUtama();
-            sortMatriksOBE();
-
-            /* cek solusi*/
-            if (!cekBersolusi()) {
-                bersolusi = false;
-                System.out.println("MATRIKS TIDAK MEMILIKI SOLUSI");
-            }
-            else {
-                /* Operasi agar Kolom Eselon */
-                if(M.getElmt(i,getIndeksUtamaElmt(i)) != 1) {
-                    /* menjadikan nilai utama baris menjadi 1 */
-                    /* contoh : baris 3 2 6 1 menjadi 1 2/3 2 1/3 */
-                    double pembagi = M.getElmt(i, getIndeksUtamaElmt(i));
-                    for (int j = 0; j < M.getColEff(); j++) {
-                        M.setElmt(i, j, M.getElmt(i, j) / pembagi);
-                    }
-                }
-                /* Kurangi baris lain sehingga menjadi matrix eselon baris */
-                for (int j = i+1; j < M.getRowEff(); j++){
-
-                    for(int k = getIndeksUtamaElmt(i); k < M.getColEff(); k++){
-                        /* j : index baris, k : index kolom */
-
-
-                        }
-                    }
+    public void obeGauss(){
+        printAugmented();
+        System.out.println();
+        refreshIdxMain(0);
+        sortIdxMain(getMatrixCol());
+        mkOneMain(0);
+        printAugmented();
+        System.out.println();
+        int pass = 1;
+        while (isContinue() && !getNoSolusi() && pass < getMatrixRow()){
+            for (int i = pass; i < getMatrixRow(); i++){
+                if (getIndexMain(i) == getIndexMain(pass-1)){
+                    substractRow(i, pass-1);
                 }
             }
-            i++;
+            sortIdxMain(pass);
+            pass++;
+            printAugmented();
+            System.out.println();
         }
-    }
+    }    
 }
