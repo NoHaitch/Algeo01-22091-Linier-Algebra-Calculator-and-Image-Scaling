@@ -1,4 +1,4 @@
-import Point.Point;
+import models.Point;
 
 import java.util.Scanner;
 

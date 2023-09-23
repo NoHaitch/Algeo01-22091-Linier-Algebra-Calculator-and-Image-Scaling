@@ -1,4 +1,4 @@
-package Point;
+package models;
 
 import java.util.Scanner;
 
@@ -15,8 +15,8 @@ public class Point {
         String input2 = sc.next();
         boolean valid = true;
         try {
-            this.x = Double.parseDouble(input1);
-            this.y = Double.parseDouble(input2);
+            x = Double.parseDouble(input1);
+            y = Double.parseDouble(input2);
         } catch (NumberFormatException nfe) {
             valid = false;
             System.out.println("Masukkan tidak valid");
@@ -27,8 +27,8 @@ public class Point {
             input1 = sc.next();
             input2 = sc.next();
             try {
-                this.x = Double.parseDouble(input1);
-                this.y = Double.parseDouble(input2);
+                x = Double.parseDouble(input1);
+                y = Double.parseDouble(input2);
                 valid = true;
             } catch (NumberFormatException nfe) {
                 System.out.println("Masukkan tidak valid");
