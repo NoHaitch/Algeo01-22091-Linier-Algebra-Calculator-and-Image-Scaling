@@ -8,7 +8,7 @@ public class OBE {
     /*-------------- Konstruktor --------------*/
     public OBE(Matrix M) {
         this.M = M;
-        setIndeksUtama(M);
+        setIndeksUtama();
     }
 
     /*-------------- Selektor --------------*/
@@ -36,38 +36,14 @@ public class OBE {
         * */
         for(int i = 0; i < M.getRowEff(); i++){
             int j = 0;
-            while(M.getELMT(i,j) == 0 && j < M.getColEff()){
+            while(M.getElmt(i,j) == 0 && j < M.getColEff()){
                 j++;
             }
             setIndeksUtamaElmt(i,j);
         }
     }
 
-    /*-------------- Primitf --------------*/
-    public void sortMatriksOBE(){
-        /* I.S. : Matriks M dan IndeksUtama bernilai */
-        /* F.S. : Matriks M terurut barisnya berdasarkan nilai IndeksUtama
-        *         Indeks Utama terurut */
-
-        /* sorting array indeksUtama */
-        for(int j = 0; j < M.getRowEff(); j++){
-            for(int k = j+1; k < M.getRowEff(); k++){
-                /* swap nilai IndeksUtama dan swap baris Matriks */
-                if(indeksUtama[j] > indeksUtama[k]){
-                    /* swap nilai indeksUtama */
-                    int tempIdx = indeksUtama[j];
-                    indeksUtama[j] = indeksUtama[k];
-                    indeksUtama[k] = tempIdx;
-
-                    /* swap baris matriks */
-                    double[] tempRow = M.getRow(j);
-                    M.setRow(M.getRow(k),j);
-                    M.setRow(tempRow,k);
-                }
-            }
-        }
-    }
-
+    /*-------------- Pengecekan --------------*/
     public boolean cekBersolusi(){
         /* Mengembalikan apakah matriks memiliki solusi atau tidak */
         int i = 0;
@@ -83,7 +59,43 @@ public class OBE {
         }
         return !noSolution;
     }
+    /*-------------- Display --------------*/
+    public void displayIndeksUtama(){
+        for(int i = 0; i<M.getRowEff();i++){
+            System.out.print(getIndeksUtamaElmt(i) + " ");
+        }
+        System.out.print("\n");
+    }
+    public void displayMatrix(){
+        M.displayMatrix();
+    }
 
+    /*-------------- Sorting --------------*/
+    public void sortMatriksOBE(){
+        /* I.S. : Matriks M dan IndeksUtama bernilai */
+        /* F.S. : Matriks M terurut barisnya berdasarkan nilai IndeksUtama
+        *         Indeks Utama terurut */
+
+        /* sorting array indeksUtama */
+        for(int j = 0; j < M.getRowEff(); j++){
+            for(int k = j+1; k < M.getRowEff(); k++){
+                /* swap nilai IndeksUtama dan swap baris Matriks */
+                if(getIndeksUtamaElmt(j) > getIndeksUtamaElmt(k)){
+                    /* swap nilai indeksUtama */
+                    int tempIdx = getIndeksUtamaElmt(j);
+                    setIndeksUtamaElmt(j,getIndeksUtamaElmt(k));
+                    setIndeksUtamaElmt(k,tempIdx);
+
+                    /* swap baris matriks */
+                    double[] tempRow = M.getRow(j);
+                    M.setRow(M.getRow(k),j);
+                    M.setRow(tempRow,k);
+                }
+            }
+        }
+    }
+
+    /*-------------- OPERASI UTAMA OBE --------------*/
     public void OperasiOBE() {
         /* I.S. : Matrix M bernilai */
         /* F.S. : Matrix M dilakukan operasi OBE hingga ditemukan tidak
@@ -91,7 +103,7 @@ public class OBE {
         boolean bersolusi = true;
         int i = 0;
 
-        while(i < M.getRow() && bersolusi) {
+        while(i < M.getRowEff() && bersolusi) {
             /* Mensiapkan Matriks untuk operasi */
             getIndeksUtama();
             sortMatriksOBE();
@@ -108,21 +120,19 @@ public class OBE {
                     /* contoh : baris 3 2 6 1 menjadi 1 2/3 2 1/3 */
                     double pembagi = M.getElmt(i, getIndeksUtamaElmt(i));
                     for (int j = 0; j < M.getColEff(); j++) {
-                        M.setElmt(i, j, M.getElmt(i, j) / pembagi);
+                        M.setElmt(M.getElmt(i, j) / pembagi, i, j);
                     }
                 }
                 /* Kurangi baris lain sehingga menjadi matrix eselon baris */
                 for (int j = i+1; j < M.getRowEff(); j++){
-
                     for(int k = getIndeksUtamaElmt(i); k < M.getColEff(); k++){
                         /* j : index baris, k : index kolom */
 
 
-                        }
                     }
                 }
             }
-            i++;
         }
+        i++;
     }
 }
