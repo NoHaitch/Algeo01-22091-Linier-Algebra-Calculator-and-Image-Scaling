@@ -1,6 +1,8 @@
 // Source code is decompiled from a .class file using FernFlower decompiler.
 package operations;
+
 import java.util.Scanner;
+
 public class Matrix {
     private double[][] matrix = new double[1000][1000];
     private int rowEff;
@@ -28,11 +30,12 @@ public class Matrix {
         this.colEff = newCol;
     }
 
-    public double getElement(int i, int j) {
+
+    public double getElmt(int i, int j) {
         return this.matrix[i][j];
     }
 
-    public void setElement(double val, int i, int j) {
+    public void setElmt(double val, int i, int j) {
         this.matrix[i][j] = val;
     }
 
@@ -40,7 +43,7 @@ public class Matrix {
         double[] temp = new double[1000];
         int j;
         for(j = 0; j < this.getColEff(); j++) {
-            temp[j] = this.getElement(i, j);
+            temp[j] = this.getElmt(i, j);
         }
         return temp;
     }
@@ -48,7 +51,7 @@ public class Matrix {
     public void setRow(double[] newRow, int i) {
         int j;
         for(j = 0; j < this.getColEff(); ++j) {
-            this.setElement(newRow[j], i, j);
+            this.setElmt(newRow[j], i, j);
         }
     }
 
@@ -56,7 +59,7 @@ public class Matrix {
         double[] temp = new double[1000];
         int i;
         for(i = 0; i < this.rowEff; i++) {
-            temp[i] = this.getElement(i, j);
+            temp[i] = this.getElmt(i, j);
         }
         return temp;
     }
@@ -64,7 +67,7 @@ public class Matrix {
     public void setCol(double[] newCol, int j) {
         int i;
         for(i = 0; i < this.rowEff; i++) {
-            this.setElement(newCol[i], i, j);
+            this.setElmt(newCol[i], i, j);
         } 
 
     }
@@ -85,7 +88,7 @@ public class Matrix {
         int i, j;
         for(i = 0; i < this.getRowEff(); ++i) {
             for(j = 0; j < this.getColEff(); ++j) {
-                System.out.print(this.getElement(i, j));
+                System.out.print(this.getElmt(i, j));
                 if (j != this.getColEff() - 1) {
                 System.out.print(" ");
                 }
@@ -102,7 +105,7 @@ public class Matrix {
         for(i = 0; i < this.getRowEff(); ++i) {
             for(j = 0; j < this.getColEff(); ++j) {
                 if (i != row && j != col) {
-                    temp.setElement(this.getElement(i, j), ii, jj);
+                    temp.setElmt(this.getElmt(i, j), ii, jj);
                     jj++;
                     if (jj == temp.getColEff()) {
                         ii++;
@@ -118,12 +121,12 @@ public class Matrix {
         // I.S. this.isSquare()
         double temp = 0;
         if (this.getRowEff() == 1) {
-            return this.getElement(0, 0);
+            return this.getElmt(0, 0);
         }
         double sign = 1;
         int i;
         for(i = 0; i < this.getRowEff(); i++) {
-            temp += sign*this.minorMatrix(0, i).determinant()*this.getElement(0, i);
+            temp += sign*this.minorMatrix(0, i).determinant()*this.getElmt(0, i);
             sign *= -1;
         }
         return temp;
@@ -137,7 +140,6 @@ public class Matrix {
     public String toString() {
         return "Matrix{row: " + rowEff + ", col: " + getColEff() + "}";
     }
-
     public void readMatrix(int row, int col){
         int i,j;
         double elmt;
