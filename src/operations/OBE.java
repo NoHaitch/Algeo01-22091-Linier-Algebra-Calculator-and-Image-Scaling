@@ -47,17 +47,17 @@ public class OBE {
     public boolean cekBersolusi(){
         /* Mengembalikan apakah matriks memiliki solusi atau tidak */
         int i = 0;
-        boolean noSolution = false;
-        while(i < M.getRowEff() && !noSolution){
+        boolean ExistSolution = true;
+        while(i < M.getRowEff() && ExistSolution){
 
             if(getIndeksUtamaElmt(i) == M.getRowEff()-1){
                 /* karena indeks utama ada pada kolom b pada ax=b, */
                 /* maka tidak ada solusi sebab 0 = k, dengan k bilangan Real */
-                noSolution = true;
+                ExistSolution = false;
             }
             i++;
         }
-        return !noSolution;
+        return ExistSolution;
     }
     /*-------------- Display --------------*/
     public void displayIndeksUtama(){
@@ -78,6 +78,7 @@ public class OBE {
 
         /* sorting array indeksUtama */
         for(int j = 0; j < M.getRowEff(); j++){
+            displayMatrix();
             for(int k = j+1; k < M.getRowEff(); k++){
                 /* swap nilai IndeksUtama dan swap baris Matriks */
                 if(getIndeksUtamaElmt(j) > getIndeksUtamaElmt(k)){
@@ -105,17 +106,15 @@ public class OBE {
 
         while(i < M.getRowEff() && bersolusi) {
             /* Mensiapkan Matriks untuk operasi */
-            getIndeksUtama();
+            setIndeksUtama();
             sortMatriksOBE();
-
             /* cek solusi*/
             if (!cekBersolusi()) {
                 bersolusi = false;
                 System.out.println("MATRIKS TIDAK MEMILIKI SOLUSI");
-            }
-            else {
+            } else {
                 /* Operasi agar Kolom Eselon */
-                if(M.getElmt(i,getIndeksUtamaElmt(i)) != 1) {
+                if (M.getElmt(i, getIndeksUtamaElmt(i)) != 1) {
                     /* menjadikan nilai utama baris menjadi 1 */
                     /* contoh : baris 3 2 6 1 menjadi 1 2/3 2 1/3 */
                     double pembagi = M.getElmt(i, getIndeksUtamaElmt(i));
@@ -124,15 +123,22 @@ public class OBE {
                     }
                 }
                 /* Kurangi baris lain sehingga menjadi matrix eselon baris */
-                for (int j = i+1; j < M.getRowEff(); j++){
-                    for(int k = getIndeksUtamaElmt(i); k < M.getColEff(); k++){
-                        /* j : index baris, k : index kolom */
-
-
+                for (int j = i + 1; j < M.getRowEff(); j++) {
+                    /* j : index baris, k : index kolom */
+                    if (M.getElmt(j, i) != 0) {
+                        double rasioPengurang = M.getElmt(j, i);
+                        System.out.println("j : " + j + ", rasio = " + rasioPengurang);
+                        for (int k = getIndeksUtamaElmt(i); k < M.getColEff(); k++) {
+                            double newElmt = M.getElmt(j, k) - (M.getElmt(i, k) * rasioPengurang);
+                            M.setElmt(newElmt, j, k);
+                        }
                     }
                 }
+                M.displayMatrix();
+                System.out.println("==============");
             }
+            i++;
+            System.out.println("i : "+i);
         }
-        i++;
     }
 }
