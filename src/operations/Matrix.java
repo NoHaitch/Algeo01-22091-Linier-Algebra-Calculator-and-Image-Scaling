@@ -6,10 +6,14 @@ public class Matrix {
     private int rowEff;
     private int colEff;
 
+    public Matrix(){
+        this(0,0);
+    }
+
     public Matrix(int rowEff, int colEff) {
-    this.matrix = new double[1000][1000];
-    this.rowEff = rowEff;
-    this.colEff = colEff;
+        this.matrix = new double[1000][1000];
+        this.rowEff = rowEff;
+        this.colEff = colEff;
     }
 
     public int getRowEff() {
@@ -28,11 +32,11 @@ public class Matrix {
         this.colEff = newCol;
     }
 
-    public double getElement(int i, int j) {
+    public double getElmt(int i, int j) {
         return this.matrix[i][j];
     }
 
-    public void setElement(double val, int i, int j) {
+    public void setElmt(double val, int i, int j) {
         this.matrix[i][j] = val;
     }
 
@@ -40,7 +44,7 @@ public class Matrix {
         double[] temp = new double[1000];
         int j;
         for(j = 0; j < this.getColEff(); j++) {
-            temp[j] = this.getElement(i, j);
+            temp[j] = this.getElmt(i, j);
         }
         return temp;
     }
@@ -48,7 +52,7 @@ public class Matrix {
     public void setRow(double[] newRow, int i) {
         int j;
         for(j = 0; j < this.getColEff(); ++j) {
-            this.setElement(newRow[j], i, j);
+            this.setElmt(newRow[j], i, j);
         }
     }
 
@@ -56,7 +60,7 @@ public class Matrix {
         double[] temp = new double[1000];
         int i;
         for(i = 0; i < this.rowEff; i++) {
-            temp[i] = this.getElement(i, j);
+            temp[i] = this.getElmt(i, j);
         }
         return temp;
     }
@@ -64,7 +68,7 @@ public class Matrix {
     public void setCol(double[] newCol, int j) {
         int i;
         for(i = 0; i < this.rowEff; i++) {
-            this.setElement(newCol[i], i, j);
+            this.setElmt(newCol[i], i, j);
         } 
 
     }
@@ -85,7 +89,7 @@ public class Matrix {
         int i, j;
         for(i = 0; i < this.getRowEff(); ++i) {
             for(j = 0; j < this.getColEff(); ++j) {
-                System.out.print(this.getElement(i, j));
+                System.out.print(this.getElmt(i, j));
                 if (j != this.getColEff() - 1) {
                 System.out.print(" ");
                 }
@@ -102,7 +106,7 @@ public class Matrix {
         for(i = 0; i < this.getRowEff(); ++i) {
             for(j = 0; j < this.getColEff(); ++j) {
                 if (i != row && j != col) {
-                    temp.setElement(this.getElement(i, j), ii, jj);
+                    temp.setElmt(this.getElmt(i, j), ii, jj);
                     jj++;
                     if (jj == temp.getColEff()) {
                         ii++;
@@ -118,20 +122,69 @@ public class Matrix {
         // I.S. this.isSquare()
         double temp = 0;
         if (this.getRowEff() == 1) {
-            return this.getElement(0, 0);
+            return this.getElmt(0, 0);
         }
         double sign = 1;
         int i;
         for(i = 0; i < this.getRowEff(); i++) {
-            temp += sign*this.minorMatrix(0, i).determinant()*this.getElement(0, i);
+            temp += sign*this.minorMatrix(0, i).determinant()*this.getElmt(0, i);
             sign *= -1;
         }
         return temp;
     }
 
+    public void copyMatrix(Matrix input){
+        int i, j;
+        for (i = 0; i < input.getRowEff(); i++){
+            for (j = 0; j < input.getColEff(); j++){
+                this.setElmt(input.getElmt(i, j), i, j);
+            }
+        }
+        this.setRowEff(input.getRowEff());
+        this.setColEff(input.getColEff());
+    }
+
     public void transposeMatrix(){
         // I.S. this.isSquare()
-        
+        int i, j;
+        for (i = 0; i < getRowEff()-1; i++){
+            for (j = i+1; j < getColEff(); j++){
+                double temp = getElmt(i, j);
+                setElmt(getElmt(j, i), i, j);
+                setElmt(temp, j, i);
+            }
+        }
+    }
+
+    public void multiplyMatrixByConst(double k){
+        int i, j;
+        for (i = 0; i < getRowEff(); i++){
+            for (j = 0; j < getColEff(); j++){
+                setElmt(getElmt(i, j)*k, i, j);
+            }
+        }
+    }
+
+    public Matrix kofaktorMatrix(){
+        // I.S. this.isSquare()
+        Matrix temp = new Matrix(this.getRowEff(), this.getColEff());
+        int i, j, sign;
+        for(i = 0; i < this.getRowEff(); i++){
+            for (j = 0; j < this.getColEff(); j++){
+                sign = (i+j)%2 == 0 ? 1 : -1;
+                temp.setElmt(sign*this.minorMatrix(i, j).determinant(),i,j);
+            }
+        }
+        return temp;
+    }
+
+    public Matrix inversMatrix(){
+        Matrix invers = new Matrix();
+        invers.copyMatrix(this.kofaktorMatrix());
+        double det = 1/this.determinant();
+        invers.multiplyMatrixByConst(det);
+        invers.transposeMatrix();
+        return invers;
     }
 
     public String toString() {
