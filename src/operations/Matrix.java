@@ -1,12 +1,12 @@
 // Source code is decompiled from a .class file using FernFlower decompiler.
 package operations;
 
-public class MatrixKofaktor {
+public class Matrix {
     private double[][] matrix = new double[1000][1000];
     private int rowEff;
     private int colEff;
 
-    public MatrixKofaktor(int rowEff, int colEff) {
+    public Matrix(int rowEff, int colEff) {
     this.matrix = new double[1000][1000];
     this.rowEff = rowEff;
     this.colEff = colEff;
@@ -94,8 +94,8 @@ public class MatrixKofaktor {
         }
     }
 
-    public MatrixKofaktor minorMatrix(int row, int col) {
-        MatrixKofaktor temp = new MatrixKofaktor(this.getRowEff() - 1, this.getColEff() - 1);
+    public Matrix minorMatrix(int row, int col) {
+        Matrix temp = new Matrix(this.getRowEff() - 1, this.getColEff() - 1);
         int ii = 0;
         int jj = 0;
         int i, j;
@@ -127,6 +127,11 @@ public class MatrixKofaktor {
             sign *= -1;
         }
         return temp;
+    }
+
+    public void transposeMatrix(){
+        // I.S. this.isSquare()
+        
     }
 
     public String toString() {
