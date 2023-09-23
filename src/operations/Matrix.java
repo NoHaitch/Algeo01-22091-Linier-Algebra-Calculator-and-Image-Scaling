@@ -172,7 +172,7 @@ public class Matrix {
         for(i = 0; i < this.getRowEff(); i++){
             for (j = 0; j < this.getColEff(); j++){
                 sign = (i+j)%2 == 0 ? 1 : -1;
-                temp.setElmt(sign*this.minorMatrix(i, j).determinant(),i,j);
+                temp.setElmt((double)sign*this.minorMatrix(i, j).determinant(),i,j);
             }
         }
         return temp;
@@ -185,6 +185,23 @@ public class Matrix {
         invers.multiplyMatrixByConst(det);
         invers.transposeMatrix();
         return invers;
+    }
+
+    public Matrix multiplyMatrix(Matrix m){
+        // I.S. Matriks yang dikali sesuai ukuranya m1 axb dan m bxc
+        Matrix result = new Matrix(this.getRowEff(), m.getColEff());
+        int i, j, k;
+        double temp;
+        for (i = 0; i < this.getRowEff(); i++){
+            for (j = 0; j < m.getColEff(); j++){
+                temp = 0;
+                for (k = 0; k < m.getRowEff(); k++){
+                    temp = temp + this.getElmt(i, k)*m.getElmt(k, j);
+                }
+                result.setElmt(temp, i, j);
+            }
+        }
+        return result;
     }
 
     public String toString() {
