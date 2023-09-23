@@ -156,6 +156,17 @@ public class Matrix {
         }
     }
 
+    public Matrix rTransposeMatrix(){
+        Matrix temp = new Matrix(this.getColEff(), this.getRowEff());
+        int i, j;
+        for (i = 0; i < this.getRowEff(); i++){
+            for (j = 0; j < this.getColEff(); j++){
+                temp.setElmt(this.getElmt(i, j), j, i);
+            }
+        }
+        return temp;
+    }
+
     public void multiplyMatrixByConst(double k){
         int i, j;
         for (i = 0; i < getRowEff(); i++){
