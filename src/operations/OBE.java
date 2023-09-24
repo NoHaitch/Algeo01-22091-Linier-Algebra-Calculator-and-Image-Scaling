@@ -44,21 +44,56 @@ public class OBE {
     }
 
     /*-------------- Pengecekan --------------*/
+
+    public boolean cekSolusiTrivial(){
+        /* Mengembalikan apakah matriks memiliki solusi trivial atau tidak */
+        int i = M.getRowEff();;
+        boolean trivialSolution = false;
+        while(i >= 0 && !trivialSolution){
+            int cekCount = 0 ;
+            for(int j = 0; j < M.getColEff(); j++){
+                if(M.getElmt(i,j) == 0){
+                    cekCount += 1;
+                }
+            }
+            System.out.println(cekCount);
+            if(cekCount == M.getColEff()){
+                trivialSolution = true;
+            }
+            i--;
+        }
+        return trivialSolution;
+    }
     public boolean cekBersolusi(){
         /* Mengembalikan apakah matriks memiliki solusi atau tidak */
-        int i = 0;
-        boolean ExistSolution = true;
-        while(i < M.getRowEff() && ExistSolution){
-
-            if(getIndeksUtamaElmt(i) == M.getRowEff()-1){
-                /* karena indeks utama ada pada kolom b pada ax=b, */
+        int i = M.getRowEff();;
+        boolean existSolution = true;
+        while(i >= 0 && existSolution){
+            if(getIndeksUtamaElmt(i) == M.getColEff()-1 && M.getElmt(i,getIndeksUtamaElmt(i)) != 0){
+                /* karena indeks uitama ada pada kolom b pada ax=b, */
                 /* maka tidak ada solusi sebab 0 = k, dengan k bilangan Real */
-                ExistSolution = false;
+                existSolution = false;
             }
-            i++;
+            i--;
         }
-        return ExistSolution;
+        return existSolution;
     }
+    public boolean cekBersolusiTunggal(){
+        /* pre-kondisi matriks tersortir */
+        /* Mengembalikan apakah matriks memiliki solusi Tunggal atau tidak */
+        int i = M.getRowEff();
+        boolean tunggal = false;
+        while(i >= 0 && !tunggal){
+            if(getIndeksUtamaElmt(i) == M.getColEff()-2 && M.getElmt(i,getIndeksUtamaElmt(i)) != 0 ){
+                /* karena indeks uitama ada pada kolom b pada ax=b, */
+                /* maka tidak ada solusi sebab 0 = k, dengan k bilangan Real */
+                tunggal = true;
+            }
+            i--;
+        }
+        return tunggal;
+    }
+
     /*-------------- Display --------------*/
     public void displayIndeksUtama(){
         for(int i = 0; i<M.getRowEff();i++){
@@ -70,6 +105,16 @@ public class OBE {
         M.displayMatrix();
     }
 
+    public void displaySolusi(){
+        if(cekSolusiTrivial()) {
+            System.out.println("Matriks memiliki solusi trivial, tidak dipastikan memiliki solusi lain");
+        } else if(cekBersolusiTunggal()){
+            System.out.println("Matriks memiliki solusi tunggal");
+        } else if(!cekBersolusi()){
+            System.out.println("Matriks Tidak memiliki solusi");
+        }
+    }
+
     /*-------------- Sorting --------------*/
     public void sortMatriksOBE(){
         /* I.S. : Matriks M dan IndeksUtama bernilai */
@@ -78,7 +123,6 @@ public class OBE {
 
         /* sorting array indeksUtama */
         for(int j = 0; j < M.getRowEff(); j++){
-            displayMatrix();
             for(int k = j+1; k < M.getRowEff(); k++){
                 /* swap nilai IndeksUtama dan swap baris Matriks */
                 if(getIndeksUtamaElmt(j) > getIndeksUtamaElmt(k)){
@@ -97,7 +141,7 @@ public class OBE {
     }
 
     /*-------------- OPERASI UTAMA OBE --------------*/
-    public void OperasiOBE() {
+    public void operasiOBE() {
         /* I.S. : Matrix M bernilai */
         /* F.S. : Matrix M dilakukan operasi OBE hingga ditemukan tidak
                   bersolusi atau hingga matrix menjadi matrix eselon baris */
@@ -111,34 +155,47 @@ public class OBE {
             /* cek solusi*/
             if (!cekBersolusi()) {
                 bersolusi = false;
-                System.out.println("MATRIKS TIDAK MEMILIKI SOLUSI");
             } else {
                 /* Operasi agar Kolom Eselon */
                 if (M.getElmt(i, getIndeksUtamaElmt(i)) != 1) {
                     /* menjadikan nilai utama baris menjadi 1 */
                     /* contoh : baris 3 2 6 1 menjadi 1 2/3 2 1/3 */
                     double pembagi = M.getElmt(i, getIndeksUtamaElmt(i));
-                    for (int j = 0; j < M.getColEff(); j++) {
-                        M.setElmt(M.getElmt(i, j) / pembagi, i, j);
+                    if(pembagi != 0) {
+                        for (int j = 0; j < M.getColEff(); j++) {
+                            M.setElmt(M.getElmt(i, j) / pembagi, i, j);
+                        }
                     }
                 }
                 /* Kurangi baris lain sehingga menjadi matrix eselon baris */
                 for (int j = i + 1; j < M.getRowEff(); j++) {
                     /* j : index baris, k : index kolom */
-                    if (M.getElmt(j, i) != 0) {
-                        double rasioPengurang = M.getElmt(j, i);
-                        System.out.println("j : " + j + ", rasio = " + rasioPengurang);
+                    if (M.getElmt(j, getIndeksUtamaElmt(i)) != 0) {
+                        double rasioPengurang = M.getElmt(j, getIndeksUtamaElmt(i));
                         for (int k = getIndeksUtamaElmt(i); k < M.getColEff(); k++) {
                             double newElmt = M.getElmt(j, k) - (M.getElmt(i, k) * rasioPengurang);
+                            if(newElmt == -0){
+                                newElmt *= -1;
+                            }
                             M.setElmt(newElmt, j, k);
                         }
                     }
                 }
-                M.displayMatrix();
-                System.out.println("==============");
             }
             i++;
-            System.out.println("i : "+i);
+        }
+        if (cekBersolusi()) {
+            i--;
+            if (M.getElmt(i, getIndeksUtamaElmt(i)) != 1) {
+                /* menjadikan nilai utama baris menjadi 1 */
+                /* contoh : baris 3 2 6 1 menjadi 1 2/3 2 1/3 */
+                double pembagi = M.getElmt(i, getIndeksUtamaElmt(i));
+                if(pembagi != 0) {
+                    for (int j = 0; j < M.getColEff(); j++) {
+                        M.setElmt(M.getElmt(i, j) / pembagi, i, j);
+                    }
+                }
+            }
         }
     }
 }
