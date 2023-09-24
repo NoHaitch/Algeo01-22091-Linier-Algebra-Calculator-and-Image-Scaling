@@ -10,10 +10,6 @@ public class Main {
         int col = sc.nextInt();
         Matrix M = new Matrix(row,col);
         M.readMatrix(row,col);
-        OBE MOBE = new OBE(M);
-        MOBE.operasiOBE();
-        MOBE.displayMatrix();
-        MOBE.displaySolusi();
     }
 }
 
