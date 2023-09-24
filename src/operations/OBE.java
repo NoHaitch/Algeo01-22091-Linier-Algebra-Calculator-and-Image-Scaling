@@ -165,8 +165,11 @@ public class OBE {
             int iMain = findIdxMain(i);
             if (iMain >= 0 && iMain < getMatrixCol()-1){
                 double valMain = getMElmt(i, iMain);
-                for (int j = iMain; j < getMatrixCol(); j++){
-                    setMElmt(getMElmt(i, j)/valMain, i, j);
+                if (valMain != 1){
+                    System.out.printf("   R%d/%.3f\n\n", i+1, valMain);
+                    for (int j = iMain; j < getMatrixCol(); j++){
+                        setMElmt(getMElmt(i, j)/valMain, i, j);
+                    }
                 }
             }
         }
@@ -236,7 +239,6 @@ public class OBE {
             System.out.println();
             lanjut = isContinue();
         }
-        System.out.println("End of Gauss Method: \n");
         mkOneMain();
         roundAllElement();
         printAugmented();

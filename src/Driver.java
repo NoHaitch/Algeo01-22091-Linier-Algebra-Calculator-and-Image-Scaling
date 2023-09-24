@@ -2,11 +2,11 @@ import operations.OBE;
 
 public class Driver {
     public static void main(String[] args) {
-        OBE M = new OBE(4, 7);
-        double[][] mtr = new double[][]{{1,3,-2,0,2,0,0},{2,6,-5,-2,4,-3,-1},{0,0,5,10,0,15,5},{2,6,0,8,4,18,6}};
+        OBE M = new OBE(3, 4);
+        double[][] mtr = new double[][]{{2,3,1,4},{2,1,1,2},{3,1,2,6}};
         int i, j;
-        for (i = 0; i < 4; i++){
-            for (j = 0; j < 7; j++){
+        for (i = 0; i < 3; i++){
+            for (j = 0; j < 4; j++){
                 M.setMElmt(mtr[i][j], i, j);
             }
         }
