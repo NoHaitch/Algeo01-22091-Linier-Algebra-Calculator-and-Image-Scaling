@@ -1,5 +1,7 @@
 package operations;
 
+import java.lang.Math;
+
 public class OBE {
     private Matrix Augmented;
     private int[] indexMain = new int[1000];
@@ -200,6 +202,18 @@ public class OBE {
         System.out.println("]");
     }
 
+    public void roundAllElement(){
+        for (int i = 0; i < getMatrixRow(); i++){
+            for (int j = 0; j < getMatrixCol(); j++){
+                double temp = getMElmt(i, j);
+                temp *=10000000;
+                temp = (double)Math.round(temp);
+                temp /=10000000;
+                setMElmt(temp, i, j);
+            }
+        }
+    }
+
     public void obeGauss(){
         boolean swapped = false;
         refreshIdxMain(0);
@@ -224,6 +238,7 @@ public class OBE {
         }
         System.out.println("End of Gauss Method: \n");
         mkOneMain();
+        roundAllElement();
         printAugmented();
         if (isSolusiUnik()){
             setSolusiUnik(true);
@@ -273,6 +288,7 @@ public class OBE {
                     substractJordan(i, j);
                 }
             }
+            roundAllElement();
         } else {
             System.out.println("\nTidak dapat dilakukan metode Gauss-Jordan.\nKarena solusi tidak unik.\n");
         }
