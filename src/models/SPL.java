@@ -2,12 +2,13 @@ package models;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.util.Scanner;
 
 import operations.OBE;
 
 public class SPL {
-    private OBE spl;
+    public OBE spl;
     
     public SPL(){
         this(0,0);
@@ -54,5 +55,17 @@ public class SPL {
         input.close();
     }
 
+    public void saveToTextFile(String path){
+        try {
+            FileWriter writer = new FileWriter(path);
+            writer.write(this.spl.getStep());
+            writer.close();
+            System.out.println("\nPenyelesaian berhasil disimpan ke :"+path+"\n\n");
+        } catch (Exception e) {
+            System.out.println("An error occurred\n");
+            e.printStackTrace();
+            // TODO: handle exception
+        }
+    }
 
 }

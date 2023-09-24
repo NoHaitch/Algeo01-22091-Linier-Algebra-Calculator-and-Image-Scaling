@@ -9,6 +9,7 @@ public class OBE {
     private String[] parameter = new String[1000];
     private boolean solusiUnik = false;
     private boolean noSolusi = false;
+    private String stepByStep = "";
 
     public OBE(){ // Konstruktor
         this(0,0);
@@ -25,6 +26,7 @@ public class OBE {
         this.parameter = newOBE.parameter;
         this.solusiUnik = newOBE.solusiUnik;
         this.noSolusi = newOBE.noSolusi;
+        this.stepByStep = newOBE.stepByStep;
     }
 
     public int getMatrixRow(){
@@ -83,8 +85,138 @@ public class OBE {
         noSolusi = cond;
     }
 
+    public String getStep(){
+        return new String(stepByStep);
+    }
+
     public void printAugmented(){
         Augmented.displayMatrix();
+    }
+
+    public String formatDouble(int i, int j, int length){
+        String temp = Augmented.createString(i, j, length);
+        int panjang = temp.length();
+        if (panjang < length){
+            for (int x = 0; x < length-panjang; x++){
+                temp = " "+temp;
+            }
+        }
+        temp += " ";
+        return temp;
+    }
+
+    public void addAugmentedToStep(int length){
+        addNewLineToStep();
+        for (int i = 0; i < getMatrixRow(); i++){
+            for (int j = 0; j < getMatrixCol(); j++){
+                String temp = formatDouble(i, j, length);
+                stepByStep += temp;
+            }
+            stepByStep += "\n";
+        }
+        addNewLineToStep();
+    }
+
+    public void addSubstractToStep(int row1, int row2, double left, double right){
+        String temp = ">>> ";
+        String leftt = Double.toString(left);
+        String rightt = Double.toString(right);
+        String fleft = leftt;
+        String fright = rightt;
+        if (leftt.length() > 9){
+            fleft = "";
+            for (int i = 0; i < 9; i++){
+                fleft += leftt.charAt(i);
+            }
+        }
+        if (fright.length() > 9){
+            fright = "";
+            for (int i = 0; i < 9; i++){
+                fright += rightt.charAt(i);
+            }
+        }
+        if (left == right){
+            temp += "R"+Integer.toString(row1 + 1)+ " - "+"R"+Integer.toString(row2 + 1);
+        } else if (right%left == 0){
+            int mul =(int) (right/left);
+            temp += "R"+Integer.toString(row1 + 1)+" - ("+Integer.toString(mul)+")R"+Integer.toString(row2 + 1);
+        } else if (left%right == 0){
+            int mul =(int) (left/right);
+            temp += Integer.toString(mul)+"R"+Integer.toString(row1 + 1)+" - R"+Integer.toString(row2 + 1);
+        } else {
+            int lval = (int)left;
+            int rval = (int)right;
+            if (lval == left && rval == right){
+                if (lval == 1){
+                    temp += "R"+Integer.toString(row1 + 1)+" - ("+rval+")R"+Integer.toString(row2 + 1);
+                } else if(rval == 1){
+                    temp += lval+"R"+Integer.toString(row1 + 1)+" - R"+Integer.toString(row2 + 1);
+                } else {
+                    temp += lval+"R"+Integer.toString(row1 + 1)+" - ("+rval+")R"+Integer.toString(row2 + 1);
+                }
+            } else if (lval == left && rval != right){
+                if (lval == 1){
+                    temp += "R"+Integer.toString(row1 + 1)+" - ("+fright+")R"+Integer.toString(row2 + 1);
+                } else {
+                    temp += lval+"R"+Integer.toString(row1 + 1)+" - ("+fright+")R"+Integer.toString(row2 + 1);
+                }
+            } else if (lval != left && rval == right){
+                if (rval == 1){
+                    temp += "("+fleft+")R"+Integer.toString(row1 + 1)+" - R"+Integer.toString(row2 + 1);
+                }else{
+                    temp += "("+fleft+")R"+Integer.toString(row1 + 1)+" - ()"+rval+")R"+Integer.toString(row2 + 1);
+                }
+            } else {
+                temp += "("+fleft+")R"+Integer.toString(row1 + 1)+" - ("+fright+")R"+Integer.toString(row2 + 1);
+            }
+
+        }
+        stepByStep += temp + "\n";
+    }
+
+    public void addNewLineToStep(){
+        stepByStep += "\n";
+    }
+
+    public void addSwaptoStep(int row1, int row2){
+        stepByStep += "R"+ Integer.toString(row1+1) +" <--> R"+Integer.toString(row2+1)+"\n"; 
+    }
+
+    public void addMkOnetoStep(int row, Double val){
+        int temp = (int) (val/1);
+        String saved = ">>> ";
+        if (temp == val){
+            saved += "R"+Integer.toString(row+1)+"/"+Integer.toString(temp);
+        } else {
+            String vall = Double.toString(val);
+            String fval = new String(vall);
+            if (fval.length() > 9){
+                fval = "";
+                for (int i = 0; i < 9; i++){
+                    fval += vall.charAt(i);
+                }
+            }
+            saved += "R"+Integer.toString(row+1)+"/("+fval+")";
+        }
+        stepByStep += saved + "\n";
+    }   
+
+    public void addNoSolutionsToStep(){
+        addNewLineToStep();
+        stepByStep += "Tidak ada Solusi\n";
+    }
+
+    public void addGaussJordanRejected(){
+        addNewLineToStep();
+        stepByStep += "\nTidak dapat melanjutkan proses Gauss-Jordan karena solusi tidak unik.\n\n";
+    }
+
+    public void addTitleStep(){
+        stepByStep += "<><><><> Langkah Penyelesaian <><><><>\n\n>>> Matriks Augmented Awal:\n";
+    }
+
+    public void addGaussJordanAccepted(){
+        stepByStep += ">>> Lanjutan Proses Gauss-Jordan\n\n";
     }
 
     public int findIdxMain(int row){
@@ -114,6 +246,7 @@ public class OBE {
         int idx = findIdxMain(row2);
         double mainVal = getMElmt(row2, idx);
         double tempVal = getMElmt(row1, idx);
+        addSubstractToStep(row1, row2, mainVal, tempVal);
         for (int i = idx; i < getMatrixCol(); i++){
             if (mainVal == tempVal){
                 if(i == idx){
@@ -154,6 +287,7 @@ public class OBE {
         setIndexMain(getIndexMain(row2), row1);
         setIndexMain(tmpIdx, row2);
         System.out.printf("   R%d <--> R%d\n\n", row1+1, row2+1);
+        addSwaptoStep(row1, row2);
     }
 
     public void sortIdxMain(int start, boolean wasSwapped){
@@ -173,6 +307,11 @@ public class OBE {
                 System.out.println();
             }
         }
+        //addNewLineToStep();
+        if (wasSwapped){
+            addAugmentedToStep(9);
+        }
+        //addNewLineToStep();
     }
 
     public void mkOneMain(){
@@ -181,6 +320,7 @@ public class OBE {
             if (iMain >= 0 && iMain < getMatrixCol()-1){
                 double valMain = getMElmt(i, iMain);
                 if (valMain != 1){
+                    addMkOnetoStep(i, valMain);
                     System.out.printf("   R%d/%.3f\n\n", i+1, valMain);
                     for (int j = iMain; j < getMatrixCol(); j++){
                         setMElmt(getMElmt(i, j)/valMain, i, j);
@@ -233,12 +373,15 @@ public class OBE {
     }
 
     public void obeGauss(){
+        addTitleStep();
+        addAugmentedToStep(9);
         boolean swapped = false;
         refreshIdxMain(0);
         sortIdxMain(0, swapped);
         if (!swapped){
             printAugmented();
-        }    
+        }
+        swapped = false;
         System.out.println();
         int pass = 1;
         boolean lanjut = isContinue();
@@ -248,6 +391,7 @@ public class OBE {
                     substractRow(i, pass-1);
                 }
             }
+            addAugmentedToStep(9);
             refreshIdxMain(pass);
             sortIdxMain(pass, swapped);
             pass++;
@@ -256,6 +400,11 @@ public class OBE {
         }
         mkOneMain();
         roundAllElement();
+        addAugmentedToStep(9);
+        if (getNoSolusi()){
+            addNewLineToStep();
+            addNoSolutionsToStep();
+        }
         printAugmented();
         if (isSolusiUnik()){
             setSolusiUnik(true);
@@ -275,6 +424,7 @@ public class OBE {
         int idx = findIdxMain(row2);
         double rightVal = getMElmt(row2, idx);
         double leftVal = getMElmt(row1, idx);
+        addSubstractToStep(row1, row2, rightVal, leftVal);
         if (leftVal == rightVal){
             System.out.printf("   R%d - R%d\n\n",row1+1,row2+1);
             for (int i = idx; i < getMatrixCol(); i++){
@@ -298,15 +448,19 @@ public class OBE {
 
     public void obeGaussJordan(){
         obeGauss();
-        if(getSolusiUnik()){
+        if(getSolusiUnik() && !getNoSolusi()){
+            addGaussJordanAccepted();
             System.out.println("\n\nLanjutan: Metode Gauss-Jordan:\n");
             for (int i = getMatrixRow()-2; i >= 0; i--){
                 for (int j = getMatrixRow()-1; j > i; j--){
                     substractJordan(i, j);
                 }
             }
+            addAugmentedToStep(9);
             roundAllElement();
+            addAugmentedToStep(9);
         } else {
+            addGaussJordanRejected();
             System.out.println("\nTidak dapat dilakukan metode Gauss-Jordan.\nKarena solusi tidak unik.\n");
         }
     }

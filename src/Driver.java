@@ -3,11 +3,10 @@ import models.SPL;
 
 public class Driver {
     public static void main(String[] args) {
-        SPL problem = new SPL();
-        problem.inputSPLText();
-        problem.getSPL().printAugmented();
-        problem.getSPL().obeGauss();
-        System.out.println("\nReturned dek\n");
-        problem.getSPL().printAugmented();
+        SPL now = new SPL();
+        now.inputSPLText();
+        now.spl.obeGaussJordan();
+        String path = "test/Penyelesaian_Mas.txt";
+        now.saveToTextFile(path);
     }
 }
