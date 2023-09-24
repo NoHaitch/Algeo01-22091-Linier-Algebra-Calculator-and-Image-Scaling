@@ -18,12 +18,27 @@ public class OBE {
         this.Augmented = new Matrix(row, col);
     }
 
+    public OBE(OBE newOBE){
+        this.Augmented = newOBE.Augmented;
+        this.indexMain = newOBE.indexMain;
+        this.solusi = newOBE.solusi;
+        this.parameter = newOBE.parameter;
+        this.solusiUnik = newOBE.solusiUnik;
+        this.noSolusi = newOBE.noSolusi;
+    }
+
     public int getMatrixRow(){
         return Augmented.getRowEff();
+    }
+    public void setMatrixRow(int i){
+        Augmented.setRowEff(i);
     }
 
     public int getMatrixCol(){
         return Augmented.getColEff();
+    }
+    public void setMatrixCol(int j){
+        Augmented.setColEff(j);
     }
 
     public double getMElmt(int i, int j){
