@@ -1,5 +1,6 @@
-// Source code is decompiled from a .class file using FernFlower decompiler.
 package operations;
+
+import java.util.Scanner;
 
 public class Matrix {
     private double[][] matrix = new double[1000][1000];
@@ -231,5 +232,39 @@ public class Matrix {
     @Override
     public String toString() {
         return "Matrix{row: " + rowEff + ", col: " + getColEff() + "}";
+    }
+    public void readMatrix(int row, int col){
+        int i,j;
+        double elmt;
+        Scanner scanelmt = new Scanner(System.in);
+        System.out.println("Masukkan elemen matriks :");
+        this.rowEff = row;
+        this.colEff = col;
+        for (i = 0; i < row; i++){
+            for (j = 0; j < col; j++){
+                elmt = scanelmt.nextDouble();
+                this.matrix[i][j] = elmt;                
+            }
+            scanelmt.nextLine();
+        }
+    }
+
+    public void multiplyByConst(int x){
+        int i,j;
+        for (i = 0; i < this.rowEff; i++){
+            for (j = 0; j < this.colEff; j++){
+                this.matrix[i][j] *= x;
+            }
+        }
+    }
+    
+    public int countElmt(){
+        int i, j, count = 0;
+        for (i = 0; i < this.rowEff; i++){
+            for (j = 0; j < this.colEff; j++){
+                count += 1;
+            }
+        }
+        return count;
     }
 } 
