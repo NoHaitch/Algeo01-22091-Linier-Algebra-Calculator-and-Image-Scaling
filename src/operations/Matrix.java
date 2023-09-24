@@ -90,13 +90,26 @@ public class Matrix {
         int i, j;
         for(i = 0; i < this.getRowEff(); ++i) {
             for(j = 0; j < this.getColEff(); ++j) {
-                System.out.print(this.getElmt(i, j));
+                System.out.printf("%-10s",this.createString(i, j, 7));
                 if (j != this.getColEff() - 1) {
                 System.out.print(" ");
                 }
             }
             System.out.println();
         }
+    }
+
+    public String createString(int i,int j, int length){
+        double temp = getElmt(i, j);
+        String num = Double.toString(temp);
+        if (num.length() > length){
+            String finalString = "";
+            for (int x = 0; x < length; x++){
+                finalString += num.charAt(x);
+            }
+            return finalString;
+        }
+        return num;
     }
 
     public Matrix minorMatrix(int row, int col) {
@@ -216,6 +229,7 @@ public class Matrix {
         return result;
     }
 
+    @Override
     public String toString() {
         return "Matrix{row: " + rowEff + ", col: " + getColEff() + "}";
     }
