@@ -4,16 +4,10 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        // menu
-        Scanner sc = new Scanner(System.in);
-        int row = sc.nextInt();
-        int col = sc.nextInt();
-        Matrix M = new Matrix(row,col);
-        M.readMatrix(row,col);
-        OBE MOBE = new OBE(M);
-        MOBE.operasiOBE();
-        MOBE.displayMatrix();
-        MOBE.displaySolusi();
+        double[] x = new double[10];
+        for (int i = 0; i < 10; i++){
+            System.out.println(x[i]);
+        }
     }
 }
 

@@ -399,16 +399,20 @@ public class OBE {
             lanjut = isContinue();
         }
         mkOneMain();
-        roundAllElement();
-        addAugmentedToStep(9);
         if (getNoSolusi()){
             addNewLineToStep();
             addNoSolutionsToStep();
         }
-        printAugmented();
         if (isSolusiUnik()){
+            addAugmentedToStep(9);
             setSolusiUnik(true);
+        } else {
+            setParameterSolutions();
+            roundAllElement();
+            addAugmentedToStep(9);
+            addParameterToStep();
         }
+        printAugmented();
     }
     
     public boolean isSolusiUnik(){
@@ -420,11 +424,21 @@ public class OBE {
         return true;
     }
 
-    public void substractJordan(int row1,int row2){
+    public void addParameterToStep(){
+        String temp = "";
+        for (int i = 0; i < getMatrixCol()-1; i++){
+            temp += "---> X"+(i+1)+" = "+getParameter(i)+"\n";
+        }
+        stepByStep += temp;
+    }
+
+    public void substractJordan(int row1,int row2, boolean isAdd){
         int idx = findIdxMain(row2);
         double rightVal = getMElmt(row2, idx);
         double leftVal = getMElmt(row1, idx);
-        addSubstractToStep(row1, row2, rightVal, leftVal);
+        if (isAdd){
+            addSubstractToStep(row1, row2, rightVal, leftVal);
+        }
         if (leftVal == rightVal){
             System.out.printf("   R%d - R%d\n\n",row1+1,row2+1);
             for (int i = idx; i < getMatrixCol(); i++){
@@ -446,6 +460,20 @@ public class OBE {
         System.out.println();
     }
 
+    public void setSolusi(){
+        for (int i = 0; i < getMatrixRow(); i++){
+            setSolutions(getMElmt(i, getMatrixCol()-1),i);
+        }
+    }
+
+    public void addSolutionToStep(){
+        String temp = "";
+        for (int i = 0; i < getMatrixCol()-1; i++){
+            temp += "---> X"+(i+1)+" = "+getSolutions(i)+"\n";
+        }
+        stepByStep += temp;
+    }
+
     public void obeGaussJordan(){
         obeGauss();
         if(getSolusiUnik() && !getNoSolusi()){
@@ -453,16 +481,113 @@ public class OBE {
             System.out.println("\n\nLanjutan: Metode Gauss-Jordan:\n");
             for (int i = getMatrixRow()-2; i >= 0; i--){
                 for (int j = getMatrixRow()-1; j > i; j--){
-                    substractJordan(i, j);
+                    substractJordan(i, j, true);
                 }
             }
             addAugmentedToStep(9);
             roundAllElement();
+            setSolusi();
             addAugmentedToStep(9);
         } else {
             addGaussJordanRejected();
             System.out.println("\nTidak dapat dilakukan metode Gauss-Jordan.\nKarena solusi tidak unik.\n");
         }
+    }
+
+    public void gaussAndSolutions(){
+        addTitleStep();
+        addAugmentedToStep(9);
+        boolean swapped = false;
+        refreshIdxMain(0);
+        sortIdxMain(0, swapped);
+        if (!swapped){
+            printAugmented();
+        }
+        swapped = false;
+        System.out.println();
+        int pass = 1;
+        boolean lanjut = isContinue();
+        while (lanjut && !getNoSolusi() && pass < getMatrixRow()){
+            for (int i = pass; i < getMatrixRow(); i++){
+                if (getIndexMain(i) == getIndexMain(pass-1)){
+                    substractRow(i, pass-1);
+                }
+            }
+            addAugmentedToStep(9);
+            refreshIdxMain(pass);
+            sortIdxMain(pass, swapped);
+            pass++;
+            System.out.println();
+            lanjut = isContinue();
+        }
+        mkOneMain();
+        if (getNoSolusi()){
+            addNewLineToStep();
+            addNoSolutionsToStep();
+        }
+        if (isSolusiUnik()){
+            addAugmentedToStep(9);
+            setSolusiUnik(true);
+            for (int i = getMatrixRow()-2; i >= 0; i--){
+                for (int j = getMatrixRow()-1; j > i; j--){
+                    substractJordan(i, j, false);
+                }
+            }
+            roundAllElement();
+            setSolusi();
+            //addAugmentedToStep(9);
+            addSolutionToStep();
+        } else {
+            setParameterSolutions();
+            roundAllElement();
+            addAugmentedToStep(9);
+            addParameterToStep();
+        }
+        printAugmented();
+    }
+
+    public void setParameterSolutions(){
+        Parameter[] result = new Parameter[1000];
+        int existedVar = getMatrixCol()-1;
+        for (int i = getMatrixRow()-1; i >= 0; i--){
+            int iMainTemp = findIdxMain(i);
+            if (iMainTemp == getMatrixCol()-2){
+                if (result[iMainTemp] == null){
+                    result[iMainTemp] = new Parameter();
+                }
+                result[iMainTemp].setParamtr(getMElmt(i, iMainTemp+1), 0, 0, true);
+                existedVar = iMainTemp;
+                setParameter(result[iMainTemp].turnIntoString(iMainTemp, getMatrixCol()-1), iMainTemp);
+            } else {
+                if (result[iMainTemp] == null){
+                    result[iMainTemp] = new Parameter();
+                }
+                for (int j = getMatrixCol()-2; j > iMainTemp; j--){
+                    if (result[j] == null){
+                        result[j] = new Parameter();
+                    }
+                    if (j < existedVar && !result[j].isTerisi()){
+                        result[j].setParamtr(0, j, 1, true);
+                        existedVar = j;
+                        setParameter(result[j].turnIntoString(j, getMatrixCol()-1), j);
+                    }
+                }
+                result[iMainTemp].setParamtr(getMElmt(i, getMatrixCol()-1), 0, 0, true);
+                for (int j = getMatrixCol()-2; j > iMainTemp; j--){
+                    if (getMElmt(i, j) != 0){
+                        result[iMainTemp].setParamtr(getMElmt(i, j)*result[j].number*(-1), 0, 0, true);
+                        //System.out.println("yang mw dicek di "+i+", "+j+": "+getMElmt(i, j)*result[j].number*(-1));
+                        for (int k = j; k < getMatrixCol()-1; k++){
+                            result[iMainTemp].setParamtr(0, k, getMElmt(i, j)*result[j].var[k]*(-1), true);
+                            //System.out.println("yang mw dicek variabelnya di "+i+", "+k+": "+getMElmt(i, j)*result[j].var[k]*(-1));
+                        }
+                    }
+                }
+                existedVar = iMainTemp;
+                setParameter(result[iMainTemp].turnIntoString(iMainTemp, getMatrixCol()-1), iMainTemp);
+            }
+        }
+
     }
 
     @Override
