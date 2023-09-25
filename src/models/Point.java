@@ -2,12 +2,16 @@ package models;
 
 import java.util.Scanner;
 
+/* Class Point */
+/* Membuat objek point */
 public class Point {
     private double x, y;
+
+    /* ---------- KONSTRUKTOR ---------- */
     public Point(){
-        // construct
-        // you can also put default values here
+        /* kosong */
     }
+
     public void readPoint(){
         Scanner sc = new Scanner(System.in);
         System.out.print("Masukkan X dan Y: ");
@@ -102,3 +106,4 @@ public class Point {
         return Math.sqrt((x*x) + (y*y));
     }
 }
+
