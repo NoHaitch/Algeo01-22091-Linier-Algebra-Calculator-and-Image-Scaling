@@ -56,11 +56,26 @@ public class SPL {
     }
 
     public void saveToTextFile(String path){
+        String fPath = "";
+        int i = 0;
+        while (path.charAt(i) != '.'){
+            fPath += path.charAt(i);
+            i++;
+        }
+        String add = "";
+        int idx = 0;
+        File testFile = new File(fPath+".txt");
+        while (testFile.exists()){
+            idx ++;
+            add = "("+idx+")";
+            testFile = new File(fPath+add+".txt");
+        }
+        fPath += add + ".txt";
         try {
-            FileWriter writer = new FileWriter(path);
+            FileWriter writer = new FileWriter(fPath);
             writer.write(this.spl.getStep());
             writer.close();
-            System.out.println("\nPenyelesaian berhasil disimpan ke :"+path+"\n\n");
+            System.out.println("\nPenyelesaian berhasil disimpan ke :"+fPath+"\n\n");
         } catch (Exception e) {
             System.out.println("An error occurred\n");
             e.printStackTrace();
