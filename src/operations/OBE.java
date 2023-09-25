@@ -179,7 +179,7 @@ public class OBE {
     }
 
     public void addSwaptoStep(int row1, int row2){
-        stepByStep += "R"+ Integer.toString(row1+1) +" <--> R"+Integer.toString(row2+1)+"\n"; 
+        stepByStep += ">>> R"+ Integer.toString(row1+1) +" <--> R"+Integer.toString(row2+1)+"\n"; 
     }
 
     public void addMkOnetoStep(int row, Double val){
