@@ -1,3 +1,4 @@
+import interfacec.MenuMain;
 import operations.*;
 
 import java.util.Scanner;
@@ -5,12 +6,9 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         // menu
-        Scanner sc = new Scanner(System.in);
-        int row = sc.nextInt();
-        int col = sc.nextInt();
-        Matrix M = new Matrix(row,col);
-        M.readMatrix(row,col);
+        MenuMain GUI = new MenuMain();
     }
+
 }
 
 /*

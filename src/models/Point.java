@@ -40,6 +40,7 @@ public class Point {
             }
         }
     }
+
     public void printPoint() {
         /* Print <x,y> without \n */
         System.out.printf("<%f,", x);
@@ -106,4 +107,3 @@ public class Point {
         return Math.sqrt((x*x) + (y*y));
     }
 }
-
