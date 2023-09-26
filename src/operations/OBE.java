@@ -20,13 +20,18 @@ public class OBE extends Matrix{
     }
 
     public OBE(OBE newOBE){
-        this.Augmented = newOBE.Augmented;
-        this.indexMain = newOBE.indexMain;
-        this.solusi = newOBE.solusi;
-        this.parameter = newOBE.parameter;
+        this.Augmented = new Matrix(newOBE.Augmented);
+        this.indexMain = new int[1000];
+        this.solusi = new double[1000];
+        this.parameter = new String[1000];
+        for (int i = 0; i < this.getMatrixCol(); i++){
+            this.indexMain[i] = newOBE.indexMain[i];
+            this.solusi[i] = newOBE.solusi[i];
+            this.parameter[i] = newOBE.parameter[i];
+        }
         this.solusiUnik = newOBE.solusiUnik;
         this.noSolusi = newOBE.noSolusi;
-        this.stepByStep = newOBE.stepByStep;
+        this.stepByStep = new String(newOBE.stepByStep);
     }
 
     public int getMatrixRow(){
@@ -459,7 +464,10 @@ public class OBE extends Matrix{
     }
     
     public boolean isSolusiUnik(){
-        for (int i = 0; i < getMatrixRow(); i++){
+        if (getMatrixRow() < getMatrixCol()-1){
+            return false;
+        }
+        for (int i = 0; i < getMatrixCol()-1; i++){
             if (getIndexMain(i) != i){
                 return false;
             }

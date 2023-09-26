@@ -12,6 +12,7 @@ public class Matrix {
 
     /* ---------- KONSTRUKTOR ---------- */
     public Matrix(int rowEff, int colEff) {
+        this.matrix = new double[1000][1000]; 
         this.rowEff = rowEff;
         this.colEff = colEff;
     }
@@ -20,6 +21,11 @@ public class Matrix {
     public Matrix(){
         /* Kasus Matriks kosong */
         this(0,0);
+    }
+
+    public Matrix(Matrix matrik){
+        this(0,0);
+        this.copyMatrix(matrik);
     }
 
     /* ---------- KELOMPOK Interaksi dengan IO ---------- */

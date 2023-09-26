@@ -8,7 +8,7 @@ import java.util.Scanner;
 import operations.Matrix;
 import operations.OBE;
 
-public class Determinan extends OBE {
+public class Determinan {
     public OBE contents;
     public boolean isDetZero = false;
     public int sign = 1;
@@ -22,6 +22,18 @@ public class Determinan extends OBE {
 
     public Determinan(int row, int col){
         contents = new OBE(row, col);
+    }
+
+    public Determinan(Determinan det){
+        this.contents = new OBE(det.contents);
+        this.isDetZero = det.isDetZero;
+        this.sign = det.sign;
+        this.countMul = det.countMul;
+        this.result = det.result;
+        this.multiply = new double[1000];
+        for (int i = 0; i < this.countMul; i++){
+            this.multiply[i] = det.multiply[i];
+        }
     }
 
     public void inputMatriksText(){
