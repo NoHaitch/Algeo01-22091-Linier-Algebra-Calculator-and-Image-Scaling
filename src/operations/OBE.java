@@ -151,6 +151,12 @@ public class OBE {
         return solusiUnik;
     }
 
+    public void setSolusi(){
+        for (int i = 0; i < getMatrixRow(); i++){
+            setSolutions(getMElmt(i, getMatrixCol()-1),i);
+        }
+    }
+
     /* ---------- KELOMPOK TEST ---------- */
     public boolean isContinue(){
         /* Mengetest apakah operasi OBE perlu dilanjutkan atau tidak */
@@ -297,6 +303,14 @@ public class OBE {
         stepByStep += ">>> Lanjutan Proses Gauss-Jordan\n\n";
     }
 
+    public void addSolutionToStep(){
+        String temp = "";
+        for (int i = 0; i < getMatrixCol()-1; i++){
+            temp += "---> X"+(i+1)+" = "+getSolutions(i)+"\n";
+        }
+        stepByStep += temp;
+    }
+
     /* ---------- KELOMPOK Pencarian ---------- */
     public int findIdxMain(int row){
         /* Mencari indeks kolom utama yaitu indeks pertama dengan nilai ELMT bukan = 0 */
@@ -366,34 +380,6 @@ public class OBE {
                     System.out.printf("   %.3fR%d - (%.3f)R%d\n\n", mainVal,row1+1,tempVal, row2+1);
                 }
                 setMElmt(getMElmt(row1, i)*mainVal-getMElmt(row2, i)*tempVal, row1, i);
-            }
-        }
-        printAugmented();
-        System.out.println();
-    }
-
-    public void substractJordan(int row1,int row2){
-        /* Melakukan Pengurangan Jordan atau mengurangi setiap baris sehingga menjadi */
-        /* matrix eselon baris tereduksi */
-        int idx = findIdxMain(row2);
-        double rightVal = getMElmt(row2, idx);
-        double leftVal = getMElmt(row1, idx);
-        addSubstractToStep(row1, row2, rightVal, leftVal);
-        if (leftVal == rightVal){
-            System.out.printf("   R%d - R%d\n\n",row1+1,row2+1);
-            for (int i = idx; i < getMatrixCol(); i++){
-                setMElmt(getMElmt(row1, i)-getMElmt(row2, i), row1, i);
-            }
-        } else if(leftVal%rightVal == 0){
-            double mul = leftVal/rightVal;
-            System.out.printf("   R%d - (%d)R%d\n\n",row1+1,(int)mul,row2+1);
-            for (int i = idx; i < getMatrixCol(); i++){
-                setMElmt(getMElmt(row1, i)-getMElmt(row2, i)*mul, row1, i);
-            }
-        } else {
-            System.out.printf("   %.3fR%d - (%.3f)R%d\n\n",rightVal,row1+1,leftVal,row2+1);
-            for (int i = idx; i <getMatrixCol(); i++){
-                setMElmt(getMElmt(row1, i)*rightVal-getMElmt(row2, i)*leftVal, row1, i);
             }
         }
         printAugmented();
@@ -502,15 +488,6 @@ public class OBE {
         }
         printAugmented();
     }
-    
-    public boolean isSolusiUnik(){
-        for (int i = 0; i < getMatrixRow(); i++){
-            if (getIndexMain(i) != i){
-                return false;
-            }
-        }
-        return true;
-    }
 
     public void addParameterToStep(){
         String temp = "";
@@ -521,6 +498,8 @@ public class OBE {
     }
 
     public void substractJordan(int row1,int row2, boolean isAdd){
+        /* Melakukan Pengurangan Jordan atau mengurangi setiap baris sehingga menjadi */
+        /* matrix eselon baris tereduksi */
         int idx = findIdxMain(row2);
         double rightVal = getMElmt(row2, idx);
         double leftVal = getMElmt(row1, idx);
@@ -548,20 +527,6 @@ public class OBE {
         System.out.println();
     }
 
-    public void setSolusi(){
-        for (int i = 0; i < getMatrixRow(); i++){
-            setSolutions(getMElmt(i, getMatrixCol()-1),i);
-        }
-    }
-
-    public void addSolutionToStep(){
-        String temp = "";
-        for (int i = 0; i < getMatrixCol()-1; i++){
-            temp += "---> X"+(i+1)+" = "+getSolutions(i)+"\n";
-        }
-        stepByStep += temp;
-    }
-
     public void obeGaussJordan(){
         /* I.S. Agumented bernilai */
         /* F.S. Agumented adalah hasil dari operasi OBE Metode Eliminasi Gauss-Jordan */
@@ -585,6 +550,7 @@ public class OBE {
     }
 
     public void gaussAndSolutions(){
+        /* Melakukan Operasi OBE Metode Eliminasi Gauss serta mencari solusinya */
         addTitleStep();
         addAugmentedToStep(9);
         boolean swapped = false;
@@ -637,6 +603,7 @@ public class OBE {
     }
 
     public void setParameterSolutions(){
+        /* Menentukan Parameter Solusi */
         Parameter[] result = new Parameter[1000];
         int existedVar = getMatrixCol()-1;
         for (int i = getMatrixRow()-1; i >= 0; i--){
@@ -679,10 +646,4 @@ public class OBE {
         }
 
     }
-
-    @Override
-    public String toString(){
-        return "OBE{solusi unik: "+getSolusiUnik()+", tidak ada solusi: "+getNoSolusi()+"}";
-    }
-
 }
