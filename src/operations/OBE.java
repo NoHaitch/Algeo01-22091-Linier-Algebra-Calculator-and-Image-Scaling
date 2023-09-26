@@ -27,14 +27,18 @@ public class OBE extends Matrix{
     }
 
     public OBE(OBE newOBE){
-        /* Kasus OBE baru */
-        this.Augmented = newOBE.Augmented;
-        this.indexMain = newOBE.indexMain;
-        this.solusi = newOBE.solusi;
-        this.parameter = newOBE.parameter;
+        this.Augmented = new Matrix(newOBE.Augmented);
+        this.indexMain = new int[1000];
+        this.solusi = new double[1000];
+        this.parameter = new String[1000];
+        for (int i = 0; i < this.getMatrixCol(); i++){
+            this.indexMain[i] = newOBE.indexMain[i];
+            this.solusi[i] = newOBE.solusi[i];
+            this.parameter[i] = newOBE.parameter[i];
+        }
         this.solusiUnik = newOBE.solusiUnik;
         this.noSolusi = newOBE.noSolusi;
-        this.stepByStep = newOBE.stepByStep;
+        this.stepByStep = new String(newOBE.stepByStep);
     }
 
     /* ----------- KELOMPOK Interaksi dengan IO ----------- */
@@ -190,13 +194,6 @@ public class OBE extends Matrix{
         return Augmented.multiplyMatrix(m);
     }
 
-    public String formatDouble(int i, int j, int length){
-        String temp = Augmented.createString(i, j, length);
-        int panjang = temp.length();
-        if (panjang < length){
-            for (int x = 0; x < length-panjang; x++){
-                temp = " "+temp;
-              
     public boolean getSolusiUnik(){
         return solusiUnik;
     }
@@ -226,16 +223,6 @@ public class OBE extends Matrix{
         }
         //System.out.println("lewat");
         return false;
-    }
-
-    public boolean isSolusiUnik(){
-        /* Melakukan test solusi unik */
-        for (int i = 0; i < getMatrixRow(); i++){
-            if (getIndexMain(i) != i){
-                return false;
-            }
-        }
-        return true;
     }
 
     /* ---------- KELOMPOK PENAMBAHAN Langkah ke dalam Output ----------- */
@@ -537,6 +524,18 @@ public class OBE extends Matrix{
             addParameterToStep();
         }
         //printAugmented();
+    }
+    
+    public boolean isSolusiUnik(){
+        if (getMatrixRow() < getMatrixCol()-1){
+            return false;
+        }
+        for (int i = 0; i < getMatrixCol()-1; i++){
+            if (getIndexMain(i) != i){
+                return false;
+            }
+        }
+        return true;
     }
 
     public void addParameterToStep(){

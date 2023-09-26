@@ -17,6 +17,10 @@ public class SPL {
         this.spl = new OBE(row, col);
     }
 
+    public SPL(SPL newOne){
+        this.spl = new OBE(newOne.spl);
+    }
+
     public OBE getSPL(){
         return new OBE(this.spl);
     }

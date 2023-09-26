@@ -17,6 +17,7 @@ public class Point {
         System.out.print("Masukkan X dan Y: ");
         String input1 = sc.next();
         String input2 = sc.next();
+        sc.close();
         boolean valid = true;
         try {
             x = Double.parseDouble(input1);

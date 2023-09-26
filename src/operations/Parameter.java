@@ -28,10 +28,14 @@ public class Parameter {
             } else {
                 //System.out.println("Nilai :"+Math.round(number));
                 String str = Double.toString(number);
-                for (int i = 0; i < 9; i++){
-                    temp += str.charAt(i);
+                if (str.length() < 9){
+                    temp += str + " ";
+                } else {
+                    for (int i = 0; i < 9; i++){
+                        temp += str.charAt(i);
+                    }
+                    temp += " ";
                 }
-                temp += " ";
             }
         }
         for (int i = first; i < last; i++){
@@ -54,8 +58,12 @@ public class Parameter {
                     if (number > 0 && temp != ""){
                         temp += "+ ";
                     }
-                    for (int j = 0; j < 9; j++){
-                        temp += str.charAt(j);
+                    if (str.length() < 9){
+                        temp += str;
+                    } else {
+                        for (int j = 0; j < 9; j++){
+                            temp += str.charAt(j);
+                        }
                     }
                     temp += symbol+Integer.toString(i+1)+" ";
                 }
