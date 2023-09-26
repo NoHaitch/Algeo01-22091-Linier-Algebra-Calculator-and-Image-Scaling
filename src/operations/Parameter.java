@@ -21,9 +21,7 @@ public class Parameter {
 
     public String turnIntoString(int first, int last){
         String temp = "";
-        boolean allZero = true;
         if (number != 0){
-            allZero = false;
             int val = (int) number;
             if (val == number){
                 temp += val +" ";
@@ -38,7 +36,6 @@ public class Parameter {
         }
         for (int i = first; i < last; i++){
             if (var[i] != 0){
-                allZero = false;
                 int val = (int) var[i];
                 if (val == var[i]){
                     if (val == 1){
@@ -46,10 +43,17 @@ public class Parameter {
                     } else if (val == -1){
                         temp += "-X"+(i+1)+" ";
                     } else {
-                        temp += val+"X"+(i+1)+" ";
+                        if (val < 0 || temp == ""){
+                            temp += val+"X"+(i+1)+" ";
+                        } else {
+                            temp += "+ "+val+"X"+(i+1)+" ";
+                        }
                     }
                 } else {
                     String str = Double.toString(number);
+                    if (number > 0 && temp != ""){
+                        temp += "+ ";
+                    }
                     for (int j = 0; j < 9; j++){
                         temp += str.charAt(j);
                     }
@@ -57,10 +61,8 @@ public class Parameter {
                 }
             }
         }
-        if (allZero){
-            return "0";
-        }
         return temp;
+        //return "X"+first+" ";
     }
 
     public boolean isTerisi(){

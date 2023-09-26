@@ -12,7 +12,7 @@ public class Driver {
             //System.out.println(kont.spl.getParameter(i));
         //}
         System.out.print(kont.spl.getStep());
-        kont.saveToTextFile("test/StepGauss.txt");
+        kont.saveToTextFile("test/TestCaseBabe.txt");
     }
 
 }
