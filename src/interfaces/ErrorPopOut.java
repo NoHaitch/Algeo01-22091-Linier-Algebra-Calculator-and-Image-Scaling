@@ -1,4 +1,4 @@
-package interfacec;
+package interfaces;
 
 import javax.swing.*;
 import java.awt.*;

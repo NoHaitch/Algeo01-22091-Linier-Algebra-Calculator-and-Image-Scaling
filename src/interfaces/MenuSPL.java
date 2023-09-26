@@ -1,50 +1,44 @@
-package interfacec;
+package interfaces;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MenuMain extends JFrame{
-    private JButton interpolasiPolinomButton;
-    private JButton splButton;
-    private JButton balikanButton;
-    private JButton determinanButton;
-    private JButton interpolasiBicubicButton;
-    private JButton regresiLinierButton;
-    private JButton keluarButton;
+public class MenuSPL extends JFrame{
     private JPanel mainPanel;
-    private JPanel IdentityPanel;
-    private JLabel IdentityLabel;
-    private JLabel MainLabel;
+    private JLabel mainLabel;
+    private JButton GaussButton;
+    private JButton GaussJordanButton;
+    private JButton MBallikanButton;
+    private JButton KramerButton;
+    private JButton kembaliButton;
 
-    public MenuMain() {
+    public MenuSPL() {
         setContentPane(mainPanel);
-        setTitle("Main Application");
+        setTitle("Menu SPL");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
-        setSize(500, 520);
+        setSize(500, 420);
         setVisible(true);
 
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) ((dimension.getWidth() - getWidth()) / 2);
         int y = (int) ((dimension.getHeight() - getHeight()) / 2);
         setLocation(x, y);
-        keluarButton.addActionListener(new ActionListener() {
+        kembaliButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
+                MenuMain menu = new MenuMain();
             }
         });
-        splButton.addActionListener(new ActionListener() {
+        GaussButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                MenuSPL menu = new MenuSPL();
+                MenuInputMatrix menuInput = new MenuInputMatrix("SPL");
             }
         });
-    }
-    public static void main(String[] args) {
-        MenuMain myFrame = new MenuMain();
     }
 }
