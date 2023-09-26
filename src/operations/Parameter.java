@@ -5,7 +5,7 @@ public class Parameter {
     double number = 0f;
     double[] var = new double[1000];
     boolean terisi = false;
-    char symbol = (char)966; // 181
+    char symbol = (char) 181; // 181
 
     public Parameter(){
     }
@@ -28,10 +28,14 @@ public class Parameter {
             } else {
                 //System.out.println("Nilai :"+Math.round(number));
                 String str = Double.toString(number);
-                for (int i = 0; i < 9; i++){
-                    temp += str.charAt(i);
+                if (str.length() < 9){
+                    temp += str + " ";
+                } else {
+                    for (int i = 0; i < 9; i++){
+                        temp += str.charAt(i);
+                    }
+                    temp += " ";
                 }
-                temp += " ";
             }
         }
         for (int i = first; i < last; i++){
@@ -39,14 +43,14 @@ public class Parameter {
                 int val = (int) var[i];
                 if (val == var[i]){
                     if (val == 1){
-                        temp += "X"+(i+1) + " ";
+                        temp += symbol+Integer.toString(i+1) + " ";
                     } else if (val == -1){
-                        temp += "-X"+(i+1)+" ";
+                        temp += "-"+symbol+Integer.toString(i+1)+" ";
                     } else {
                         if (val < 0 || temp == ""){
-                            temp += val+"X"+(i+1)+" ";
+                            temp += Integer.toString(val)+symbol+Integer.toString(i+1)+" ";
                         } else {
-                            temp += "+ "+val+"X"+(i+1)+" ";
+                            temp += "+ "+Integer.toString(val)+symbol+Integer.toString(i+1)+" ";
                         }
                     }
                 } else {
@@ -54,15 +58,19 @@ public class Parameter {
                     if (number > 0 && temp != ""){
                         temp += "+ ";
                     }
-                    for (int j = 0; j < 9; j++){
-                        temp += str.charAt(j);
+                    if (str.length() < 9){
+                        temp += str;
+                    } else {
+                        for (int j = 0; j < 9; j++){
+                            temp += str.charAt(j);
+                        }
                     }
-                    temp += "X"+(i+1)+" ";
+                    temp += symbol+Integer.toString(i+1)+" ";
                 }
             }
         }
         return temp;
-        //return "X"+first+" ";
+        //return symbol+first+" ";
     }
 
     public boolean isTerisi(){

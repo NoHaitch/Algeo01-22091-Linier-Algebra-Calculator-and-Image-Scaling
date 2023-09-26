@@ -1,22 +1,18 @@
-import operations.Matrix;
-import operations.OBE;
-import operations.interpolation;
-import models.Point;
-import java.util.Scanner;
+//import operations.OBE;
+import models.Determinan;
+
 public class Driver {
     public static void main(String[] args) {
-        int i,j;
-        Matrix m = interpolation.askDataPoint();
-        Matrix newm = interpolation.convertPtoM(m);
-        OBE obe = new OBE (newm.getRowEff(), newm.getColEff());
-        for (i = 0; i < newm.getRowEff(); i++){
-            for (j = 0; j < newm.getColEff();j++){
-                obe.setMElmt(newm.getElmt(i,j), i, j);
-            }
+        Determinan x = new Determinan(3,3);
+        x.inputMatriksText();
+        double det = x.determinanKofaktor();
+        x.CalculateOBE();
+        x.saveToTextFile("test/DeterminanDuluGan.txt");
+        System.out.println(x.contents.getStep());
+        System.out.println(x.result+"\n");
+        for (int i = 0; i < x.countMul; i++){
+            System.out.println(x.multiply[i]);
         }
-        obe.gaussAndSolutions();
-        interpolation.displayFunction(obe);
-        System.out.println();
-        System.out.print(interpolation.taksiran(obe,2));
+        System.out.println("\n"+det);
     }
 }

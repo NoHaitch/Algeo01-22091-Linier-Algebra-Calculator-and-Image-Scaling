@@ -2,7 +2,11 @@ package operations;
 
 import java.lang.Math;
 
-public class OBE {
+/* Class OBE */
+/*  Membuat objek OBE, yang digunakan untuk melakukan OBE */
+/*  dengan metode Gauss atau Gauss-Jordan */
+
+public class OBE extends Matrix{
     private Matrix Augmented;
     private int[] indexMain = new int[1000];
     private double[] solusi = new double[1000];
@@ -11,88 +15,41 @@ public class OBE {
     private boolean noSolusi = false;
     private String stepByStep = "";
 
-    public OBE(){ // Konstruktor
+    /* ---------- KONSTRUKTOR ---------- */
+    public OBE(){
+        /* Kasus Kosong */
         this(0,0);
     }
 
     public OBE(int row, int col){
+        /* Kasus Matrix */
         this.Augmented = new Matrix(row, col);
     }
 
     public OBE(OBE newOBE){
-        this.Augmented = newOBE.Augmented;
-        this.indexMain = newOBE.indexMain;
-        this.solusi = newOBE.solusi;
-        this.parameter = newOBE.parameter;
+        this.Augmented = new Matrix(newOBE.Augmented);
+        this.indexMain = new int[1000];
+        this.solusi = new double[1000];
+        this.parameter = new String[1000];
+        for (int i = 0; i < this.getMatrixCol(); i++){
+            this.indexMain[i] = newOBE.indexMain[i];
+            this.solusi[i] = newOBE.solusi[i];
+            this.parameter[i] = newOBE.parameter[i];
+        }
         this.solusiUnik = newOBE.solusiUnik;
         this.noSolusi = newOBE.noSolusi;
-        this.stepByStep = newOBE.stepByStep;
+        this.stepByStep = new String(newOBE.stepByStep);
     }
 
-    public int getMatrixRow(){
-        return Augmented.getRowEff();
-    }
-    public void setMatrixRow(int i){
-        Augmented.setRowEff(i);
-    }
-
-    public int getMatrixCol(){
-        return Augmented.getColEff();
-    }
-    public void setMatrixCol(int j){
-        Augmented.setColEff(j);
-    }
-    public double getMElmt(int i, int j){
-        return Augmented.getElmt(i, j);
-    }
-    public void setMElmt(double val, int i, int j){
-        Augmented.setElmt(val, i, j);
-    }
-
-    public int getIndexMain(int i){
-        return indexMain[i];
-    }
-    public void setIndexMain(int val, int i){
-        indexMain[i] = val;
-    }
-
-    public double getSolutions(int i){
-        return solusi[i];
-    }
-    public void setSolutions(double val, int i){
-        solusi[i] = val;
-    }
-
-    public String getParameter(int i){
-        return parameter[i];
-    }
-    public void setParameter(String s, int i){
-        parameter[i] = s;
-    }
-
-    public boolean getSolusiUnik(){
-        return solusiUnik;
-    }
-    public void setSolusiUnik(boolean cond){
-        solusiUnik = cond;
-    }
-
-    public boolean getNoSolusi(){
-        return noSolusi;
-    }
-    public void setNoSolusi(boolean cond){
-        noSolusi = cond;
-    }
-
-    public String getStep(){
-        return new String(stepByStep);
-    }
-
-    public void printAugmented(){
-        Augmented.displayMatrix();
+    /* ----------- KELOMPOK Interaksi dengan IO ----------- */
+    @Override
+    public String toString(){
+        /* Melakukan Override fungsi untuk mempermudah penunjukan hasil */
+        return "OBE{solusi unik: "+getSolusiUnik()+", tidak ada solusi: "+getNoSolusi()+"}";
     }
 
     public String formatDouble(int i, int j, int length){
+        /* Mengubah format double menjadi lebih pendek */
         String temp = Augmented.createString(i, j, length);
         int panjang = temp.length();
         if (panjang < length){
@@ -104,6 +61,170 @@ public class OBE {
         return temp;
     }
 
+    public void printAugmented(){
+        /* Menuliskan Matrix Augemented */
+        Augmented.displayMatrix();
+    }
+
+    public void printIMain(){
+        /* Menuliskan IndexMain */
+        System.out.print("[");
+        for (int i = 0; i < getMatrixRow(); i++){
+            System.out.print(getIndexMain(i));
+            if (i != getMatrixRow()-1){
+                System.out.print(" ");
+            }
+        }
+        System.out.println("]");
+    }
+
+    /* ---------- SELEKTOR ---------- */
+    public int getMatrixRow(){
+        /* Mengembalikan nilai baris efektif matrix */
+        return Augmented.getRowEff();
+    }
+
+    public void setMatrixRow(int i){
+        /* Mengubah nilai baris efektif matrix */
+        Augmented.setRowEff(i);
+    }
+
+    public int getMatrixCol(){
+        /* Mengembalikan nilai kolom efektif matrix */
+        return Augmented.getColEff();
+    }
+
+    public void setMatrixCol(int j){
+        /* Mengubah nilai kolom efektif matrix */
+        Augmented.setColEff(j);
+    }
+    public double getMElmt(int i, int j){
+        /* Mengembalikan nilai dari Elemen pada baris i+1 dan kolom j+1 */
+        return Augmented.getElmt(i, j);
+    }
+
+    public void setMElmt(double val, int i, int j){
+        /* Mengubah nilai dari Elemen pada baris i+1 dan kolom j+1 */
+        Augmented.setElmt(val, i, j);
+    }
+
+    public int getIndexMain(int i){
+        /* Mengembalikan nilai dari Elemen Indeks Main pada indeks i */
+        return indexMain[i];
+    }
+
+    public void setIndexMain(int val, int i){
+        /* Mengubah nilai dari Elemen Indeks Main pada indeks i */
+        indexMain[i] = val;
+    }
+
+    public double getSolutions(int i){
+        return solusi[i];
+    }
+
+    public void setSolutions(double val, int i){
+        solusi[i] = val;
+    }
+
+    public String getParameter(int i){
+        return parameter[i];
+    }
+
+    public void setParameter(String s, int i){
+        parameter[i] = s;
+    }
+
+    public void setSolusiUnik(boolean cond){
+        solusiUnik = cond;
+    }
+
+    public void setNoSolusi(boolean cond){
+        noSolusi = cond;
+    }
+
+    public String getStep(){
+        return new String(stepByStep);
+    }
+    public void addStringToStep(String add){
+        stepByStep += add;
+    }
+
+    public boolean getNoSolusi(){
+        return noSolusi;
+    }
+
+    public boolean isSquare(){
+        return Augmented.isSquare();
+    }
+
+    public boolean isIdxValid(int i, int j){
+        return Augmented.isIdxValid(i, j);
+    }
+
+    public boolean isIdxEff(int i, int j){
+        return Augmented.isIdxEff(i, j);
+    }
+
+    public double determinant(){
+        return Augmented.determinant();
+    }
+
+    public void transposeMatrix(){
+        Augmented.transposeMatrix();
+    }
+
+    public Matrix rTransposeMatrix(){
+        return Augmented.rTransposeMatrix();
+    }
+
+    public void multiplyMatrixByConst(double k){
+        Augmented.multiplyMatrixByConst(k);
+    }
+
+    public Matrix kofakMatrix(){
+        return Augmented.kofaktorMatrix();
+    }
+
+    public Matrix inversMatrix(){
+        return Augmented.inversMatrix();
+    }
+
+    public Matrix multiplyMatrix(Matrix m){
+        return Augmented.multiplyMatrix(m);
+    }
+
+    public boolean getSolusiUnik(){
+        return solusiUnik;
+    }
+
+    public void setSolusi(){
+        for (int i = 0; i < getMatrixRow(); i++){
+            setSolutions(getMElmt(i, getMatrixCol()-1),i);
+        }
+    }
+
+    /* ---------- KELOMPOK TEST ---------- */
+    public boolean isContinue(){
+        /* Mengetest apakah operasi OBE perlu dilanjutkan atau tidak */
+        for (int i = 0; i < getMatrixRow()-1; i++){
+            int pass = getIndexMain(i);
+            if (pass == -1){
+                setNoSolusi(true);
+                //System.out.println("pass: "+pass);
+                return false;
+            }
+            for (int j = i+1; j < getMatrixRow(); j++){
+                if (pass != getMatrixCol() && getIndexMain(j) == pass){
+                    //System.out.println("pass: "+pass+" ke-"+j+": "+getIndexMain(j));
+                    return true;
+                }
+            }
+        }
+        //System.out.println("lewat");
+        return false;
+    }
+
+    /* ---------- KELOMPOK PENAMBAHAN Langkah ke dalam Output ----------- */
     public void addAugmentedToStep(int length){
         addNewLineToStep();
         for (int i = 0; i < getMatrixRow(); i++){
@@ -178,7 +299,7 @@ public class OBE {
     }
 
     public void addSwaptoStep(int row1, int row2){
-        stepByStep += ">>> R"+ Integer.toString(row1+1) +" <--> R"+Integer.toString(row2+1)+"\n"; 
+        stepByStep += ">>> R"+ Integer.toString(row1+1) +" <--> R"+Integer.toString(row2+1)+"\n";
     }
 
     public void addMkOnetoStep(int row, Double val){
@@ -198,7 +319,7 @@ public class OBE {
             saved += "R"+Integer.toString(row+1)+"/("+fval+")";
         }
         stepByStep += saved + "\n";
-    }   
+    }
 
     public void addNoSolutionsToStep(){
         addNewLineToStep();
@@ -218,7 +339,17 @@ public class OBE {
         stepByStep += ">>> Lanjutan Proses Gauss-Jordan\n\n";
     }
 
+    public void addSolutionToStep(){
+        String temp = "";
+        for (int i = 0; i < getMatrixCol()-1; i++){
+            temp += "---> X"+(i+1)+" = "+getSolutions(i)+"\n";
+        }
+        stepByStep += temp;
+    }
+
+    /* ---------- KELOMPOK Pencarian ---------- */
     public int findIdxMain(int row){
+        /* Mencari indeks kolom utama yaitu indeks pertama dengan nilai ELMT bukan = 0 */
         for (int i = 0; i < getMatrixCol(); i++){
             if (getMElmt(row, i) != 0){
                 if (i < getMatrixCol()-1){
@@ -235,13 +366,29 @@ public class OBE {
         return getMatrixCol();
     }
 
+    /* ---------- KELOMPOK Fungsi Utama ---------- */
+    public void roundAllElement(){
+        /* Melakukan Pembulatan nilai*/
+        for (int i = 0; i < getMatrixRow(); i++){
+            for (int j = 0; j < getMatrixCol(); j++){
+                double temp = getMElmt(i, j);
+                temp *=10000000;
+                temp = (double)Math.round(temp);
+                temp /=10000000;
+                setMElmt(temp, i, j);
+            }
+        }
+    }
+
     public void refreshIdxMain(int i){
+        /* Melakukan pembaruan nilai Index Main */
         for (int j = i; j < getMatrixRow(); j++){
             findIdxMain(j);
         }
     }
 
     public void substractRow(int row1, int row2){
+        /* Mengurangi semua Element pada baris row1 dengan ELement pada baris row2 */
         int idx = findIdxMain(row2);
         double mainVal = getMElmt(row2, idx);
         double tempVal = getMElmt(row1, idx);
@@ -249,33 +396,34 @@ public class OBE {
         for (int i = idx; i < getMatrixCol(); i++){
             if (mainVal == tempVal){
                 if(i == idx){
-                    System.out.printf("   R%d - R%d\n\n", row1+1, row2+1);
+                    //System.out.printf("   R%d - R%d\n\n", row1+1, row2+1);
                 }
                 setMElmt(getMElmt(row1, i)-getMElmt(row2, i), row1, i);
             } else if (mainVal%tempVal == 0){
                 double mul = mainVal/tempVal;
                 if(i == idx){
-                    System.out.printf("   %dR%d - R%d\n\n",(int)mul,row1+1,row2+1);
+                    //System.out.printf("   %dR%d - R%d\n\n",(int)mul,row1+1,row2+1);
                 }
                 setMElmt(getMElmt(row1, i)*mul-getMElmt(row2, i), row1, i);
             } else if (tempVal%mainVal == 0){
                 double mul = tempVal/mainVal;
                 if(i == idx){
-                    System.out.printf("   R%d - (%d)R%d\n\n", row1+1,(int)mul, row2+1);
+                    //System.out.printf("   R%d - (%d)R%d\n\n", row1+1,(int)mul, row2+1);
                 }
                 setMElmt(getMElmt(row1, i)-getMElmt(row2, i)*mul, row1, i);
             } else {
                 if(i == idx){
-                    System.out.printf("   %.3fR%d - (%.3f)R%d\n\n", mainVal,row1+1,tempVal, row2+1);
+                    //System.out.printf("   %.3fR%d - (%.3f)R%d\n\n", mainVal,row1+1,tempVal, row2+1);
                 }
                 setMElmt(getMElmt(row1, i)*mainVal-getMElmt(row2, i)*tempVal, row1, i);
             }
         }
-        printAugmented();
-        System.out.println();
+        //printAugmented();
+        //System.out.println();
     }
 
     public void swapRow(int row1, int row2){
+        /* Menukar isi dari baris row 1 dengan baris row 2*/
         double temp;
         for (int i = 0; i < getMatrixCol(); i++){
             temp = getMElmt(row1, i);
@@ -285,11 +433,13 @@ public class OBE {
         int tmpIdx = getIndexMain(row1);
         setIndexMain(getIndexMain(row2), row1);
         setIndexMain(tmpIdx, row2);
-        System.out.printf("   R%d <--> R%d\n\n", row1+1, row2+1);
+        //System.out.printf("   R%d <--> R%d\n\n", row1+1, row2+1);
         addSwaptoStep(row1, row2);
     }
 
     public void sortIdxMain(int start, boolean wasSwapped){
+        /* I.S. Index Main dan Matrix Augmented bernilai */
+        /* F.S. Index Main dan Matrix Augmented tersortir */
         for (int i = start; i < getMatrixRow()-1; i++){
             int temp = getIndexMain(i);
             int idx = i;
@@ -302,8 +452,8 @@ public class OBE {
             if (idx != i){
                 wasSwapped = true;
                 swapRow(idx, i);
-                printAugmented();
-                System.out.println();
+                //printAugmented();
+                //System.out.println();
             }
         }
         //addNewLineToStep();
@@ -314,13 +464,14 @@ public class OBE {
     }
 
     public void mkOneMain(){
+        /* Membuat satu baris sebagai baris Utama */
         for (int i = 0; i < getMatrixRow(); i++){
             int iMain = findIdxMain(i);
             if (iMain >= 0 && iMain < getMatrixCol()-1){
                 double valMain = getMElmt(i, iMain);
                 if (valMain != 1){
                     addMkOnetoStep(i, valMain);
-                    System.out.printf("   R%d/%.3f\n\n", i+1, valMain);
+                    //System.out.printf("   R%d/%.3f\n\n", i+1, valMain);
                     for (int j = iMain; j < getMatrixCol(); j++){
                         setMElmt(getMElmt(i, j)/valMain, i, j);
                     }
@@ -329,59 +480,19 @@ public class OBE {
         }
     }
 
-    public boolean isContinue(){
-        for (int i = 0; i < getMatrixRow()-1; i++){
-            int pass = getIndexMain(i);
-            if (pass == -1){
-                setNoSolusi(true);
-                //System.out.println("pass: "+pass);
-                return false;
-            }
-            for (int j = i+1; j < getMatrixRow(); j++){
-                if (pass != getMatrixCol() && getIndexMain(j) == pass){
-                    //System.out.println("pass: "+pass+" ke-"+j+": "+getIndexMain(j));
-                    return true;
-                }
-            }
-        }
-        //System.out.println("lewat");
-        return false;
-    }
-
-    public void printIMain(){
-        System.out.print("[");
-        for (int i = 0; i < getMatrixRow(); i++){
-            System.out.print(getIndexMain(i));
-            if (i != getMatrixRow()-1){
-                System.out.print(" ");
-            }
-        }
-        System.out.println("]");
-    }
-
-    public void roundAllElement(){
-        for (int i = 0; i < getMatrixRow(); i++){
-            for (int j = 0; j < getMatrixCol(); j++){
-                double temp = getMElmt(i, j);
-                temp *=10000000;
-                temp = (double)Math.round(temp);
-                temp /=10000000;
-                setMElmt(temp, i, j);
-            }
-        }
-    }
-
     public void obeGauss(){
+        /* I.S. Agumented bernilai */
+        /* F.S. Agumented adalah hasil dari operasi OBE Metode Eliminasi Gauss */
         addTitleStep();
         addAugmentedToStep(9);
         boolean swapped = false;
         refreshIdxMain(0);
         sortIdxMain(0, swapped);
         if (!swapped){
-            printAugmented();
+            //printAugmented();
         }
         swapped = false;
-        System.out.println();
+        //System.out.println();
         int pass = 1;
         boolean lanjut = isContinue();
         while (lanjut && !getNoSolusi() && pass < getMatrixRow()){
@@ -394,7 +505,7 @@ public class OBE {
             refreshIdxMain(pass);
             sortIdxMain(pass, swapped);
             pass++;
-            System.out.println();
+            //System.out.println();
             lanjut = isContinue();
         }
         mkOneMain();
@@ -411,11 +522,14 @@ public class OBE {
             addAugmentedToStep(9);
             addParameterToStep();
         }
-        printAugmented();
+        //printAugmented();
     }
     
     public boolean isSolusiUnik(){
-        for (int i = 0; i < getMatrixRow(); i++){
+        if (getMatrixRow() < getMatrixCol()-1){
+            return false;
+        }
+        for (int i = 0; i < getMatrixCol()-1; i++){
             if (getIndexMain(i) != i){
                 return false;
             }
@@ -432,6 +546,8 @@ public class OBE {
     }
 
     public void substractJordan(int row1,int row2, boolean isAdd){
+        /* Melakukan Pengurangan Jordan atau mengurangi setiap baris sehingga menjadi */
+        /* matrix eselon baris tereduksi */
         int idx = findIdxMain(row2);
         double rightVal = getMElmt(row2, idx);
         double leftVal = getMElmt(row1, idx);
@@ -455,29 +571,17 @@ public class OBE {
                 setMElmt(getMElmt(row1, i)*rightVal-getMElmt(row2, i)*leftVal, row1, i);
             }
         }
-        printAugmented();
-        System.out.println();
-    }
-
-    public void setSolusi(){
-        for (int i = 0; i < getMatrixRow(); i++){
-            setSolutions(getMElmt(i, getMatrixCol()-1),i);
-        }
-    }
-
-    public void addSolutionToStep(){
-        String temp = "";
-        for (int i = 0; i < getMatrixCol()-1; i++){
-            temp += "---> X"+(i+1)+" = "+getSolutions(i)+"\n";
-        }
-        stepByStep += temp;
+        //printAugmented();
+        //System.out.println();
     }
 
     public void obeGaussJordan(){
+        /* I.S. Agumented bernilai */
+        /* F.S. Agumented adalah hasil dari operasi OBE Metode Eliminasi Gauss-Jordan */
         obeGauss();
         if(getSolusiUnik() && !getNoSolusi()){
             addGaussJordanAccepted();
-            System.out.println("\n\nLanjutan: Metode Gauss-Jordan:\n");
+            //System.out.println("\n\nLanjutan: Metode Gauss-Jordan:\n");
             for (int i = getMatrixRow()-2; i >= 0; i--){
                 for (int j = getMatrixRow()-1; j > i; j--){
                     substractJordan(i, j, true);
@@ -489,18 +593,19 @@ public class OBE {
             addAugmentedToStep(9);
         } else {
             addGaussJordanRejected();
-            System.out.println("\nTidak dapat dilakukan metode Gauss-Jordan.\nKarena solusi tidak unik.\n");
+            //System.out.println("\nTidak dapat dilakukan metode Gauss-Jordan.\nKarena solusi tidak unik.\n");
         }
     }
 
     public void gaussAndSolutions(){
+        /* Melakukan Operasi OBE Metode Eliminasi Gauss serta mencari solusinya */
         addTitleStep();
         addAugmentedToStep(9);
         boolean swapped = false;
         refreshIdxMain(0);
         sortIdxMain(0, swapped);
         if (!swapped){
-            printAugmented();
+            //printAugmented();
         }
         swapped = false;
         System.out.println();
@@ -516,7 +621,7 @@ public class OBE {
             refreshIdxMain(pass);
             sortIdxMain(pass, swapped);
             pass++;
-            System.out.println();
+            //System.out.println();
             lanjut = isContinue();
         }
         mkOneMain();
@@ -542,10 +647,11 @@ public class OBE {
             addAugmentedToStep(9);
             addParameterToStep();
         }
-        printAugmented();
+        //printAugmented();
     }
 
     public void setParameterSolutions(){
+        /* Menentukan Parameter Solusi */
         Parameter[] result = new Parameter[1000];
         int existedVar = getMatrixCol()-1;
         for (int i = getMatrixRow()-1; i >= 0; i--){
@@ -588,10 +694,4 @@ public class OBE {
         }
 
     }
-
-    @Override
-    public String toString(){
-        return "OBE{solusi unik: "+getSolusiUnik()+", tidak ada solusi: "+getNoSolusi()+"}";
-    }
-
 }
