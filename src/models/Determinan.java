@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.Scanner;
 
-import operations.Matrix;
 import operations.OBE;
 
 public class Determinan {
