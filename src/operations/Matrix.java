@@ -14,6 +14,7 @@ public class Matrix {
     public Matrix(int rowEff, int colEff) {
         this.rowEff = rowEff;
         this.colEff = colEff;
+        matrix = new double[rowEff][colEff];
     }
 
     /* Konstruktor overloading */

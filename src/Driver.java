@@ -1,30 +1,22 @@
 import operations.Matrix;
-import operations.interpolation;
 import operations.OBE;
+import operations.interpolation;
 import models.Point;
 import java.util.Scanner;
 public class Driver {
-    // interpolation ip = new interpolation();
     public static void main(String[] args) {
-        int i, j, n;
-        Point p = new Point();
-        System.out.print("Masukkan banyak titik: ");
-        Scanner scan = new Scanner(System.in);
-        n = scan.nextInt();
-        Matrix m = new Matrix(n,2);
-        for (i = 0; i < n ; i++){
-            p.readPoint();
-            m.setElmt(p.getX(), i, 0);
-            m.setElmt(p.getY(), i, 1);
-        }
-        m.displayMatrix();
+        int i,j;
+        Matrix m = interpolation.askDataPoint();
         Matrix newm = interpolation.convertPtoM(m);
-        newm.displayMatrix();
-        OBE.obeGauss();
-        // 3
-        // (1,1) 
-        // (2,2) 
-        // (3,3)
-
+        OBE obe = new OBE (newm.getRowEff(), newm.getColEff());
+        for (i = 0; i < newm.getRowEff(); i++){
+            for (j = 0; j < newm.getColEff();j++){
+                obe.setMElmt(newm.getElmt(i,j), i, j);
+            }
+        }
+        obe.gaussAndSolutions();
+        interpolation.displayFunction(obe);
+        System.out.println();
+        System.out.print(interpolation.taksiran(obe,2));
     }
 }

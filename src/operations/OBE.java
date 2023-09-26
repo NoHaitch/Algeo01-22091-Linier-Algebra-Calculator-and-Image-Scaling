@@ -42,7 +42,6 @@ public class OBE {
     public void setMatrixCol(int j){
         Augmented.setColEff(j);
     }
-
     public double getMElmt(int i, int j){
         return Augmented.getElmt(i, j);
     }
