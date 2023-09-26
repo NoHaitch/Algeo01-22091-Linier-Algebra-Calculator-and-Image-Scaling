@@ -2,17 +2,22 @@ package models;
 
 import java.util.Scanner;
 
+/* Class Point */
+/* Membuat objek point */
 public class Point {
     private double x, y;
+
+    /* ---------- KONSTRUKTOR ---------- */
     public Point(){
-        // construct
-        // you can also put default values here
+        /* kosong */
     }
+
     public void readPoint(){
         Scanner sc = new Scanner(System.in);
         System.out.print("Masukkan X dan Y: ");
         String input1 = sc.next();
         String input2 = sc.next();
+        sc.close();
         boolean valid = true;
         try {
             x = Double.parseDouble(input1);
@@ -36,6 +41,7 @@ public class Point {
             }
         }
     }
+
     public void printPoint() {
         /* Print <x,y> without \n */
         System.out.printf("<%f,", x);

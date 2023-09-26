@@ -1,48 +1,106 @@
-// Source code is decompiled from a .class file using FernFlower decompiler.
 package operations;
 
 import java.util.Scanner;
 
+/* Class Matrix */
+/* Membuat objek matrix, serta berisi fungsi-fungsi operasi matriks */
+/* Seperti inverse, transpose serta determinan kofaktor */
+
 public class Matrix {
-    private double[][] matrix = new double[1000][1000];
+    private double[][] matrix;
     private int rowEff;
     private int colEff;
 
-    public Matrix(){
-        this(0,0);
-    }
-
+    /* ---------- KONSTRUKTOR ---------- */
     public Matrix(int rowEff, int colEff) {
-        this.matrix = new double[1000][1000];
+        this.matrix = new double[1000][1000]; 
         this.rowEff = rowEff;
         this.colEff = colEff;
     }
 
+    /* Konstruktor overloading */
+    public Matrix(){
+        /* Kasus Matriks kosong */
+        this(0,0);
+    }
+
+    public Matrix(Matrix matrik){
+        this(0,0);
+        this.copyMatrix(matrik);
+    }
+
+    /* ---------- KELOMPOK Interaksi dengan IO ---------- */
+
+    @Override
+    public String toString() {
+        /* Melakukan Override fungsi untuk mempermudah penunjukan hasil */
+        return "Matrix{row: " + rowEff + ", col: " + getColEff() + "}";
+    }
+
+    public void readMatrix(int row, int col){
+        /* I.S. Matriks terdifinisi dan kosong */
+        /* F.S. Matriks bernilai*/
+        int i,j;
+        double elmt;
+        Scanner scanelmt = new Scanner(System.in);
+        System.out.println("Masukkan elemen matriks :");
+        this.rowEff = row;
+        this.colEff = col;
+        for (i = 0; i < row; i++){
+            for (j = 0; j < col; j++){
+                elmt = scanelmt.nextDouble();
+                this.matrix[i][j] = elmt;
+            }
+            scanelmt.nextLine();
+        }
+    }
+
+    public void displayMatrix() {
+        int i, j;
+        for(i = 0; i < this.getRowEff(); ++i) {
+            for(j = 0; j < this.getColEff(); ++j) {
+                System.out.printf("%-10s",this.createString(i, j, 7));
+                if (j != this.getColEff() - 1) {
+                    System.out.print(" ");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    /* ---------- SELEKTOR ---------- */
     public int getRowEff() {
+        /* Mengembalikan jumlah baris efektif */
         return this.rowEff;
     }
 
     public void setRowEff(int newRow) {
+        /* Mengubah jumlah baris efektif */
         this.rowEff = newRow;
     }
 
     public int getColEff() {
+        /* Mengembalikan jumlah kolom efektif */
         return this.colEff;
     }
 
     public void setColEff(int newCol) {
+        /* Mengubah jumlah kolom efektif */
         this.colEff = newCol;
     }
 
     public double getElmt(int i, int j) {
+        /* Mengembalikan nilai element pada baris i+1 dan kolom j+1 */
         return this.matrix[i][j];
     }
 
     public void setElmt(double val, int i, int j) {
+        /* Mengubah nilai element pada baris i+1 dan kolom j+1 */
         this.matrix[i][j] = val;
     }
 
     public double[] getRow(int i) {
+        /* Mengembalikan isi satu baris matrix */
         double[] temp = new double[1000];
         int j;
         for(j = 0; j < this.getColEff(); j++) {
@@ -52,6 +110,7 @@ public class Matrix {
     }
 
     public void setRow(double[] newRow, int i) {
+        /* Mengubah isi satu baris matrix */
         int j;
         for(j = 0; j < this.getColEff(); ++j) {
             this.setElmt(newRow[j], i, j);
@@ -59,6 +118,7 @@ public class Matrix {
     }
 
     public double[] getCol(int j) {
+        /* Mengembalikan isi satu kolom matrix */
         double[] temp = new double[1000];
         int i;
         for(i = 0; i < this.rowEff; i++) {
@@ -68,39 +128,60 @@ public class Matrix {
     }
 
     public void setCol(double[] newCol, int j) {
+        /* Mmengubah isi satu kolom matrix */
         int i;
         for(i = 0; i < this.rowEff; i++) {
             this.setElmt(newCol[i], i, j);
-        } 
-
+        }
     }
 
+    /* ---------- KELOMPOK TEST ---------- */
     public boolean isSquare() {
+        /* Mengetest matriks adalah matriks persegi */
         return this.getRowEff() == this.getColEff();
     }
 
     public boolean isIdxValid(int i, int j) {
+        /* Mengetest idx matrix adalah valid */
         return i >= 0 && i < 1000 && j >= 0 && j < 1000;
     }
 
     public boolean isIdxEff(int i, int j) {
+        /* Mengetest idx matriks adalah idx effektif */
         return i >= 0 && i < this.getRowEff() && j >= 0 && j < this.getColEff();
     }
 
-    public void displayMatrix() {
-        int i, j;
-        for(i = 0; i < this.getRowEff(); ++i) {
-            for(j = 0; j < this.getColEff(); ++j) {
-                System.out.print(this.getElmt(i, j));
-                if (j != this.getColEff() - 1) {
-                System.out.print(" ");
-                }
+    /* ---------- KELOMPOK Fungsi Utama ---------- */
+    public int countElmt(){
+        /* Mengembalikan jumlah elemen efektif */
+        int i, j, count = 0;
+        for (i = 0; i < this.rowEff; i++){
+            for (j = 0; j < this.colEff; j++){
+                count += 1;
             }
-            System.out.println();
         }
+        return count;
+    }
+
+    public String createString(int i,int j, int length){
+        /* Mengubah angka berlebih menjadi angka dalam bentuk string yang lebih pendek */
+        /* Mirip dengan formatting */
+        double temp = getElmt(i, j);
+        String num = Double.toString(temp);
+        if (num.length() > length){
+            String finalString = "";
+            for (int x = 0; x < length; x++){
+                finalString += num.charAt(x);
+            }
+            return finalString;
+        }
+        return num;
     }
 
     public Matrix minorMatrix(int row, int col) {
+        /* Mengembalikan Matrix minor */
+        /* Matrix minor adalah matrix persegit yang dihilangkan satu baris dan kolom */
+        /* Operasi ini digunakan unutk mencari kofaktor */
         Matrix temp = new Matrix(this.getRowEff() - 1, this.getColEff() - 1);
         int ii = 0;
         int jj = 0;
@@ -121,7 +202,8 @@ public class Matrix {
     }
 
     public double determinant() {
-        // I.S. this.isSquare()
+        // Prekondisi : this.isSquare()
+        // Mengembalikan nilai determinan, menggunakan metode kofaktor
         double temp = 0;
         if (this.getRowEff() == 1) {
             return this.getElmt(0, 0);
@@ -136,6 +218,8 @@ public class Matrix {
     }
 
     public void copyMatrix(Matrix input){
+        /* I.S. Matrix terdefinisi */
+        /* F.S. Matrix input berisi salinan isi Matrix */
         int i, j;
         for (i = 0; i < input.getRowEff(); i++){
             for (j = 0; j < input.getColEff(); j++){
@@ -147,7 +231,8 @@ public class Matrix {
     }
 
     public void transposeMatrix(){
-        // I.S. this.isSquare()
+        /* I.S. this.isSquare() */
+        /* F.S. Matriks berhasil ditranspose */
         int i, j;
         for (i = 0; i < getRowEff()-1; i++){
             for (j = i+1; j < getColEff(); j++){
@@ -159,6 +244,8 @@ public class Matrix {
     }
 
     public Matrix rTransposeMatrix(){
+        /* Prekondisi : this.isSquare() */
+        /* Mengembalikan Matriks hasil transpose */
         Matrix temp = new Matrix(this.getColEff(), this.getRowEff());
         int i, j;
         for (i = 0; i < this.getRowEff(); i++){
@@ -170,6 +257,8 @@ public class Matrix {
     }
 
     public void multiplyMatrixByConst(double k){
+        /* I.S. Matriks terdefinisi */
+        /* F.S. Setiap elemen matriks dikalikan dengan k */
         int i, j;
         for (i = 0; i < getRowEff(); i++){
             for (j = 0; j < getColEff(); j++){
@@ -179,7 +268,8 @@ public class Matrix {
     }
 
     public Matrix kofaktorMatrix(){
-        // I.S. this.isSquare()
+        /* Prekondisi : this.isSquare() */
+        /* Mengembalikan Matriks kofaktor */
         Matrix temp = new Matrix(this.getRowEff(), this.getColEff());
         int i, j, sign;
         for(i = 0; i < this.getRowEff(); i++){
@@ -192,6 +282,7 @@ public class Matrix {
     }
 
     public Matrix inversMatrix(){
+        /* Mengembalikan Matriks inverse */
         Matrix invers = new Matrix();
         invers.copyMatrix(this.kofaktorMatrix());
         double det = 1/this.determinant();
@@ -217,25 +308,8 @@ public class Matrix {
         return result;
     }
 
-    public String toString() {
-        return "Matrix{row: " + rowEff + ", col: " + getColEff() + "}";
-    }
-    public void readMatrix(int row, int col){
-        int i,j;
-        double elmt;
-        Scanner scanelmt = new Scanner(System.in);
-        System.out.println("Masukkan elemen matriks :");
-        this.rowEff = row;
-        this.colEff = col;
-        for (i = 0; i < row; i++){
-            for (j = 0; j < col; j++){
-                elmt = scanelmt.nextDouble();
-                this.matrix[i][j] = elmt;                
-            }
-        }
-    }
-
     public void multiplyByConst(int x){
+        /* I.S. */
         int i,j;
         for (i = 0; i < this.rowEff; i++){
             for (j = 0; j < this.colEff; j++){
@@ -243,14 +317,4 @@ public class Matrix {
             }
         }
     }
-    
-    public int countElmt(){
-        int i, j, count = 0;
-        for (i = 0; i < this.rowEff; i++){
-            for (j = 0; j < this.colEff; j++){
-                count += 1;
-            }
-        }
-        return count;
-    }
-} 
+}
