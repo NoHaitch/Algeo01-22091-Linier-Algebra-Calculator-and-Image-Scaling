@@ -1,7 +1,4 @@
-import interfacec.MenuMain;
-import operations.*;
-
-import java.util.Scanner;
+import interfaces.MenuMain;
 
 public class Main {
     public static void main(String[] args) {

@@ -5,6 +5,7 @@ import java.util.Scanner;
 /* Class Matrix */
 /* Membuat objek matrix, serta berisi fungsi-fungsi operasi matriks */
 /* Seperti inverse, transpose serta determinan kofaktor */
+
 public class Matrix {
     private double[][] matrix;
     private int rowEff;
@@ -30,11 +31,12 @@ public class Matrix {
 
     /* ---------- KELOMPOK Interaksi dengan IO ---------- */
 
-    /* Melakukan Override fungsi untuk mempermudah penunjukan hasil */
     @Override
     public String toString() {
+        /* Melakukan Override fungsi untuk mempermudah penunjukan hasil */
         return "Matrix{row: " + rowEff + ", col: " + getColEff() + "}";
     }
+
     public void readMatrix(int row, int col){
         /* I.S. Matriks terdifinisi dan kosong */
         /* F.S. Matriks bernilai*/
@@ -52,6 +54,7 @@ public class Matrix {
             scanelmt.nextLine();
         }
     }
+
     public void displayMatrix() {
         int i, j;
         for(i = 0; i < this.getRowEff(); ++i) {
@@ -148,7 +151,7 @@ public class Matrix {
         return i >= 0 && i < this.getRowEff() && j >= 0 && j < this.getColEff();
     }
 
-    /* ---------- KELOMPOK Operasi ---------- */
+    /* ---------- KELOMPOK Fungsi Utama ---------- */
     public int countElmt(){
         /* Mengembalikan jumlah elemen efektif */
         int i, j, count = 0;
@@ -277,6 +280,7 @@ public class Matrix {
         }
         return temp;
     }
+
     public Matrix inversMatrix(){
         /* Mengembalikan Matriks inverse */
         Matrix invers = new Matrix();

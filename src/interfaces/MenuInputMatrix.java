@@ -1,25 +1,24 @@
-package interfacec;
+package interfaces;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
-public class MenuSPL extends JFrame{
+public class MenuInputMatrix extends JFrame{
     private JPanel mainPanel;
-    private JLabel mainLabel;
-    private JButton GaussButton;
-    private JButton GaussJordanButton;
-    private JButton MBallikanButton;
-    private JButton KramerButton;
+    private JButton ketikButton;
+    private JButton fileButton;
     private JButton kembaliButton;
+    private JLabel mainLabel;
 
-    public MenuSPL() {
+    public MenuInputMatrix(String lastMenu){
         setContentPane(mainPanel);
-        setTitle("Menu SPL");
+        setTitle("Main Application");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
-        setSize(500, 420);
+        setSize(400, 240);
         setVisible(true);
 
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -30,14 +29,23 @@ public class MenuSPL extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                MenuMain menu = new MenuMain();
+                if(Objects.equals(lastMenu, "SPL")){
+                    MenuSPL menu = new MenuSPL();
+                }
             }
         });
-        GaussButton.addActionListener(new ActionListener() {
+        ketikButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                MenuInputMatrix menuInput = new MenuInputMatrix("SPL");
+                MenuInputKetikMatrix menuInputKetik = new MenuInputKetikMatrix(lastMenu);
+            }
+        });
+        fileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                MenuInputFile menuInputFile = new MenuInputFile(lastMenu);
             }
         });
     }
