@@ -7,7 +7,7 @@ import java.util.Scanner;
 /* Seperti inverse, transpose serta determinan kofaktor */
 
 public class Matrix {
-    private double[][] matrix = new double[1000][1000];
+    private double[][] matrix;
     private int rowEff;
     private int colEff;
 
