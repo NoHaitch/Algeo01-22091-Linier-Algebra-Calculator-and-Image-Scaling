@@ -11,15 +11,14 @@ public class Driver {
         //    }
         //}
         x.inputMatriksText();
-        double det = x.determinanKofaktor();
+        //double det = x.determinanKofaktor();
         x.CalculateOBE();
-        x.saveToTextFile("test/DeterminanDuluGan.txt");
+        x.saveToTextFile("test/Determinan.txt");
         System.out.println(x.contents.getStep());
         System.out.println(x.result+"\n");
         for (int i = 0; i < x.countMul; i++){
             System.out.println(x.multiply[i]);
         }
-        System.out.println("\n"+det);
+        //System.out.println("\n"+det);
     }
-
 }

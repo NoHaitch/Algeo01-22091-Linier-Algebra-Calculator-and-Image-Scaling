@@ -109,8 +109,8 @@ public class Determinan {
         return contents.getMatrixCol();
     }
 
-    public void refreshIMain(){
-        for (int i = 0; i < contents.getMatrixRow(); i++){
+    public void refreshIMain(int start){
+        for (int i = start; i < contents.getMatrixRow(); i++){
             findIMain(i);
         }
     }
@@ -162,15 +162,57 @@ public class Determinan {
                 }
             }
         }
-        return true;
+        return false;
+    }
+
+    public void makeOneRow(int row){
+        int iMain = findIMain(row);
+        if (iMain < contents.getMatrixCol()){
+            double val = contents.getMElmt(row, iMain);
+            if (val != 1){
+                contents.addMkOnetoStep(row, val);
+                multiply[countMul] = 1/val;
+                countMul ++;
+                for (int i = iMain; i < contents.getMatrixCol(); i++){
+                    double temp = contents.getMElmt(row, i)/val;
+                    if (temp == -0.0){
+                        temp = 0.0;
+                    }
+                    contents.setMElmt(temp, row, i);
+                }
+            }
+        }
+    }
+
+    public void makeOneAny(int start){
+        for (int i = start; i < contents.getMatrixRow(); i++){
+            int iMain = findIMain(i);
+            if (iMain < contents.getMatrixCol()){
+                double val = contents.getMElmt(i, iMain);
+                if (val != 1){
+                    contents.addMkOnetoStep(i, val);
+                    multiply[countMul] = 1/val;
+                    countMul++;
+                    for (int j = iMain; j < contents.getMatrixCol(); j++){
+                        double temp = contents.getMElmt(i, j)/val;
+                        if (temp == -0.0){
+                            temp = 0.0;
+                        }
+                        contents.setMElmt(temp, i, j);
+                    }
+                }
+            }
+        }
     }
 
     public void CalculateOBE(){
         contents.addTitleStep();
         contents.addAugmentedToStep(7);
         boolean swapped = false;
-        contents.refreshIdxMain(0);
-        contents.sortIdxMain(0, swapped);
+        refreshIMain(0);
+        sortIMain(0, swapped);
+        makeOneRow(0);
+        contents.addAugmentedToStep(7);
         swapped = false;
         int pass = 1;
         boolean lanjut = isLanjut();
@@ -187,8 +229,10 @@ public class Determinan {
                 }
             }
             contents.addAugmentedToStep(7);
-            refreshIMain();
+            refreshIMain(pass);
             sortIMain(pass, swapped);
+            makeOneAny(pass);
+            contents.addAugmentedToStep(7);
             pass++;
             lanjut = isLanjut();
         }
