@@ -5,7 +5,7 @@ public class Parameter {
     double number = 0f;
     double[] var = new double[1000];
     boolean terisi = false;
-    char symbol = (char)966; // 181
+    char symbol = (char) 181; // 181
 
     public Parameter(){
     }
@@ -39,14 +39,14 @@ public class Parameter {
                 int val = (int) var[i];
                 if (val == var[i]){
                     if (val == 1){
-                        temp += "X"+(i+1) + " ";
+                        temp += symbol+Integer.toString(i+1) + " ";
                     } else if (val == -1){
-                        temp += "-X"+(i+1)+" ";
+                        temp += "-"+symbol+Integer.toString(i+1)+" ";
                     } else {
                         if (val < 0 || temp == ""){
-                            temp += val+"X"+(i+1)+" ";
+                            temp += Integer.toString(val)+symbol+Integer.toString(i+1)+" ";
                         } else {
-                            temp += "+ "+val+"X"+(i+1)+" ";
+                            temp += "+ "+Integer.toString(val)+symbol+Integer.toString(i+1)+" ";
                         }
                     }
                 } else {
@@ -57,12 +57,12 @@ public class Parameter {
                     for (int j = 0; j < 9; j++){
                         temp += str.charAt(j);
                     }
-                    temp += "X"+(i+1)+" ";
+                    temp += symbol+Integer.toString(i+1)+" ";
                 }
             }
         }
         return temp;
-        //return "X"+first+" ";
+        //return symbol+first+" ";
     }
 
     public boolean isTerisi(){
