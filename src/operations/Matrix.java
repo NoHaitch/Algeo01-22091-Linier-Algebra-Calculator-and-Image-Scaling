@@ -6,7 +6,7 @@ import java.util.Scanner;
 /* Membuat objek matrix, serta berisi fungsi-fungsi operasi matriks */
 /* Seperti inverse, transpose serta determinan kofaktor */
 public class Matrix {
-    private double[][] matrix = new double[1000][1000];
+    private double[][] matrix;
     private int rowEff;
     private int colEff;
 
