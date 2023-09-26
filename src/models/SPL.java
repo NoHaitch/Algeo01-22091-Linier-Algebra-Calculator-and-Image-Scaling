@@ -21,8 +21,9 @@ public class SPL {
         return new OBE(this.spl);
     }
 
+    //getInput from Text file
     public void inputSPLText(){
-        String path;
+        String path; 
         Scanner input = new Scanner (System.in);
         System.out.print("Masukkan source file: ");
         path = input.nextLine();
@@ -55,6 +56,8 @@ public class SPL {
         input.close();
     }
 
+
+    //Save the proccesses to Text file
     public void saveToTextFile(String path){
         String fPath = "";
         int i = 0;
