@@ -1,5 +1,6 @@
 import operations.Matrix;
 import operations.interpolation;
+import operations.OBE;
 import models.Point;
 import java.util.Scanner;
 public class Driver {
@@ -19,6 +20,7 @@ public class Driver {
         m.displayMatrix();
         Matrix newm = interpolation.convertPtoM(m);
         newm.displayMatrix();
+        OBE.obeGauss();
         // 3
         // (1,1) 
         // (2,2) 

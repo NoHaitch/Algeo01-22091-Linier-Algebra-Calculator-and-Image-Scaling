@@ -1,29 +1,26 @@
+import interfacec.MenuMain;
 import operations.*;
+
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        // menu
-        Matrix M = new Matrix(4,4);
-        for(int i = 0; i<4;i++){
-            for(int j=0; j<4; j++){
-                M.setElmt(2,i,j);
-            }
-        }
-        M.setElmt(5,3,3);
-        M.setElmt(0,3,0);
-        M.setElmt(0,3,1);
-        M.setElmt(0,3,2);
-        M.setElmt(0,3,3);
-        M.setElmt(0,0,0);
-        M.setElmt(0,0,1);
-        M.setElmt(0,1,0);
-        M.displayMatrix();
-        OBE MOBE = new OBE(M);
-        MOBE.displayIndeksUtama();
-        MOBE.displayMatrix();
-        MOBE.sortMatriksOBE();
-        MOBE.displayIndeksUtama();
-        MOBE.displayMatrix();
-        System.out.println(MOBE.cekBersolusi());
+        MenuMain GUI = new MenuMain();
     }
+
 }
+
+/*
+2 3 -1 5
+4 4 -3 3
+-2 3 -1 1
+
+1 3 -2 0 2 0 0
+2 6 -5 -2 4 -3 -1
+0 0 5 10 0 15 5
+2 6 0 8 4 18 6
+
+0 0 0 1
+1 2 3 4
+4 5 9 1
+*/
