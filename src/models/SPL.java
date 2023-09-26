@@ -13,6 +13,7 @@ public class SPL {
     public SPL(){
         this(0,0);
     }
+
     public SPL(int row, int col){
         this.spl = new OBE(row, col);
     }

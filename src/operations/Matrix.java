@@ -24,9 +24,9 @@ public class Matrix {
         this(0,0);
     }
 
-    public Matrix(Matrix matrik){
+    public Matrix(Matrix matrix){
         this(0,0);
-        this.copyMatrix(matrik);
+        this.copyMatrix(matrix);
     }
 
     /* ---------- KELOMPOK Interaksi dengan IO ---------- */
@@ -308,6 +308,7 @@ public class Matrix {
         return result;
     }
 
+    // udah ada multiplyMatrixByConst di atas kiw bisa diganti
     public void multiplyByConst(int x){
         /* I.S. */
         int i,j;

@@ -54,7 +54,7 @@ public class OBE extends Matrix{
         int panjang = temp.length();
         if (panjang < length){
             for (int x = 0; x < length-panjang; x++){
-                temp = " "+temp;
+                temp = " " + temp;
             }
         }
         temp += " ";
@@ -146,14 +146,22 @@ public class OBE extends Matrix{
     public String getStep(){
         return new String(stepByStep);
     }
-    public void addStringToStep(String add){
-        stepByStep += add;
-    }
 
     public boolean getNoSolusi(){
         return noSolusi;
     }
 
+    public boolean getSolusiUnik(){
+        return solusiUnik;
+    }
+
+    public void setSolusi(){
+        for (int i = 0; i < getMatrixRow(); i++){
+            setSolutions(getMElmt(i, getMatrixCol()-1),i);
+        }
+    }
+
+    /* ----------- KELOMPOK Operasi Penerus dari Matriks Augmented ----------- */
     public boolean isSquare(){
         return Augmented.isSquare();
     }
@@ -194,16 +202,6 @@ public class OBE extends Matrix{
         return Augmented.multiplyMatrix(m);
     }
 
-    public boolean getSolusiUnik(){
-        return solusiUnik;
-    }
-
-    public void setSolusi(){
-        for (int i = 0; i < getMatrixRow(); i++){
-            setSolutions(getMElmt(i, getMatrixCol()-1),i);
-        }
-    }
-
     /* ---------- KELOMPOK TEST ---------- */
     public boolean isContinue(){
         /* Mengetest apakah operasi OBE perlu dilanjutkan atau tidak */
@@ -237,7 +235,6 @@ public class OBE extends Matrix{
         }
         addNewLineToStep();
     }
-
     public void addSubstractToStep(int row1, int row2, double left, double right){
         String temp = ">>> ";
         String leftt = Double.toString(left);
@@ -293,6 +290,10 @@ public class OBE extends Matrix{
 
         }
         stepByStep += temp + "\n";
+    }
+
+    public void addStringToStep(String add){
+        stepByStep += add;
     }
 
     public void addNewLineToStep(){

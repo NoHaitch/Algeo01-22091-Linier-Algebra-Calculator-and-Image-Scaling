@@ -35,7 +35,7 @@ public class Determinan {
         }
     }
 
-    public void inputMatriksText(){
+    public void inputMatriksFile(){
         String path; 
         Scanner input = new Scanner (System.in);
         System.out.print("Masukkan source file: ");

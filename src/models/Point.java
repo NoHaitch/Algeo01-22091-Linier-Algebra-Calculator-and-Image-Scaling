@@ -64,6 +64,7 @@ public class Point {
         this.y = y;
     }
 
+    /* ---------- KELOMPOK TEST ---------- */
     public  boolean isOrigin(){
         return (x == 0 && y == 0);
     }
