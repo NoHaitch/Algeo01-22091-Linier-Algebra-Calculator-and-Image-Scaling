@@ -6,7 +6,7 @@ import java.lang.Math;
 /*  Membuat objek OBE, yang digunakan untuk melakukan OBE */
 /*  dengan metode Gauss atau Gauss-Jordan */
 
-public class OBE{
+public class OBE {
     private Matrix Augmented;
     private int[] indexMain = new int[1000];
     private double[] solusi = new double[1000];
@@ -40,6 +40,12 @@ public class OBE{
         this.noSolusi = newOBE.noSolusi;
         this.stepByStep = new String(newOBE.stepByStep);
     }
+
+    public Matrix getCopyAugmented(){
+        return new Matrix(Augmented);
+    }
+
+    
 
     /* ----------- KELOMPOK Interaksi dengan IO ----------- */
     @Override
@@ -397,27 +403,31 @@ public class OBE{
         addSubstractToStep(row1, row2, mainVal, tempVal);
         for (int i = idx; i < getMatrixCol(); i++){
             if (mainVal == tempVal){
-                if(i == idx){
-                    //System.out.printf("   R%d - R%d\n\n", row1+1, row2+1);
+                double temp = getMElmt(row1, i)-getMElmt(row2, i);
+                if (temp == -0.0){
+                    temp = 0.0;
                 }
-                setMElmt(getMElmt(row1, i)-getMElmt(row2, i), row1, i);
+                setMElmt(temp, row1, i);
             } else if (mainVal%tempVal == 0){
                 double mul = mainVal/tempVal;
-                if(i == idx){
-                    //System.out.printf("   %dR%d - R%d\n\n",(int)mul,row1+1,row2+1);
+                double temp = getMElmt(row1, i)*mul-getMElmt(row2, i);
+                if (temp == -0.0){
+                    temp = 0.0;
                 }
-                setMElmt(getMElmt(row1, i)*mul-getMElmt(row2, i), row1, i);
+                setMElmt(temp, row1, i);
             } else if (tempVal%mainVal == 0){
                 double mul = tempVal/mainVal;
-                if(i == idx){
-                    //System.out.printf("   R%d - (%d)R%d\n\n", row1+1,(int)mul, row2+1);
+                double temp = getMElmt(row1, i)-getMElmt(row2, i)*mul;
+                if (temp == -0.0){
+                    temp = 0.0;
                 }
-                setMElmt(getMElmt(row1, i)-getMElmt(row2, i)*mul, row1, i);
+                setMElmt(temp, row1, i);
             } else {
-                if(i == idx){
-                    //System.out.printf("   %.3fR%d - (%.3f)R%d\n\n", mainVal,row1+1,tempVal, row2+1);
+                double temp = getMElmt(row1, i)*mainVal-getMElmt(row2, i)*tempVal;
+                if (temp == -0.0){
+                    temp = 0.0;
                 }
-                setMElmt(getMElmt(row1, i)*mainVal-getMElmt(row2, i)*tempVal, row1, i);
+                setMElmt(temp, row1, i);
             }
         }
         //printAugmented();
@@ -475,7 +485,11 @@ public class OBE{
                     addMkOnetoStep(i, valMain);
                     //System.out.printf("   R%d/%.3f\n\n", i+1, valMain);
                     for (int j = iMain; j < getMatrixCol(); j++){
-                        setMElmt(getMElmt(i, j)/valMain, i, j);
+                        double temp = getMElmt(i, j)/valMain;
+                        if (temp == -0.0){
+                            temp = 0.0;
+                        }
+                        setMElmt(temp, i, j);
                     }
                 }
             }
@@ -557,20 +571,32 @@ public class OBE{
             addSubstractToStep(row1, row2, rightVal, leftVal);
         }
         if (leftVal == rightVal){
-            System.out.printf("   R%d - R%d\n\n",row1+1,row2+1);
+            //System.out.printf("   R%d - R%d\n\n",row1+1,row2+1);
             for (int i = idx; i < getMatrixCol(); i++){
-                setMElmt(getMElmt(row1, i)-getMElmt(row2, i), row1, i);
+                double temp = getMElmt(row1, i)-getMElmt(row2, i);
+                if (temp == -0.0){
+                    temp = 0.0;
+                }
+                setMElmt(temp, row1, i);
             }
         } else if(leftVal%rightVal == 0){
             double mul = leftVal/rightVal;
-            System.out.printf("   R%d - (%d)R%d\n\n",row1+1,(int)mul,row2+1);
+            //System.out.printf("   R%d - (%d)R%d\n\n",row1+1,(int)mul,row2+1);
             for (int i = idx; i < getMatrixCol(); i++){
-                setMElmt(getMElmt(row1, i)-getMElmt(row2, i)*mul, row1, i);
+                double temp = getMElmt(row1, i)-getMElmt(row2, i)*mul;
+                    if (temp == -0.0){
+                        temp = 0.0;
+                    }
+                setMElmt(temp, row1, i);
             }
         } else {
-            System.out.printf("   %.3fR%d - (%.3f)R%d\n\n",rightVal,row1+1,leftVal,row2+1);
+            //System.out.printf("   %.3fR%d - (%.3f)R%d\n\n",rightVal,row1+1,leftVal,row2+1);
             for (int i = idx; i <getMatrixCol(); i++){
-                setMElmt(getMElmt(row1, i)*rightVal-getMElmt(row2, i)*leftVal, row1, i);
+                double temp = getMElmt(row1, i)*rightVal-getMElmt(row2, i)*leftVal;
+                    if (temp == -0.0){
+                        temp = 0.0;
+                    }
+                setMElmt(temp, row1, i);
             }
         }
         //printAugmented();

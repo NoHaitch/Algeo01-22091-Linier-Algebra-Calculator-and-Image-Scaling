@@ -263,7 +263,11 @@ public class Matrix {
         int i, j;
         for (i = 0; i < getRowEff(); i++){
             for (j = 0; j < getColEff(); j++){
-                setElmt(getElmt(i, j)*k, i, j);
+                double temp = getElmt(i, j)*k;
+                if (temp == -0.0){
+                    temp = 0.0;
+                }
+                setElmt(temp, i, j);
             }
         }
     }
@@ -302,6 +306,9 @@ public class Matrix {
                 temp = 0;
                 for (k = 0; k < m.getRowEff(); k++){
                     temp = temp + this.getElmt(i, k)*m.getElmt(k, j);
+                }
+                if (temp == -0.0){
+                    temp = 0.0;
                 }
                 result.setElmt(temp, i, j);
             }
