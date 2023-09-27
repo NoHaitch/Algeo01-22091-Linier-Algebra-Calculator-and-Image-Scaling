@@ -12,6 +12,7 @@ public class Driver2 {
         //    f = bic.getFValueOf(temp[0], temp[1]);
         //}
         f = bic.getRequestAnswer();
+        bic.saveProccessesToText("test/firstBicubicTest.txt");
         System.out.println(bic.function);
     }
 }

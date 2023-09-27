@@ -2,6 +2,7 @@ package models;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.util.Scanner;
 
 import operations.Matrix;
@@ -152,6 +153,34 @@ public class BicubicSpline {
             readFile.close();
         } catch (FileNotFoundException e){
             System.out.println("An error occurred.");
+            e.printStackTrace();
+            // TODO: handle exception
+        }
+    }
+
+    public void saveProccessesToText(String path){
+        String fPath = "";
+        int i = 0;
+        while (path.charAt(i) != '.'){
+            fPath += path.charAt(i);
+            i++;
+        }
+        String add = "";
+        int idx = 0;
+        File testFile = new File(fPath+".txt");
+        while (testFile.exists()){
+            idx ++;
+            add = "("+idx+")";
+            testFile = new File(fPath+add+".txt");
+        }
+        fPath += add + ".txt";
+        try {
+            FileWriter writer = new FileWriter(fPath);
+            writer.write(function);
+            writer.close();
+            System.out.println("\nPenyelesaian berhasil disimpan ke :"+fPath+"\n\n");
+        } catch (Exception e) {
+            System.out.println("An error occurred\n");
             e.printStackTrace();
             // TODO: handle exception
         }
