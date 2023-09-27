@@ -1,24 +1,25 @@
-package interfaces;
+package interfacec;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Objects;
 
-public class MenuInputMatrix extends JFrame{
+public class MenuSPL extends JFrame{
     private JPanel mainPanel;
-    private JButton ketikButton;
-    private JButton fileButton;
-    private JButton kembaliButton;
     private JLabel mainLabel;
+    private JButton GaussButton;
+    private JButton GaussJordanButton;
+    private JButton MBallikanButton;
+    private JButton KramerButton;
+    private JButton kembaliButton;
 
-    public MenuInputMatrix(String lastMenu){
+    public MenuSPL() {
         setContentPane(mainPanel);
-        setTitle("Main Application");
+        setTitle("Menu SPL");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
-        setSize(400, 240);
+        setSize(500, 420);
         setVisible(true);
 
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -29,23 +30,14 @@ public class MenuInputMatrix extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                if(Objects.equals(lastMenu, "SPL")){
-                    MenuSPL menu = new MenuSPL();
-                }
+                MenuMain menu = new MenuMain();
             }
         });
-        ketikButton.addActionListener(new ActionListener() {
+        GaussButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                MenuInputKetikMatrix menuInputKetik = new MenuInputKetikMatrix(lastMenu);
-            }
-        });
-        fileButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                MenuInputFile menuInputFile = new MenuInputFile(lastMenu);
+                MenuInputMatrix menuInput = new MenuInputMatrix("SPL");
             }
         });
     }

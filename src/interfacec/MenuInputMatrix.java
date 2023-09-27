@@ -1,50 +1,45 @@
-package interfaces;
+package interfacec;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
-public class MenuMain extends JFrame{
-    private JButton interpolasiPolinomButton;
-    private JButton splButton;
-    private JButton balikanButton;
-    private JButton determinanButton;
-    private JButton interpolasiBicubicButton;
-    private JButton regresiLinierButton;
-    private JButton keluarButton;
+public class MenuInputMatrix extends JFrame{
     private JPanel mainPanel;
-    private JPanel IdentityPanel;
-    private JLabel IdentityLabel;
-    private JLabel MainLabel;
+    private JButton ketikButton;
+    private JButton fileButton;
+    private JButton kembaliButton;
+    private JLabel mainLabel;
 
-    public MenuMain() {
+    public MenuInputMatrix(String lastMenu){
         setContentPane(mainPanel);
         setTitle("Main Application");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
-        setSize(500, 520);
+        setSize(400, 240);
         setVisible(true);
 
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) ((dimension.getWidth() - getWidth()) / 2);
         int y = (int) ((dimension.getHeight() - getHeight()) / 2);
         setLocation(x, y);
-        keluarButton.addActionListener(new ActionListener() {
+        kembaliButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
+                if(Objects.equals(lastMenu, "SPL")){
+                    MenuSPL menu = new MenuSPL();
+                }
             }
         });
-        splButton.addActionListener(new ActionListener() {
+        ketikButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                MenuSPL menu = new MenuSPL();
+                MenuInputKetikMatrix menuInputKetik = new MenuInputKetikMatrix(lastMenu);
             }
         });
-    }
-    public static void main(String[] args) {
-        MenuMain myFrame = new MenuMain();
     }
 }
