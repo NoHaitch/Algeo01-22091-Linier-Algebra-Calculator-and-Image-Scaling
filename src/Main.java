@@ -15,13 +15,13 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        println("\n***** =============== APLIKASI MULAI =============== *****");
+        println("\n***** ==================== APLIKASI MULAI ==================== *****");
         println("==== Selamat Datang pada Aplikasi Perhitungan Matriks ====");
         Scanner scanner = new Scanner(System.in);
         boolean program = true;
         while(program) {
             println("");
-            println("   ===== Menu =====");
+            println("   =============== MENU UTAMA =============== ");
             println("1. Sistem Persamaaan Linier");
             println("2. Determinan");
             println("3. Matriks balikan");
@@ -37,7 +37,7 @@ public class Main {
                     case 2:
                         boolean isDeterminanMenu = true;
                         while(isDeterminanMenu){
-                            println("   ===== Pilih Metode Determinan =====");
+                            println("\n   ========== Pilih Metode Determinan ========== ");
                             println("1. Metode Ekspansi Kofaktor");
                             println("2. Metode Reduksi Baris dengan OBE");
                             println("3. Kembali");
@@ -47,9 +47,8 @@ public class Main {
                                 switch (opsiMenuDeterminan){
                                     case 1:
                                         boolean isInputMenu = true;
-                                        Determinan determinan = new Determinan();
                                         while(isInputMenu) {
-                                            println("   ===== Pilih Metode Masukkan =====");
+                                            println("\n   ===== Pilih Metode Masukkan =====");
                                             println("1. Masukkan Ketik");
                                             println("2. Masukkan dalam bentuk File");
                                             println("3. Kembali");
@@ -60,7 +59,7 @@ public class Main {
                                                     case 1:
                                                         boolean isInputUkuranValid = true;
                                                         while(isInputUkuranValid) {
-                                                            println(" === Metode Ketik === ");
+                                                            println("\n ===== Metode Ketik ===== ");
                                                             println("Ketik -1 untuk kembali ");
                                                             try {
                                                                 print(" >>> Masukkan Jumlah Baris : ");
@@ -81,6 +80,10 @@ public class Main {
                                                                         println("Ukuran Matriks tidak bisa 0");
                                                                     }
                                                                     else if(row == col){
+                                                                        Determinan determinan = new Determinan();
+                                                                        Matrix matrix = new Matrix();
+                                                                        determinan.contents.setMatrixRow(row);
+                                                                        determinan.contents.setMatrixCol(col);
                                                                         /* Baca Isi Matrix */
                                                                         boolean isInputMatrixValid = true;
                                                                         int i = 0;
@@ -89,7 +92,8 @@ public class Main {
                                                                             while(j < col && isInputMatrixValid) {
                                                                                 try {
                                                                                     double elmt = scanner.nextDouble();
-                                                                                    determinan.contents.setElmt(elmt,i,j);
+                                                                                    determinan.contents.setMElmt(elmt,i,j);
+                                                                                    println("" + determinan.contents.getMElmt(i,j));
                                                                                 } catch (Exception InputMismatchException) {
                                                                                     println("Isi Matrix salah. Pastikan isi matriks adalah angka desimal");
                                                                                     isInputMatrixValid = false;
@@ -98,9 +102,8 @@ public class Main {
                                                                             }
                                                                             i++;
                                                                         }
+                                                                        scanner.nextLine();
                                                                         if(isInputMatrixValid) {
-                                                                            determinan.contents.setRowEff(row);
-                                                                            determinan.contents.setColEff(col);
                                                                             println(" ================== HASIL ================== ");
                                                                             println("   Determinan = " + determinan.determinanKofaktor());
                                                                             isInputUkuranValid = false;
@@ -118,6 +121,7 @@ public class Main {
                                                         }
                                                         break;
                                                     case 2:
+                                                        Determinan determinan = new Determinan();
                                                         boolean inputValid = false;
                                                         while(!inputValid) {
                                                             println("Ketik 0 untuk kembali");
