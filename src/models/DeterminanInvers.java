@@ -9,6 +9,7 @@ import operations.Matrix;
 import operations.OBE;
 
 public class DeterminanInvers {
+    //public static Matrix xInvers;
     public OBE contents;
     public boolean isDetZero = false;
     public int sign = 1;
