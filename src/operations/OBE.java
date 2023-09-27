@@ -623,8 +623,15 @@ public class OBE {
             roundAllElement();
             setSolusi();
             addAugmentedToStep(9);
+            setSolusi();
+            //addAugmentedToStep(9);
+            addSolutionToStep();
         } else {
             addGaussJordanRejected();
+            setParameterSolutions();
+            roundAllElement();
+            addAugmentedToStep(9);
+            addParameterToStep();
             //System.out.println("\nTidak dapat dilakukan metode Gauss-Jordan.\nKarena solusi tidak unik.\n");
         }
     }
