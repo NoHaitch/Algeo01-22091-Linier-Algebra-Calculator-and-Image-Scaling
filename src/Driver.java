@@ -1,26 +1,27 @@
 //import operations.OBE;
-import models.DeterminanInvers;
+import models.BicubicSpline;
+import models.SPL;
 
 public class Driver {
     public static void main(String[] args) {
-        DeterminanInvers x = new DeterminanInvers(3,3);
-        //double [][] mtr = new double[][]{{1,2,1},{1,2,1},{1,2,3}};
-        //for (int i = 0; i < 3; i++){
-        //    for (int j = 0; j < 3; j++){
-        //        //x.contents.setMElmt(mtr[i][j],i,j);
-        //    }
-        //}
-        x.addIndentity();
-        x.contents.addAugmentedToStep(1);
-        System.out.println(x.contents.getStep());
-        //double det = x.determinanKofaktor();
-        //x.CalculateOBE();
-        //x.saveToTextFile("test/NewOne.txt");
-        //System.out.println(x.contents.getStep());
-        //System.out.println(x.result+"\n");
-        //for (int i = 0; i < x.countMul; i++){
-        //    System.out.println(x.multiply[i]);
-        //}
-        //System.out.println("\n"+det);
+        BicubicSpline.setStaticInvX();
+        SPL temp = new SPL();
+        temp.inputSPLText("test/testCase.txt");
+        boolean isDiff = false;
+        for (int i = 0; i < 16; i++){
+            for (int j = 0; j < 16; j++){
+                if (BicubicSpline.invX.getElmt(i, j) != temp.spl.getMElmt(i,j)){
+                    isDiff = true;
+                }
+            }
+        }
+        System.out.println(isDiff);
+
+        //BicubicSpline.invX.displayMatrix();
+        //DeterminanInvers temp = new DeterminanInvers();
+        //temp.contents.setAugmented(BicubicSpline.invX);
+        //temp.contents.addAugmentedToStep(4);
+        //temp.saveToTextFile("test/testCase.txt");
+        //System.out.println(temp.contents.getStep());
     }
 }

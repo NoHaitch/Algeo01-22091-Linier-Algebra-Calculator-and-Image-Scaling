@@ -27,11 +27,11 @@ public class SPL {
     }
 
     //getInput from Text file
-    public void inputSPLText(){
-        String path; 
-        Scanner input = new Scanner (System.in);
-        System.out.print("Masukkan source file: ");
-        path = input.nextLine();
+    public void inputSPLText(String path){
+        //String path; 
+        //Scanner input = new Scanner (System.in);
+        //System.out.print("Masukkan source file: ");
+        //path = input.nextLine();
         try {
             File inputFile = new File(path);
             Scanner readFile = new Scanner(inputFile);
@@ -58,7 +58,7 @@ public class SPL {
             e.printStackTrace();
             // TODO: handle exception
         }
-        input.close();
+        //input.close();
     }
 
 

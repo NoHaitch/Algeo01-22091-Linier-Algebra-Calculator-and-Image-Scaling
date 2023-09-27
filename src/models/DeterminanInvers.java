@@ -37,10 +37,7 @@ public class DeterminanInvers {
         }
     }
 
-    public boolean inputMatriksFile(String path){
-        Scanner input = new Scanner (System.in);
-        System.out.print("Masukkan source file: ");
-        boolean valid = false;
+    public void inputMatriksFile(String path){
         try {
             File inputFile = new File(path);
             Scanner readFile = new Scanner(inputFile);
@@ -61,15 +58,12 @@ public class DeterminanInvers {
             }
             contents.setMatrixRow(row);
             contents.setMatrixCol(column);
-            valid = true;
             readFile.close();
         } catch (FileNotFoundException e){
             System.out.println("An error occurred.");
             e.printStackTrace();
             // TODO: handle exception
         }
-        input.close();
-        return valid;
     }
 
     public void saveToTextFile(String path){
