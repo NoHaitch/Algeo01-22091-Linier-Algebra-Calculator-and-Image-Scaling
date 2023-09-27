@@ -1,4 +1,4 @@
-import models.Determinan;
+import models.DeterminanInvers;
 import operations.Matrix;
 
 import java.io.File;
@@ -44,9 +44,9 @@ public class Main {
                             print(" >>> Pilih Metode Determinan : ");
                             try{
                                 int opsiMenuDeterminan = Integer.parseInt(scanner.nextLine());
+                                boolean isInputMenu = true;
                                 switch (opsiMenuDeterminan){
                                     case 1:
-                                        boolean isInputMenu = true;
                                         while(isInputMenu) {
                                             println("\n   ===== Pilih Metode Masukkan =====");
                                             println("1. Masukkan Ketik");
@@ -80,7 +80,7 @@ public class Main {
                                                                         println("Ukuran Matriks tidak bisa 0");
                                                                     }
                                                                     else if(row == col){
-                                                                        Determinan determinan = new Determinan();
+                                                                        DeterminanInvers determinan = new DeterminanInvers();
                                                                         Matrix matrix = new Matrix();
                                                                         determinan.contents.setMatrixRow(row);
                                                                         determinan.contents.setMatrixCol(col);
@@ -121,7 +121,7 @@ public class Main {
                                                         }
                                                         break;
                                                     case 2:
-                                                        Determinan determinan = new Determinan();
+                                                        DeterminanInvers determinan = new DeterminanInvers();
                                                         boolean inputValid = false;
                                                         while(!inputValid) {
                                                             println("Ketik 0 untuk kembali");
@@ -174,7 +174,33 @@ public class Main {
                                             }
                                         }
                                         break;
-                                    case 2: break;
+                                    case 2:
+                                        while(isInputMenu) {
+                                            println("\n   ===== Pilih Metode Masukkan =====");
+                                            println("1. Masukkan Ketik");
+                                            println("2. Masukkan dalam bentuk File");
+                                            println("3. Kembali");
+                                            print(" >>> Pilih Metode Masukkan : ");
+                                            try {
+                                                int opsiMenuInput = Integer.parseInt(scanner.nextLine());
+                                                switch (opsiMenuInput) {
+                                                    case 1:
+
+                                                        break;
+                                                    case 2:
+
+                                                        break;
+                                                    case 3:
+                                                        isInputMenu = false;
+                                                        break;
+                                                    default:
+                                                        println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
+                                                }
+                                            } catch (Exception InputMismatchException) {
+                                                println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
+                                            }
+                                        }
+                                        break;
                                     case 3:
                                         isDeterminanMenu = false;
                                         break;
