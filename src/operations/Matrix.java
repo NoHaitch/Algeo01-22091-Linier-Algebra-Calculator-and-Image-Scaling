@@ -53,6 +53,7 @@ public class Matrix {
             }
             scanelmt.nextLine();
         }
+        scanelmt.close();
     }
 
     public void displayMatrix() {

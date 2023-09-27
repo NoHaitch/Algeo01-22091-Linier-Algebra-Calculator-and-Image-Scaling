@@ -1,5 +1,9 @@
 import models.Determinan;
+import operations.Matrix;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -31,8 +35,8 @@ public class Main {
                 switch (opsiMenuUtama){
                     case 1: break;
                     case 2:
-                        boolean determinanMenu = true;
-                        while(determinanMenu){
+                        boolean isDeterminanMenu = true;
+                        while(isDeterminanMenu){
                             println("   ===== Pilih Metode Determinan =====");
                             println("1. Metode Ekspansi Kofaktor");
                             println("2. Metode Reduksi Baris dengan OBE");
@@ -42,11 +46,11 @@ public class Main {
                                 int opsiMenuDeterminan = Integer.parseInt(scanner.nextLine());
                                 switch (opsiMenuDeterminan){
                                     case 1:
-                                        boolean inputMenu = true;
+                                        boolean isInputMenu = true;
                                         Determinan determinan = new Determinan();
-                                        while(inputMenu) {
+                                        while(isInputMenu) {
                                             println("   ===== Pilih Metode Masukkan =====");
-                                            println("1. Masukkan dengan Ketik");
+                                            println("1. Masukkan Ketik");
                                             println("2. Masukkan dalam bentuk File");
                                             println("3. Kembali");
                                             print(" >>> Pilih Metode Masukkan : ");
@@ -54,17 +58,109 @@ public class Main {
                                                 int opsiMenuInput = Integer.parseInt(scanner.nextLine());
                                                 switch (opsiMenuInput) {
                                                     case 1:
-                                                        //determinan.inputMatriksKetik();
+                                                        boolean isInputUkuranValid = true;
+                                                        while(isInputUkuranValid) {
+                                                            println(" === Metode Ketik === ");
+                                                            println("Ketik -1 untuk kembali ");
+                                                            try {
+                                                                print(" >>> Masukkan Jumlah Baris : ");
+                                                                int row = Integer.parseInt(scanner.nextLine());
+                                                                if(row == -1){
+                                                                    isInputUkuranValid = false ;
+                                                                }
+                                                                else if(row == 0){
+                                                                    println("Ukuran Matriks tidak bisa 0");
+                                                                }
+                                                                else{
+                                                                    print(" >>> Masukkan Jumlah Kolom : ");
+                                                                    int col = Integer.parseInt(scanner.nextLine());
+                                                                    if(col == -1){
+                                                                        isInputUkuranValid = false ;
+                                                                    }
+                                                                    else if(col == 0){
+                                                                        println("Ukuran Matriks tidak bisa 0");
+                                                                    }
+                                                                    else if(row == col){
+                                                                        /* Baca Isi Matrix */
+                                                                        boolean isInputMatrixValid = true;
+                                                                        int i = 0;
+                                                                        while(i < row && isInputMatrixValid){
+                                                                            int j = 0;
+                                                                            while(j < col && isInputMatrixValid) {
+                                                                                try {
+                                                                                    double elmt = scanner.nextDouble();
+                                                                                    determinan.contents.setElmt(elmt,i,j);
+                                                                                } catch (Exception InputMismatchException) {
+                                                                                    println("Isi Matrix salah. Pastikan isi matriks adalah angka desimal");
+                                                                                    isInputMatrixValid = false;
+                                                                                }
+                                                                                j++;
+                                                                            }
+                                                                            i++;
+                                                                        }
+                                                                        if(isInputMatrixValid) {
+                                                                            determinan.contents.setRowEff(row);
+                                                                            determinan.contents.setColEff(col);
+                                                                            println(" ================== HASIL ================== ");
+                                                                            println("   Determinan = " + determinan.determinanKofaktor());
+                                                                            isInputUkuranValid = false;
+                                                                            isInputMenu = false;
+                                                                            isDeterminanMenu = false;
+                                                                        }
+                                                                    }
+                                                                    else{
+                                                                        println("Ukuran Matriks salah. Matriks tidak bukan matriks persegi (baris = kolom)");
+                                                                    }
+                                                                }
+                                                            } catch (Exception InputMismatchException){
+                                                                println("Ukuran Matrix salah. Pastikan ukuran adalah bilangan bulat");
+                                                            }
+                                                        }
                                                         break;
                                                     case 2:
-                                                        determinan.inputMatriksFile();
-                                                        println("\n ===== Determinan =   " + determinan.determinanKofaktor() + " ===== ");
-                                                        scanner.nextLine();
-                                                        inputMenu = false;
-                                                        determinanMenu = false;
+                                                        boolean inputValid = false;
+                                                        while(!inputValid) {
+                                                            println("Ketik 0 untuk kembali");
+                                                            print(" >>> Masukkan alamat file: ");
+                                                            String path = scanner.nextLine();
+                                                            if(Objects.equals(path, "0")) {
+                                                                inputValid = true;
+                                                            }
+                                                            else {
+                                                                try {
+                                                                    File inputFile = new File(path);
+                                                                    Scanner readFile = new Scanner(inputFile);
+                                                                    String line;
+                                                                    int row = 0;
+                                                                    int column = 0;
+                                                                    while (readFile.hasNextLine() && (line = readFile.nextLine()) != null) {
+                                                                        String[] saved = line.split(" ");
+                                                                        if (row == 0) {
+                                                                            column = saved.length;
+                                                                        }
+                                                                        int i;
+                                                                        for (i = 0; i < column; i++) {
+                                                                            double temp = Double.parseDouble(saved[i]);
+                                                                            determinan.contents.setMElmt(temp, row, i);
+                                                                        }
+                                                                        row++;
+                                                                    }
+                                                                    determinan.contents.setMatrixRow(row);
+                                                                    determinan.contents.setMatrixCol(column);
+                                                                    println(" ================== HASIL ================== ");
+                                                                    println("   Determinan =   " + determinan.determinanKofaktor());
+                                                                    inputValid = true;
+                                                                    isInputMenu = false;
+                                                                    isDeterminanMenu = false;
+                                                                    readFile.close();
+                                                                } catch (FileNotFoundException e) {
+                                                                    println("Alamat file salah. Contoh alamat benar : src/input.txt ");
+                                                                }
+                                                            }
+                                                        }
                                                         break;
                                                     case 3:
-                                                        inputMenu = false;
+                                                        isInputMenu = false;
                                                         break;
                                                     default:
                                                         println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
@@ -76,7 +172,7 @@ public class Main {
                                         break;
                                     case 2: break;
                                     case 3:
-                                        determinanMenu = false;
+                                        isDeterminanMenu = false;
                                         break;
                                     default:
                                         println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");

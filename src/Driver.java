@@ -10,7 +10,7 @@ public class Driver {
         //        //x.contents.setMElmt(mtr[i][j],i,j);
         //    }
         //}
-        x.inputMatriksFile();
+        //x.inputMatriksFile();
         double det = x.determinanKofaktor();
         x.CalculateOBE();
         x.saveToTextFile("test/DeterminanDuluGan.txt");
