@@ -13,7 +13,7 @@ public class Driver {
         x.inputMatriksText();
         //double det = x.determinanKofaktor();
         x.CalculateOBE();
-        x.saveToTextFile("test/Determinan.txt");
+        x.saveToTextFile("test/NewOne.txt");
         System.out.println(x.contents.getStep());
         System.out.println(x.result+"\n");
         for (int i = 0; i < x.countMul; i++){
