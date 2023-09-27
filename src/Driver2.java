@@ -1,5 +1,6 @@
 import models.DeterminanInvers;
 import operations.Matrix;
+import operations.OBE;
 
 public class Driver2 {
     public static void main(String[] args) {
@@ -10,5 +11,9 @@ public class Driver2 {
         //x.inversMatrix().displayMatrix();
         //System.out.println("\n\n");
         m.inversMatrix().displayMatrix();
+        DeterminanInvers temp = new DeterminanInvers(m);
+        temp.contents.setAugmented(m.inversMatrix());
+        temp.contents.addAugmentedToStep(4);
+        temp.saveToTextFile("test/MatrixForBicubic.txt");
     }
 }

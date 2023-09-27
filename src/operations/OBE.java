@@ -45,6 +45,10 @@ public class OBE {
         return new Matrix(Augmented);
     }
 
+    public void setAugmented(Matrix m){
+        this.Augmented = new Matrix(m);
+    }
+
     
 
     /* ----------- KELOMPOK Interaksi dengan IO ----------- */
