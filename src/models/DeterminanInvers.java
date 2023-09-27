@@ -279,8 +279,6 @@ public class DeterminanInvers {
             for (int j = contents.getMatrixCol(); j < length; j++){
                 if (i == j - contents.getMatrixCol()){
                     contents.setMElmt(1, i, j);
-                } else {
-                    contents.setElmt(1, i, j);
                 }
             }
         }

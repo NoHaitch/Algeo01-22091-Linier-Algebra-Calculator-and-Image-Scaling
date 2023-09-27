@@ -6,7 +6,7 @@ import java.lang.Math;
 /*  Membuat objek OBE, yang digunakan untuk melakukan OBE */
 /*  dengan metode Gauss atau Gauss-Jordan */
 
-public class OBE extends Matrix{
+public class OBE {
     private Matrix Augmented;
     private int[] indexMain = new int[1000];
     private double[] solusi = new double[1000];
