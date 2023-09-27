@@ -41,6 +41,12 @@ public class OBE extends Matrix{
         this.stepByStep = new String(newOBE.stepByStep);
     }
 
+    public Matrix getCopyAugmented(){
+        return new Matrix(Augmented);
+    }
+
+    
+
     /* ----------- KELOMPOK Interaksi dengan IO ----------- */
     @Override
     public String toString(){
