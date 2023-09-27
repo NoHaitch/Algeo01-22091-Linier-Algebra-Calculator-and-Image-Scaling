@@ -21,6 +21,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         boolean program = true;
         while(program) {
+            /* ============================== MENU UTAMA ============================== */
             println("");
             println("   =============== MENU UTAMA =============== ");
             println("1. Sistem Persamaaan Linier");
@@ -47,7 +48,6 @@ public class Main {
                             print(" >>> Pilih Metode : ");
                             try{
                                 int opsiMenuSPL = Integer.parseInt(scanner.nextLine());
-
                                 boolean isInputMenu = true;
                                 switch (opsiMenuSPL){
                                     case 1:
@@ -66,59 +66,42 @@ public class Main {
                                                         boolean isInputUkuranValid = true;
                                                         while(isInputUkuranValid) {
                                                             println("\n ===== Metode Ketik ===== ");
-                                                            println("Ketik -1 untuk kembali ");
                                                             try {
-                                                                print(" >>> Masukkan Jumlah Baris : ");
-                                                                int row = Integer.parseInt(scanner.nextLine());
-                                                                if(row == -1){
-                                                                    isInputUkuranValid = false ;
+                                                                print(" >>> Masukkan Ukuran Matriks (m x n) : ");
+                                                                int row = scanner.nextInt();
+                                                                int col = scanner.nextInt();
+                                                                scanner.nextLine();
+                                                                if(row <= 0 || col <= 0){
+                                                                    println("Ukuran Matriks harus bilangan bulat positif");
                                                                 }
-                                                                else if(row == 0){
-                                                                    println("Ukuran Matriks tidak bisa 0");
-                                                                }
-                                                                else{
-                                                                    print(" >>> Masukkan Jumlah Kolom : ");
-                                                                    int col = Integer.parseInt(scanner.nextLine());
-                                                                    if(col == -1){
-                                                                        isInputUkuranValid = false ;
-                                                                    }
-                                                                    else if(col == 0){
-                                                                        println("Ukuran Matriks tidak bisa 0");
-                                                                    }
-                                                                    else if(row == col){
-                                                                        DeterminanInvers determinan = new DeterminanInvers();
-                                                                        Matrix matrix = new Matrix();
-                                                                        determinan.contents.setMatrixRow(row);
-                                                                        determinan.contents.setMatrixCol(col);
-                                                                        /* Baca Isi Matrix */
-                                                                        boolean isInputMatrixValid = true;
-                                                                        int i = 0;
-                                                                        while(i < row && isInputMatrixValid){
-                                                                            int j = 0;
-                                                                            while(j < col && isInputMatrixValid) {
-                                                                                try {
-                                                                                    double elmt = scanner.nextDouble();
-                                                                                    determinan.contents.setMElmt(elmt,i,j);
-                                                                                    println("" + determinan.contents.getMElmt(i,j));
-                                                                                } catch (Exception InputMismatchException) {
-                                                                                    println("Isi Matrix salah. Pastikan isi matriks adalah angka desimal");
-                                                                                    isInputMatrixValid = false;
-                                                                                }
-                                                                                j++;
+                                                                else {
+                                                                    println(">>> Masukkan Nilai Matriks : ");
+                                                                    SPL spl = new SPL(row,col);
+                                                                    /* Baca Isi Matrix */
+                                                                    boolean isInputMatrixValid = true;
+                                                                    int i = 0;
+                                                                    while(i < row && isInputMatrixValid){
+                                                                        int j = 0;
+                                                                        while(j < col && isInputMatrixValid) {
+                                                                            try {
+                                                                                double elmt = scanner.nextDouble();
+                                                                                spl.spl.setMElmt(elmt,i,j);
+                                                                            } catch (Exception InputMismatchException) {
+                                                                                println("Isi Matrix salah. Pastikan isi matriks adalah angka desimal");
+                                                                                isInputMatrixValid = false;
                                                                             }
-                                                                            i++;
+                                                                            j++;
                                                                         }
-                                                                        scanner.nextLine();
-                                                                        if(isInputMatrixValid) {
-                                                                            println(" ================== HASIL ================== ");
-                                                                            println("   Determinan = " + determinan.determinanKofaktor());
-                                                                            isInputUkuranValid = false;
-                                                                            isInputMenu = false;
-                                                                            isSPLMenu = false;
-                                                                        }
+                                                                        i++;
                                                                     }
-                                                                    else{
-                                                                        println("Ukuran Matriks salah. Matriks tidak bukan matriks persegi (baris = kolom)");
+                                                                    scanner.nextLine();
+                                                                    if(isInputMatrixValid) {
+                                                                        spl.spl.gaussAndSolutions();
+                                                                        println(" ================== HASIL ================== ");
+                                                                        println(spl.spl.getStep());
+                                                                        isInputUkuranValid = false;
+                                                                        isInputMenu = false;
+                                                                        isSPLMenu = false;
                                                                     }
                                                                 }
                                                             } catch (Exception InputMismatchException){
@@ -195,63 +178,46 @@ public class Main {
                                                 int opsiMenuInput = Integer.parseInt(scanner.nextLine());
                                                 switch (opsiMenuInput) {
                                                     case 1:
-                                                        boolean isInputUkuranValid = true;
-                                                        while(isInputUkuranValid) {
+                                                        /* ============ Input Ketik =========== */
+                                                        boolean isInputUkuranValid = false;
+                                                        while(!isInputUkuranValid) {
                                                             println("\n ===== Metode Ketik ===== ");
-                                                            println("Ketik -1 untuk kembali ");
                                                             try {
-                                                                print(" >>> Masukkan Jumlah Baris : ");
-                                                                int row = Integer.parseInt(scanner.nextLine());
-                                                                if(row == -1){
-                                                                    isInputUkuranValid = false ;
+                                                                print(" >>> Masukkan Ukuran Matriks (m x n) : ");
+                                                                int row = scanner.nextInt();
+                                                                int col = scanner.nextInt();
+                                                                scanner.nextLine();
+                                                                if(row <= 0 || col <= 0){
+                                                                    println("Ukuran Matriks harus bilangan bulat positif");
                                                                 }
-                                                                else if(row == 0){
-                                                                    println("Ukuran Matriks tidak bisa 0");
-                                                                }
-                                                                else{
-                                                                    print(" >>> Masukkan Jumlah Kolom : ");
-                                                                    int col = Integer.parseInt(scanner.nextLine());
-                                                                    if(col == -1){
-                                                                        isInputUkuranValid = false ;
-                                                                    }
-                                                                    else if(col == 0){
-                                                                        println("Ukuran Matriks tidak bisa 0");
-                                                                    }
-                                                                    else if(row == col){
-                                                                        DeterminanInvers determinan = new DeterminanInvers();
-                                                                        Matrix matrix = new Matrix();
-                                                                        determinan.contents.setMatrixRow(row);
-                                                                        determinan.contents.setMatrixCol(col);
-                                                                        /* Baca Isi Matrix */
-                                                                        boolean isInputMatrixValid = true;
-                                                                        int i = 0;
-                                                                        while(i < row && isInputMatrixValid){
-                                                                            int j = 0;
-                                                                            while(j < col && isInputMatrixValid) {
-                                                                                try {
-                                                                                    double elmt = scanner.nextDouble();
-                                                                                    determinan.contents.setMElmt(elmt,i,j);
-                                                                                    println("" + determinan.contents.getMElmt(i,j));
-                                                                                } catch (Exception InputMismatchException) {
-                                                                                    println("Isi Matrix salah. Pastikan isi matriks adalah angka desimal");
-                                                                                    isInputMatrixValid = false;
-                                                                                }
-                                                                                j++;
+                                                                else {
+                                                                    println(">>> Masukkan Nilai Matriks : ");
+                                                                    SPL spl = new SPL(row,col);
+                                                                    /* Baca Isi Matrix */
+                                                                    boolean isInputMatrixValid = true;
+                                                                    int i = 0;
+                                                                    while(i < row && isInputMatrixValid){
+                                                                        int j = 0;
+                                                                        while(j < col && isInputMatrixValid) {
+                                                                            try {
+                                                                                double elmt = scanner.nextDouble();
+                                                                                spl.spl.setMElmt(elmt,i,j);
+                                                                            } catch (Exception InputMismatchException) {
+                                                                                println("Isi Matrix salah. Pastikan isi matriks adalah angka desimal");
+                                                                                isInputMatrixValid = false;
                                                                             }
-                                                                            i++;
+                                                                            j++;
                                                                         }
-                                                                        scanner.nextLine();
-                                                                        if(isInputMatrixValid) {
-                                                                            determinan.CalculateOBE();
-                                                                            println(" ================== HASIL ================== ");
-                                                                            println("   Determinan = " + determinan.result);
-                                                                            isInputUkuranValid = false;
-                                                                            isInputMenu = false;
-                                                                            isSPLMenu = false;
-                                                                        }
+                                                                        i++;
                                                                     }
-                                                                    else{
-                                                                        println("Ukuran Matriks salah. Matriks tidak bukan matriks persegi (baris = kolom)");
+                                                                    scanner.nextLine();
+                                                                    if(isInputMatrixValid) {
+                                                                        spl.spl.obeGaussJordan();
+                                                                        println(" ================== HASIL ================== ");
+                                                                        println(spl.spl.getStep());
+                                                                        isInputUkuranValid = true;
+                                                                        isInputMenu = false;
+                                                                        isSPLMenu = false;
                                                                     }
                                                                 }
                                                             } catch (Exception InputMismatchException){
@@ -305,6 +271,7 @@ public class Main {
                                                         }
                                                         break;
                                                     case 3:
+                                                        /* ============ Kembali ============ */
                                                         isInputMenu = false;
                                                         break;
                                                     default:
@@ -315,6 +282,7 @@ public class Main {
                                             }
                                         }
                                         break;
+                                    /* TODO CASE 3 CASE 4*/
                                     case 3:
                                         /* ========== Metode Matriks Balikan ========== */
                                         while(isInputMenu) {
@@ -327,62 +295,46 @@ public class Main {
                                                 int opsiMenuInput = Integer.parseInt(scanner.nextLine());
                                                 switch (opsiMenuInput) {
                                                     case 1:
+                                                        /* ============ Input Ketik =========== */
                                                         boolean isInputUkuranValid = true;
                                                         while(isInputUkuranValid) {
                                                             println("\n ===== Metode Ketik ===== ");
-                                                            println("Ketik -1 untuk kembali ");
                                                             try {
-                                                                print(" >>> Masukkan Jumlah Baris : ");
-                                                                int row = Integer.parseInt(scanner.nextLine());
-                                                                if(row == -1){
-                                                                    isInputUkuranValid = false ;
+                                                                print(" >>> Masukkan Ukuran Matriks (m x n) : ");
+                                                                int row = scanner.nextInt();
+                                                                int col = scanner.nextInt();
+                                                                scanner.nextLine();
+                                                                if(row <= 0 || col <= 0){
+                                                                    println("Ukuran Matriks harus bilangan bulat positif");
                                                                 }
-                                                                else if(row == 0){
-                                                                    println("Ukuran Matriks tidak bisa 0");
-                                                                }
-                                                                else{
-                                                                    print(" >>> Masukkan Jumlah Kolom : ");
-                                                                    int col = Integer.parseInt(scanner.nextLine());
-                                                                    if(col == -1){
-                                                                        isInputUkuranValid = false ;
-                                                                    }
-                                                                    else if(col == 0){
-                                                                        println("Ukuran Matriks tidak bisa 0");
-                                                                    }
-                                                                    else if(row == col){
-                                                                        DeterminanInvers determinan = new DeterminanInvers();
-                                                                        Matrix matrix = new Matrix();
-                                                                        determinan.contents.setMatrixRow(row);
-                                                                        determinan.contents.setMatrixCol(col);
-                                                                        /* Baca Isi Matrix */
-                                                                        boolean isInputMatrixValid = true;
-                                                                        int i = 0;
-                                                                        while(i < row && isInputMatrixValid){
-                                                                            int j = 0;
-                                                                            while(j < col && isInputMatrixValid) {
-                                                                                try {
-                                                                                    double elmt = scanner.nextDouble();
-                                                                                    determinan.contents.setMElmt(elmt,i,j);
-                                                                                    println("" + determinan.contents.getMElmt(i,j));
-                                                                                } catch (Exception InputMismatchException) {
-                                                                                    println("Isi Matrix salah. Pastikan isi matriks adalah angka desimal");
-                                                                                    isInputMatrixValid = false;
-                                                                                }
-                                                                                j++;
+                                                                else {
+                                                                    println(">>> Masukkan Nilai Matriks : ");
+                                                                    SPL spl = new SPL(row,col);
+                                                                    /* Baca Isi Matrix */
+                                                                    boolean isInputMatrixValid = true;
+                                                                    int i = 0;
+                                                                    while(i < row && isInputMatrixValid){
+                                                                        int j = 0;
+                                                                        while(j < col && isInputMatrixValid) {
+                                                                            try {
+                                                                                double elmt = scanner.nextDouble();
+                                                                                spl.spl.setMElmt(elmt,i,j);
+                                                                            } catch (Exception InputMismatchException) {
+                                                                                println("Isi Matrix salah. Pastikan isi matriks adalah angka desimal");
+                                                                                isInputMatrixValid = false;
                                                                             }
-                                                                            i++;
+                                                                            j++;
                                                                         }
-                                                                        scanner.nextLine();
-                                                                        if(isInputMatrixValid) {
-                                                                            println(" ================== HASIL ================== ");
-                                                                            println("   Determinan = " + determinan.determinanKofaktor());
-                                                                            isInputUkuranValid = false;
-                                                                            isInputMenu = false;
-                                                                            isSPLMenu = false;
-                                                                        }
+                                                                        i++;
                                                                     }
-                                                                    else{
-                                                                        println("Ukuran Matriks salah. Matriks tidak bukan matriks persegi (baris = kolom)");
+                                                                    scanner.nextLine();
+                                                                    if(isInputMatrixValid) {
+                                                                        spl.spl.gaussAndSolutions();
+                                                                        println(" ================== HASIL ================== ");
+                                                                        println(spl.spl.getStep());
+                                                                        isInputUkuranValid = false;
+                                                                        isInputMenu = false;
+                                                                        isSPLMenu = false;
                                                                     }
                                                                 }
                                                             } catch (Exception InputMismatchException){
@@ -391,6 +343,7 @@ public class Main {
                                                         }
                                                         break;
                                                     case 2:
+                                                        /* ============ Input File ============ */
                                                         DeterminanInvers determinan = new DeterminanInvers();
                                                         boolean inputValid = false;
                                                         while(!inputValid) {
@@ -434,6 +387,7 @@ public class Main {
                                                         }
                                                         break;
                                                     case 3:
+                                                        /* ============ Kembali ============ */
                                                         isInputMenu = false;
                                                         break;
                                                     default:
@@ -456,6 +410,7 @@ public class Main {
                                                 int opsiMenuInput = Integer.parseInt(scanner.nextLine());
                                                 switch (opsiMenuInput) {
                                                     case 1:
+                                                        /* ============ Input Ketik ============ */
                                                         boolean isInputUkuranValid = true;
                                                         while(isInputUkuranValid) {
                                                             println("\n ===== Metode Ketik ===== ");
@@ -520,6 +475,7 @@ public class Main {
                                                         }
                                                         break;
                                                     case 2:
+                                                        /* ============ Input File ============ */
                                                         DeterminanInvers determinan = new DeterminanInvers();
                                                         boolean inputValid = false;
                                                         while(!inputValid) {
@@ -563,6 +519,7 @@ public class Main {
                                                         }
                                                         break;
                                                     case 3:
+                                                        /* ============ Kembali ============ */
                                                         isInputMenu = false;
                                                         break;
                                                     default:
@@ -574,13 +531,14 @@ public class Main {
                                         }
                                         break;
                                     case 5:
+                                        /* ========== Kembali ========== */
                                         isSPLMenu = false;
                                         break;
                                     default:
-                                        println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
+                                        println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 5");
                                 }
                             } catch (Exception InputMismatchException){
-                                println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
+                                println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 5");
                             }
                         }
                         break;
@@ -598,6 +556,7 @@ public class Main {
                                 boolean isInputMenu = true;
                                 switch (opsiMenuDeterminan){
                                     case 1:
+                                        /* ========== Metode Ekspansi Kofaktor ========== */
                                         while(isInputMenu) {
                                             println("\n   ===== Pilih Metode Masukkan =====");
                                             println("1. Masukkan Ketik");
@@ -608,62 +567,44 @@ public class Main {
                                                 int opsiMenuInput = Integer.parseInt(scanner.nextLine());
                                                 switch (opsiMenuInput) {
                                                     case 1:
+                                                        /* ========== Input Ketik ========== */
                                                         boolean isInputUkuranValid = true;
                                                         while(isInputUkuranValid) {
                                                             println("\n ===== Metode Ketik ===== ");
                                                             println("Ketik -1 untuk kembali ");
                                                             try {
-                                                                print(" >>> Masukkan Jumlah Baris : ");
-                                                                int row = Integer.parseInt(scanner.nextLine());
-                                                                if(row == -1){
+                                                                print(" >>> Masukkan Ukuran Matriks (n x n) : ");
+                                                                int n = Integer.parseInt(scanner.nextLine());
+                                                                if(n <= 0){
                                                                     isInputUkuranValid = false ;
                                                                 }
-                                                                else if(row == 0){
-                                                                    println("Ukuran Matriks tidak bisa 0");
-                                                                }
-                                                                else{
-                                                                    print(" >>> Masukkan Jumlah Kolom : ");
-                                                                    int col = Integer.parseInt(scanner.nextLine());
-                                                                    if(col == -1){
-                                                                        isInputUkuranValid = false ;
-                                                                    }
-                                                                    else if(col == 0){
-                                                                        println("Ukuran Matriks tidak bisa 0");
-                                                                    }
-                                                                    else if(row == col){
-                                                                        DeterminanInvers determinan = new DeterminanInvers();
-                                                                        Matrix matrix = new Matrix();
-                                                                        determinan.contents.setMatrixRow(row);
-                                                                        determinan.contents.setMatrixCol(col);
-                                                                        /* Baca Isi Matrix */
-                                                                        boolean isInputMatrixValid = true;
-                                                                        int i = 0;
-                                                                        while(i < row && isInputMatrixValid){
-                                                                            int j = 0;
-                                                                            while(j < col && isInputMatrixValid) {
-                                                                                try {
-                                                                                    double elmt = scanner.nextDouble();
-                                                                                    determinan.contents.setMElmt(elmt,i,j);
-                                                                                    println("" + determinan.contents.getMElmt(i,j));
-                                                                                } catch (Exception InputMismatchException) {
-                                                                                    println("Isi Matrix salah. Pastikan isi matriks adalah angka desimal");
-                                                                                    isInputMatrixValid = false;
-                                                                                }
-                                                                                j++;
+                                                                else {
+                                                                    println(" >>> Masukkan Nilai Matriks :");
+                                                                    DeterminanInvers determinan = new DeterminanInvers(n,n);
+                                                                    /* Baca Isi Matrix */
+                                                                    boolean isInputMatrixValid = true;
+                                                                    int i = 0;
+                                                                    while (i < n && isInputMatrixValid) {
+                                                                        int j = 0;
+                                                                        while (j < n && isInputMatrixValid) {
+                                                                            try {
+                                                                                double elmt = scanner.nextDouble();
+                                                                                determinan.contents.setMElmt(elmt, i, j);
+                                                                            } catch (Exception InputMismatchException) {
+                                                                                println("Isi Matrix salah. Pastikan isi matriks adalah angka desimal");
+                                                                                isInputMatrixValid = false;
                                                                             }
-                                                                            i++;
+                                                                            j++;
                                                                         }
-                                                                        scanner.nextLine();
-                                                                        if(isInputMatrixValid) {
-                                                                            println(" ================== HASIL ================== ");
-                                                                            println("   Determinan = " + determinan.determinanKofaktor());
-                                                                            isInputUkuranValid = false;
-                                                                            isInputMenu = false;
-                                                                            isDeterminanMenu = false;
-                                                                        }
+                                                                        i++;
                                                                     }
-                                                                    else{
-                                                                        println("Ukuran Matriks salah. Matriks tidak bukan matriks persegi (baris = kolom)");
+                                                                    scanner.nextLine();
+                                                                    if (isInputMatrixValid) {
+                                                                        println(" ================== HASIL ================== ");
+                                                                        println("   Determinan = " + determinan.determinanKofaktor());
+                                                                        isInputUkuranValid = false;
+                                                                        isInputMenu = false;
+                                                                        isDeterminanMenu = false;
                                                                     }
                                                                 }
                                                             } catch (Exception InputMismatchException){
@@ -672,14 +613,16 @@ public class Main {
                                                         }
                                                         break;
                                                     case 2:
+                                                        /* ========== Input File ========== */
                                                         DeterminanInvers determinan = new DeterminanInvers();
-                                                        boolean inputValid = false;
-                                                        while(!inputValid) {
+                                                        boolean isinputValid = true;
+                                                        while(isinputValid) {
+                                                            boolean isInputMatrixValid = true;
                                                             println("Ketik 0 untuk kembali");
                                                             print(" >>> Masukkan alamat file: ");
                                                             String path = scanner.nextLine();
                                                             if(Objects.equals(path, "0")) {
-                                                                inputValid = true;
+                                                                isinputValid = false;
                                                             }
                                                             else {
                                                                 try {
@@ -700,14 +643,16 @@ public class Main {
                                                                         }
                                                                         row++;
                                                                     }
-                                                                    determinan.contents.setMatrixRow(row);
-                                                                    determinan.contents.setMatrixCol(column);
-                                                                    println(" ================== HASIL ================== ");
-                                                                    println("   Determinan =   " + determinan.determinanKofaktor());
-                                                                    inputValid = true;
-                                                                    isInputMenu = false;
-                                                                    isDeterminanMenu = false;
                                                                     readFile.close();
+                                                                    if(isInputMatrixValid) {
+                                                                        determinan.contents.setMatrixRow(row);
+                                                                        determinan.contents.setMatrixCol(column);
+                                                                        println(" ================== HASIL ================== ");
+                                                                        println("   Determinan =   " + determinan.determinanKofaktor());
+                                                                        isinputValid = false;
+                                                                        isInputMenu = false;
+                                                                        isDeterminanMenu = false;
+                                                                    }
                                                                 } catch (FileNotFoundException e) {
                                                                     println("Alamat file salah. Contoh alamat benar : src/input.txt ");
                                                                 }
@@ -715,6 +660,7 @@ public class Main {
                                                         }
                                                         break;
                                                     case 3:
+                                                        /* ========== Kembali ========== */
                                                         isInputMenu = false;
                                                         break;
                                                     default:
@@ -726,6 +672,7 @@ public class Main {
                                         }
                                         break;
                                     case 2:
+                                        /* ========== Metode Reduksi Baris dengan OBE ========== */
                                         while(isInputMenu) {
                                             println("\n   ===== Pilih Metode Masukkan =====");
                                             println("1. Masukkan Ketik");
@@ -736,63 +683,45 @@ public class Main {
                                                 int opsiMenuInput = Integer.parseInt(scanner.nextLine());
                                                 switch (opsiMenuInput) {
                                                     case 1:
+                                                        /* ========== Input Ketik ========== */
                                                         boolean isInputUkuranValid = true;
                                                         while(isInputUkuranValid) {
                                                             println("\n ===== Metode Ketik ===== ");
                                                             println("Ketik -1 untuk kembali ");
                                                             try {
-                                                                print(" >>> Masukkan Jumlah Baris : ");
-                                                                int row = Integer.parseInt(scanner.nextLine());
-                                                                if(row == -1){
+                                                                print(" >>> Masukkan Ukuran Matriks (n x n) : ");
+                                                                int n = Integer.parseInt(scanner.nextLine());
+                                                                if(n <= 0){
                                                                     isInputUkuranValid = false ;
                                                                 }
-                                                                else if(row == 0){
-                                                                    println("Ukuran Matriks tidak bisa 0");
-                                                                }
-                                                                else{
-                                                                    print(" >>> Masukkan Jumlah Kolom : ");
-                                                                    int col = Integer.parseInt(scanner.nextLine());
-                                                                    if(col == -1){
-                                                                        isInputUkuranValid = false ;
-                                                                    }
-                                                                    else if(col == 0){
-                                                                        println("Ukuran Matriks tidak bisa 0");
-                                                                    }
-                                                                    else if(row == col){
-                                                                        DeterminanInvers determinan = new DeterminanInvers();
-                                                                        Matrix matrix = new Matrix();
-                                                                        determinan.contents.setMatrixRow(row);
-                                                                        determinan.contents.setMatrixCol(col);
-                                                                        /* Baca Isi Matrix */
-                                                                        boolean isInputMatrixValid = true;
-                                                                        int i = 0;
-                                                                        while(i < row && isInputMatrixValid){
-                                                                            int j = 0;
-                                                                            while(j < col && isInputMatrixValid) {
-                                                                                try {
-                                                                                    double elmt = scanner.nextDouble();
-                                                                                    determinan.contents.setMElmt(elmt,i,j);
-                                                                                    println("" + determinan.contents.getMElmt(i,j));
-                                                                                } catch (Exception InputMismatchException) {
-                                                                                    println("Isi Matrix salah. Pastikan isi matriks adalah angka desimal");
-                                                                                    isInputMatrixValid = false;
-                                                                                }
-                                                                                j++;
+                                                                else {
+                                                                    println(" >>> Masukkan Nilai Matriks :");
+                                                                    DeterminanInvers determinan = new DeterminanInvers(n,n);
+                                                                    /* Baca Isi Matrix */
+                                                                    boolean isInputMatrixValid = true;
+                                                                    int i = 0;
+                                                                    while (i < n && isInputMatrixValid) {
+                                                                        int j = 0;
+                                                                        while (j < n && isInputMatrixValid) {
+                                                                            try {
+                                                                                double elmt = scanner.nextDouble();
+                                                                                determinan.contents.setMElmt(elmt, i, j);
+                                                                            } catch (Exception InputMismatchException) {
+                                                                                println("Isi Matrix salah. Pastikan isi matriks adalah angka desimal");
+                                                                                isInputMatrixValid = false;
                                                                             }
-                                                                            i++;
+                                                                            j++;
                                                                         }
-                                                                        scanner.nextLine();
-                                                                        if(isInputMatrixValid) {
-                                                                            determinan.CalculateOBE();
-                                                                            println(" ================== HASIL ================== ");
-                                                                            println("   Determinan = " + determinan.result);
-                                                                            isInputUkuranValid = false;
-                                                                            isInputMenu = false;
-                                                                            isDeterminanMenu = false;
-                                                                        }
+                                                                        i++;
                                                                     }
-                                                                    else{
-                                                                        println("Ukuran Matriks salah. Matriks tidak bukan matriks persegi (baris = kolom)");
+                                                                    scanner.nextLine();
+                                                                    if (isInputMatrixValid) {
+                                                                        determinan.CalculateOBE();
+                                                                        println(" ================== HASIL ================== ");
+                                                                        println("   Determinan = " + determinan.result);
+                                                                        isInputUkuranValid = false;
+                                                                        isInputMenu = false;
+                                                                        isDeterminanMenu = false;
                                                                     }
                                                                 }
                                                             } catch (Exception InputMismatchException){
@@ -801,6 +730,7 @@ public class Main {
                                                         }
                                                         break;
                                                     case 2:
+                                                        /* ========== Input File ========== */
                                                         DeterminanInvers determinan = new DeterminanInvers();
                                                         boolean inputValid = false;
                                                         while(!inputValid) {
@@ -845,6 +775,7 @@ public class Main {
                                                         }
                                                         break;
                                                     case 3:
+                                                        /* ========== Kembali ========== */
                                                         isInputMenu = false;
                                                         break;
                                                     default:
@@ -868,6 +799,7 @@ public class Main {
                         break;
                     case 3:
                         /* =========== MENU MATRIX BALIKAN =========== */
+
                         break;
                     case 4:
                         /* =========== MENU INTERPOLASI POLINOM =========== */
@@ -894,18 +826,3 @@ public class Main {
         scanner.close();
     }
 }
-
-/*
-2 3 -1 5
-4 4 -3 3
--2 3 -1 1
-
-1 3 -2 0 2 0 0
-2 6 -5 -2 4 -3 -1
-0 0 5 10 0 15 5
-2 6 0 8 4 18 6
-
-0 0 0 1
-1 2 3 4
-4 5 9 1
-*/
