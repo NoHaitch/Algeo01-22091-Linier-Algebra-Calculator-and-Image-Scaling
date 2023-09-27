@@ -10,7 +10,6 @@ public class Driver {
         //        //x.contents.setMElmt(mtr[i][j],i,j);
         //    }
         //}
-        x.inputMatriksText();
         x.addIndentity();
         x.contents.addAugmentedToStep(1);
         System.out.println(x.contents.getStep());
