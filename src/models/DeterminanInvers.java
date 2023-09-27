@@ -5,9 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.Scanner;
 
+import operations.Matrix;
 import operations.OBE;
 
-public class Determinan {
+public class DeterminanInvers {
     public OBE contents;
     public boolean isDetZero = false;
     public int sign = 1;
@@ -15,15 +16,15 @@ public class Determinan {
     public int countMul = 0;
     public double result;
 
-    public Determinan(){
+    public DeterminanInvers(){
         this(0,0);
     }
 
-    public Determinan(int row, int col){
+    public DeterminanInvers(int row, int col){
         contents = new OBE(row, col);
     }
 
-    public Determinan(Determinan det){
+    public DeterminanInvers(DeterminanInvers det){
         this.contents = new OBE(det.contents);
         this.isDetZero = det.isDetZero;
         this.sign = det.sign;
@@ -165,6 +166,22 @@ public class Determinan {
         return false;
     }
 
+    public boolean isLanjutForInvers(){
+        for (int i = 0; i < contents.getMatrixRow()-1; i++){
+            int pass = contents.getIndexMain(i);
+            if (pass == contents.getMatrixCol()/2){
+                isDetZero = true;
+                return false;
+            }
+            for (int j = i+1; j < contents.getMatrixRow()/2; j++){
+                if (pass == contents.getIndexMain(j)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public void makeOneRow(int row){
         int iMain = findIMain(row);
         if (iMain < contents.getMatrixCol()){
@@ -254,5 +271,34 @@ public class Determinan {
     
     public double determinanKofaktor(){
         return contents.determinant();
+    }
+
+    public void addIndentity(){
+        int length = contents.getMatrixCol()*2;
+        for (int i = 0; i < contents.getMatrixRow(); i++){
+            for (int j = contents.getMatrixCol(); j < length; j++){
+                if (i == j - contents.getMatrixCol()){
+                    contents.setMElmt(1, i, j);
+                } else {
+                    contents.setElmt(1, i, j);
+                }
+            }
+        }
+        contents.setMatrixCol(length);
+    }
+
+    public Matrix inversMatrix(){
+        //I.S. Matriks mempunyai invers : determinan != 0;
+        Matrix temp = new Matrix();
+        DeterminanInvers oper = new DeterminanInvers(this);
+        oper.addIndentity();
+        boolean swapped = false;
+        oper.refreshIMain(0);
+        oper.sortIMain(0, swapped);
+        oper.makeOneRow(0);
+        swapped = false;
+        int pass = 1;
+        boolean lanjut = is
+        return temp;
     }
 }
