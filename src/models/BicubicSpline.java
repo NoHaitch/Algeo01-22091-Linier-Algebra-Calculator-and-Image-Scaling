@@ -1,17 +1,20 @@
 package models;
 
 import operations.OBE;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 import operations.Matrix;
 
 public class BicubicSpline {
-    OBE contents = new OBE();
+    public Matrix initF = new Matrix(16, 1);
     public static Matrix invX;
+    public double[] solveA = new double[16];
+    public String function = "";
 
     public BicubicSpline(){
-    }
-
-    public BicubicSpline(int row, int col){
-        contents = new OBE(row, col);
     }
 
     public static void funcF(double x, double y){
@@ -126,4 +129,62 @@ public class BicubicSpline {
         temp.contents.setAugmented(invX);
         invX.copyMatrix(temp.inversMatrix());
     } 
-}
+
+    public void inputInitFromText(String path){
+        try {
+            File inputFile = new File(path);
+            Scanner readFile = new Scanner(inputFile);
+            String line;
+            int idx = 0;
+            while (readFile.hasNextLine() && (line = readFile.nextLine()) != null){
+                String[] saved = line.split(" ");
+                int len = saved.length;
+                for (int i = 0; i < len; i++){
+                    double temp = Double.parseDouble(saved[i]);
+                    initF.setElmt(temp, idx, 0);
+                    idx ++;
+                }
+            }
+            readFile.close();
+        } catch (FileNotFoundException e){
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+            // TODO: handle exception
+        }
+    }
+
+    public void solveBicubic(){
+        Matrix temp = new Matrix(16, 1);
+        temp.copyMatrix(invX.multiplyMatrix(temp));
+        for (int i = 0; i < 16; i++){
+            solveA[i] = temp.getElmt(i, 0);
+        }
+    }
+
+    public double getFValueOf(double x, double y){
+        //I.S. 0 <= x <= 1 && 0 <= y <= 1
+        double value = 0;
+        int idx = 0;
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < 4; j++){
+                value += solveA[idx]*Math.pow(x,j)*Math.pow(y,i);
+                idx ++;
+            }
+        }
+        return value;
+    }
+
+    public void addFunctionText(){
+        String temp = "f(x,y) = ";
+        int idx = 0;
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < 4; j++){
+                if (solveA[idx] != 0){
+                    int val = (int)solveA[idx];
+                    if (val == solveA[idx]){
+                        
+                    }
+                }
+            }
+        }
+    }

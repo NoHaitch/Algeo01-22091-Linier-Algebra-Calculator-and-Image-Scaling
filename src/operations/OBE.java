@@ -621,7 +621,6 @@ public class OBE {
             }
             addAugmentedToStep(9);
             roundAllElement();
-            setSolusi();
             addAugmentedToStep(9);
             setSolusi();
             //addAugmentedToStep(9);
