@@ -2,6 +2,10 @@ package operations;
 
 import java.lang.Math;
 
+/* Class OBE */
+/*  Membuat objek OBE, yang digunakan untuk melakukan OBE */
+/*  dengan metode Gauss atau Gauss-Jordan */
+
 public class OBE {
     private Matrix Augmented;
     private int[] indexMain = new int[1000];
@@ -29,6 +33,54 @@ public class OBE {
         this.stepByStep = newOBE.stepByStep;
     }
 
+    public Matrix getCopyAugmented(){
+        return new Matrix(Augmented);
+    }
+
+    public void setAugmented(Matrix m){
+        this.Augmented = new Matrix(m);
+    }
+
+    
+
+    /* ----------- KELOMPOK Interaksi dengan IO ----------- */
+    @Override
+    public String toString(){
+        /* Melakukan Override fungsi untuk mempermudah penunjukan hasil */
+        return "OBE{solusi unik: "+getSolusiUnik()+", tidak ada solusi: "+getNoSolusi()+"}";
+    }
+
+    public String formatDouble(int i, int j, int length){
+        /* Mengubah format double menjadi lebih pendek */
+        String temp = Augmented.createString(i, j, length);
+        int panjang = temp.length();
+        if (panjang < length){
+            for (int x = 0; x < length-panjang; x++){
+                temp = " " + temp;
+            }
+        }
+        temp += " ";
+        return temp;
+    }
+
+    public void printAugmented(){
+        /* Menuliskan Matrix Augemented */
+        Augmented.displayMatrix();
+    }
+
+    public void printIMain(){
+        /* Menuliskan IndexMain */
+        System.out.print("[");
+        for (int i = 0; i < getMatrixRow(); i++){
+            System.out.print(getIndexMain(i));
+            if (i != getMatrixRow()-1){
+                System.out.print(" ");
+            }
+        }
+        System.out.println("]");
+    }
+
+    /* ---------- SELEKTOR ---------- */
     public int getMatrixRow(){
         return Augmented.getRowEff();
     }
@@ -88,16 +140,80 @@ public class OBE {
         return new String(stepByStep);
     }
 
-    public void printAugmented(){
-        Augmented.displayMatrix();
+    public boolean getNoSolusi(){
+        return noSolusi;
     }
 
-    public String formatDouble(int i, int j, int length){
-        String temp = Augmented.createString(i, j, length);
-        int panjang = temp.length();
-        if (panjang < length){
-            for (int x = 0; x < length-panjang; x++){
-                temp = " "+temp;
+    public boolean getSolusiUnik(){
+        return solusiUnik;
+    }
+
+    public void setSolusi(){
+        for (int i = 0; i < getMatrixRow(); i++){
+            setSolutions(getMElmt(i, getMatrixCol()-1),i);
+        }
+    }
+
+    /* ----------- KELOMPOK Operasi Penerus dari Matriks Augmented ----------- */
+    public boolean isSquare(){
+        return Augmented.isSquare();
+    }
+
+    public boolean isIdxValid(int i, int j){
+        return Augmented.isIdxValid(i, j);
+    }
+
+    public boolean isIdxEff(int i, int j){
+        return Augmented.isIdxEff(i, j);
+    }
+
+    public double determinant(){
+        return Augmented.determinant();
+    }
+
+    public void transposeMatrix(){
+        Augmented.transposeMatrix();
+    }
+
+    public Matrix rTransposeMatrix(){
+        return Augmented.rTransposeMatrix();
+    }
+
+    public void multiplyMatrixByConst(double k){
+        Augmented.multiplyMatrixByConst(k);
+    }
+
+    public Matrix kofakMatrix(){
+        return Augmented.kofaktorMatrix();
+    }
+
+    public Matrix inversMatrix(){
+        return Augmented.inversMatrix();
+    }
+
+    public Matrix multiplyMatrix(Matrix m){
+        return Augmented.multiplyMatrix(m);
+    }
+
+    public boolean getSolusiUnik(){
+        return solusiUnik;
+    }
+
+    public void setSolusi(){
+        for (int i = 0; i < getMatrixRow(); i++){
+            setSolutions(getMElmt(i, getMatrixCol()-1),i);
+        }
+    }
+
+    /* ---------- KELOMPOK TEST ---------- */
+    public boolean isContinue(){
+        /* Mengetest apakah operasi OBE perlu dilanjutkan atau tidak */
+        for (int i = 0; i < getMatrixRow()-1; i++){
+            int pass = getIndexMain(i);
+            if (pass == -1){
+                setNoSolusi(true);
+                //System.out.println("pass: "+pass);
+                return false;
             }
         }
         temp += " ";
@@ -115,7 +231,6 @@ public class OBE {
         }
         addNewLineToStep();
     }
-
     public void addSubstractToStep(int row1, int row2, double left, double right){
         String temp = ">>> ";
         String leftt = Double.toString(left);
@@ -171,6 +286,10 @@ public class OBE {
 
         }
         stepByStep += temp + "\n";
+    }
+
+    public void addStringToStep(String add){
+        stepByStep += add;
     }
 
     public void addNewLineToStep(){
@@ -505,11 +624,17 @@ public class OBE {
             }
             addAugmentedToStep(9);
             roundAllElement();
-            setSolusi();
             addAugmentedToStep(9);
+            setSolusi();
+            //addAugmentedToStep(9);
+            addSolutionToStep();
         } else {
             addGaussJordanRejected();
-            System.out.println("\nTidak dapat dilakukan metode Gauss-Jordan.\nKarena solusi tidak unik.\n");
+            setParameterSolutions();
+            roundAllElement();
+            addAugmentedToStep(9);
+            addParameterToStep();
+            //System.out.println("\nTidak dapat dilakukan metode Gauss-Jordan.\nKarena solusi tidak unik.\n");
         }
     }
 

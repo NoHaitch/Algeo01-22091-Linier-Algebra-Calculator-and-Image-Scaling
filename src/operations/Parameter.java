@@ -21,19 +21,6 @@ public class Parameter {
 
     public String turnIntoString(int first, int last){
         String temp = "";
-        if (number != 0){
-            int val = (int) number;
-            if (val == number){
-                temp += val +" ";
-            } else {
-                //System.out.println("Nilai :"+Math.round(number));
-                String str = Double.toString(number);
-                for (int i = 0; i < 9; i++){
-                    temp += str.charAt(i);
-                }
-                temp += " ";
-            }
-        }
         for (int i = first; i < last; i++){
             if (var[i] != 0){
                 int val = (int) var[i];
@@ -59,6 +46,50 @@ public class Parameter {
                     }
                     temp += "X"+(i+1)+" ";
                 }
+            }
+        }
+        if (number != 0){
+            int val = (int) number;
+            if (val == number){
+                temp = val +" " + temp;
+            } else {
+                //System.out.println("Nilai :"+Math.round(number));
+                String str = Double.toString(number);
+                if (str.length() < 9){
+                    temp = str + " " + temp;
+                } else {
+                    String slice = "";
+                    for (int i = 0; i < 9; i++){
+                        slice += str.charAt(i);
+                    }
+                    temp = slice + " "+temp;
+                }
+            }
+        } else {
+            if (temp == ""){
+                temp += "0";
+            }
+        }
+        if (number != 0){
+            int val = (int) number;
+            if (val == number){
+                temp = val +" " + temp;
+            } else {
+                //System.out.println("Nilai :"+Math.round(number));
+                String str = Double.toString(number);
+                if (str.length() < 9){
+                    temp = str + " " + temp;
+                } else {
+                    String slice = "";
+                    for (int i = 0; i < 9; i++){
+                        slice += str.charAt(i);
+                    }
+                    temp = slice + " "+temp;
+                }
+            }
+        } else {
+            if (temp == ""){
+                temp += "0";
             }
         }
         return temp;

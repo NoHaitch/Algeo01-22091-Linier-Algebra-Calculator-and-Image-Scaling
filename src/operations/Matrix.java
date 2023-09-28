@@ -23,6 +23,11 @@ public class Matrix {
         this(0,0);
     }
 
+    public Matrix(Matrix matrix){
+        this(0,0);
+        this.copyMatrix(matrix);
+    }
+
     /* ---------- KELOMPOK Interaksi dengan IO ---------- */
 
     /* Melakukan Override fungsi untuk mempermudah penunjukan hasil */
@@ -46,6 +51,7 @@ public class Matrix {
             }
             scanelmt.nextLine();
         }
+        scanelmt.close();
     }
     public void displayMatrix() {
         int i, j;
@@ -254,7 +260,11 @@ public class Matrix {
         int i, j;
         for (i = 0; i < getRowEff(); i++){
             for (j = 0; j < getColEff(); j++){
-                setElmt(getElmt(i, j)*k, i, j);
+                double temp = getElmt(i, j)*k;
+                if (temp == -0.0){
+                    temp = 0.0;
+                }
+                setElmt(temp, i, j);
             }
         }
     }
@@ -293,12 +303,16 @@ public class Matrix {
                 for (k = 0; k < m.getRowEff(); k++){
                     temp = temp + this.getElmt(i, k)*m.getElmt(k, j);
                 }
+                if (temp == -0.0){
+                    temp = 0.0;
+                }
                 result.setElmt(temp, i, j);
             }
         }
         return result;
     }
 
+    // udah ada multiplyMatrixByConst di atas kiw bisa diganti
     public void multiplyByConst(int x){
         /* I.S. */
         int i,j;

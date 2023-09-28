@@ -9,6 +9,7 @@ import operations.Matrix;
 import operations.OBE;
 
 public class DeterminanInvers {
+    //public static Matrix xInvers;
     public OBE contents;
     public boolean isDetZero = false;
     public int sign = 1;
@@ -36,11 +37,7 @@ public class DeterminanInvers {
         }
     }
 
-    public void inputMatriksText(){
-        String path; 
-        Scanner input = new Scanner (System.in);
-        System.out.print("Masukkan source file: ");
-        path = input.nextLine();
+    public void inputMatriksFile(String path){
         try {
             File inputFile = new File(path);
             Scanner readFile = new Scanner(inputFile);
@@ -67,7 +64,6 @@ public class DeterminanInvers {
             e.printStackTrace();
             // TODO: handle exception
         }
-        input.close();
     }
 
     public void saveToTextFile(String path){
@@ -279,17 +275,52 @@ public class DeterminanInvers {
             for (int j = contents.getMatrixCol(); j < length; j++){
                 if (i == j - contents.getMatrixCol()){
                     contents.setMElmt(1, i, j);
-                } else {
-                    contents.setElmt(1, i, j);
                 }
             }
         }
         contents.setMatrixCol(length);
     }
 
+    public void substractJrdn(int row1, int row2){
+        int idx = findIMain(row2);
+        double left = contents.getMElmt(row1, idx);
+        double right = contents.getMElmt(row2, idx);
+        //System.out.println(left+" ---- "+right);
+        if (left == right){
+            //System.out.println("Sama");
+            for (int i = idx; i < contents.getMatrixCol(); i++){
+                double temp = contents.getMElmt(row1, i)-contents.getMElmt(row2, i);
+                if (temp == -0.0){
+                    temp = 0.0;
+                }
+                contents.setMElmt(temp, row1, i);
+            }
+        } else if (left%right == 0){
+            //System.out.println("Case 2");
+            double mul = left/right;
+            for (int i = idx; i < contents.getMatrixCol(); i++){
+                double temp = contents.getMElmt(row1, i)-contents.getMElmt(row2, i)*mul;
+                if (temp == -0.0){
+                    temp = 0.0;
+                }
+                contents.setMElmt(temp, row1, i);
+            }
+        } else {
+            //System.out.println("Case 3");
+            for (int i = idx; i < contents.getMatrixCol(); i++){
+                double temp = contents.getMElmt(row1, i)-contents.getMElmt(row2, i)*left;
+                if (temp == -0.0){
+                    temp = 0.0;
+                }
+                contents.setMElmt(temp, row1, i);
+            }
+        }
+
+    }
+
     public Matrix inversMatrix(){
         //I.S. Matriks mempunyai invers : determinan != 0;
-        Matrix temp = new Matrix();
+        Matrix temp = new Matrix(contents.getMatrixRow(),contents.getMatrixRow());
         DeterminanInvers oper = new DeterminanInvers(this);
         oper.addIndentity();
         boolean swapped = false;
@@ -298,7 +329,32 @@ public class DeterminanInvers {
         oper.makeOneRow(0);
         swapped = false;
         int pass = 1;
-        boolean lanjut = is
+        boolean lanjut = oper.isLanjutForInvers();
+        while (lanjut && !oper.isDetZero && pass < oper.contents.getMatrixRow()){
+            for (int i = pass; i < oper.contents.getMatrixRow(); i++){
+                if (oper.contents.getIndexMain(i) == oper.contents.getIndexMain(pass-1)){
+                    oper.contents.substractRow(i, pass-1);
+                }
+            }
+            oper.refreshIMain(pass);
+            oper.sortIMain(pass, swapped);
+            oper.makeOneAny(pass);
+            pass++;
+            lanjut = isLanjutForInvers();
+        }
+        if (!oper.isDetZero){
+            for (int i = oper.contents.getMatrixRow()-2; i >= 0; i--){
+                for(int j = oper.contents.getMatrixRow()-1; j > i; j--){
+                    oper.substractJrdn(i, j);
+                }
+            }
+            for (int i = 0; i < oper.contents.getMatrixRow(); i++){
+                for (int j = 0; j < oper.contents.getMatrixRow(); j++){
+                    temp.setElmt(oper.contents.getMElmt(i, j+oper.contents.getMatrixRow()), i, j);
+                }
+            }
+            //oper.contents.printAugmented();
+        }
         return temp;
     }
 }

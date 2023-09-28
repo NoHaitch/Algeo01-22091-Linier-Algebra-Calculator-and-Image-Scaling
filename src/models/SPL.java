@@ -13,6 +13,7 @@ public class SPL {
     public SPL(){
         this(0,0);
     }
+
     public SPL(int row, int col){
         this.spl = new OBE(row, col);
     }
@@ -21,11 +22,12 @@ public class SPL {
         return new OBE(this.spl);
     }
 
-    public void inputSPLText(){
-        String path;
-        Scanner input = new Scanner (System.in);
-        System.out.print("Masukkan source file: ");
-        path = input.nextLine();
+    //getInput from Text file
+    public void inputSPLText(String path){
+        //String path; 
+        //Scanner input = new Scanner (System.in);
+        //System.out.print("Masukkan source file: ");
+        //path = input.nextLine();
         try {
             File inputFile = new File(path);
             Scanner readFile = new Scanner(inputFile);
@@ -52,7 +54,7 @@ public class SPL {
             e.printStackTrace();
             // TODO: handle exception
         }
-        input.close();
+        //input.close();
     }
 
     public void saveToTextFile(String path){
