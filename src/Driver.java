@@ -1,27 +1,21 @@
 //import operations.OBE;
-import models.BicubicSpline;
-import models.SPL;
+import models.*;
 
 public class Driver {
     public static void main(String[] args) {
-        BicubicSpline.setStaticInvX();
-        SPL temp = new SPL();
-        temp.inputSPLText("test/testCase.txt");
-        boolean isDiff = false;
+        ImageBSI.setDMat();
+        DeterminanInvers det = new DeterminanInvers(16,16);
+        det.inputMatriksFile("src/operations/D.txt");
+        ImageBSI.DMat.displayMatrix();
+        boolean adaBeda = false;
         for (int i = 0; i < 16; i++){
             for (int j = 0; j < 16; j++){
-                if (BicubicSpline.invX.getElmt(i, j) != temp.spl.getMElmt(i,j)){
-                    isDiff = true;
+                if (ImageBSI.DMat.getElmt(i, j) != det.contents.getMElmt(i, j)){
+                    adaBeda = true;
+                    System.out.println(i+1 + " " + (j+1));
                 }
             }
         }
-        System.out.println(isDiff);
-
-        //BicubicSpline.invX.displayMatrix();
-        //DeterminanInvers temp = new DeterminanInvers();
-        //temp.contents.setAugmented(BicubicSpline.invX);
-        //temp.contents.addAugmentedToStep(4);
-        //temp.saveToTextFile("test/testCase.txt");
-        //System.out.println(temp.contents.getStep());
+        System.out.println(adaBeda);
     }
 }
