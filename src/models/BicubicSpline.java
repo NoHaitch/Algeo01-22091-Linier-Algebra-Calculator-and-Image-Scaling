@@ -10,6 +10,7 @@ import operations.Matrix;
 public class BicubicSpline {
     public Matrix initF = new Matrix(16, 1);
     public static Matrix invX;
+    public static Matrix X = new Matrix(16, 16);
     public double[] solveA = new double[16];
     public String function = "";
     public double[] request = new double[2];
@@ -127,6 +128,7 @@ public class BicubicSpline {
             funcFxy(sect[0], sect[1]);
         }
         temp.contents.setAugmented(invX);
+        X.copyMatrix(temp.contents.getCopyAugmented());
         invX.copyMatrix(temp.inversMatrix());
     } 
 
