@@ -1,7 +1,6 @@
-package operations;
+package models;
 import operations.Matrix;
-import models.Point;
-import models.SPL;
+import operations.OBE;
 
 import java.io.File;
 import java.io.FileNotFoundException;
