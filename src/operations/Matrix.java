@@ -12,9 +12,9 @@ public class Matrix {
 
     /* ---------- KONSTRUKTOR ---------- */
     public Matrix(int rowEff, int colEff) {
+        matrix = new double[1000][1000];
         this.rowEff = rowEff;
         this.colEff = colEff;
-        matrix = new double[rowEff][colEff];
     }
 
     /* Konstruktor overloading */

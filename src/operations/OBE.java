@@ -128,10 +128,6 @@ public class OBE {
     public void setSolusiUnik(boolean cond){
         solusiUnik = cond;
     }
-
-    public boolean getNoSolusi(){
-        return noSolusi;
-    }
     public void setNoSolusi(boolean cond){
         noSolusi = cond;
     }
@@ -144,9 +140,6 @@ public class OBE {
         return noSolusi;
     }
 
-    public boolean getSolusiUnik(){
-        return solusiUnik;
-    }
 
     public void setSolusi(){
         for (int i = 0; i < getMatrixRow(); i++){
@@ -194,31 +187,7 @@ public class OBE {
     public Matrix multiplyMatrix(Matrix m){
         return Augmented.multiplyMatrix(m);
     }
-
-    public boolean getSolusiUnik(){
-        return solusiUnik;
-    }
-
-    public void setSolusi(){
-        for (int i = 0; i < getMatrixRow(); i++){
-            setSolutions(getMElmt(i, getMatrixCol()-1),i);
-        }
-    }
-
     /* ---------- KELOMPOK TEST ---------- */
-    public boolean isContinue(){
-        /* Mengetest apakah operasi OBE perlu dilanjutkan atau tidak */
-        for (int i = 0; i < getMatrixRow()-1; i++){
-            int pass = getIndexMain(i);
-            if (pass == -1){
-                setNoSolusi(true);
-                //System.out.println("pass: "+pass);
-                return false;
-            }
-        }
-        temp += " ";
-        return temp;
-    }
 
     public void addAugmentedToStep(int length){
         addNewLineToStep();
@@ -475,16 +444,6 @@ public class OBE {
         return false;
     }
 
-    public void printIMain(){
-        System.out.print("[");
-        for (int i = 0; i < getMatrixRow(); i++){
-            System.out.print(getIndexMain(i));
-            if (i != getMatrixRow()-1){
-                System.out.print(" ");
-            }
-        }
-        System.out.println("]");
-    }
 
     public void roundAllElement(){
         for (int i = 0; i < getMatrixRow(); i++){
@@ -597,13 +556,6 @@ public class OBE {
         printAugmented();
         System.out.println();
     }
-
-    public void setSolusi(){
-        for (int i = 0; i < getMatrixRow(); i++){
-            setSolutions(getMElmt(i, getMatrixCol()-1),i);
-        }
-    }
-
     public void addSolutionToStep(){
         String temp = "";
         for (int i = 0; i < getMatrixCol()-1; i++){
@@ -733,10 +685,4 @@ public class OBE {
         }
 
     }
-
-    @Override
-    public String toString(){
-        return "OBE{solusi unik: "+getSolusiUnik()+", tidak ada solusi: "+getNoSolusi()+"}";
-    }
-
 }

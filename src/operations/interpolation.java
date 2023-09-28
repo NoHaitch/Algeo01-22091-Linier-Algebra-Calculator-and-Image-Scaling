@@ -1,10 +1,23 @@
 package operations;
 import operations.Matrix;
 import models.Point;
+import models.SPL;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 public class interpolation {
-    Matrix m = new Matrix();
-    public static Matrix convertPtoM (Matrix m){ 
+    public Matrix point;
+    public double xRequest;
+    public interpolation(){
+        this(0);
+    }
+
+    public interpolation(int JmlhPoint){
+        point = new Matrix(JmlhPoint, 2);
+    }
+
+    public Matrix convertPtoM (Matrix m){ 
         // convert Matrix point to Matrix SPL
         int i, j, n, k;
         double x,y;
@@ -26,7 +39,7 @@ public class interpolation {
         return newm;
     }
     
-    public static Matrix askDataPoint() {
+    public Matrix askDataPoint() {
         // ask how many data and store them in Matrix for Point
         int i, j, n;
         Point p = new Point();
@@ -42,7 +55,7 @@ public class interpolation {
         return m;
     }
     
-    public static void displayFunction(OBE meselon){
+    public void displayFunction(OBE meselon){
         // display f(x)
         int i,j = meselon.getMatrixCol() - 1,n;
         n = meselon.getMatrixRow() - 1;
@@ -67,7 +80,7 @@ public class interpolation {
         }
     }
     
-    public static double taksiran(OBE meselon,double input){
+    public double taksiran(OBE meselon,double input){
         // return f(x) with x = input
         int i,j = meselon.getMatrixCol() - 1;
         Matrix Mnilai = new Matrix(1,meselon.getMatrixRow());
@@ -85,5 +98,44 @@ public class interpolation {
             }
         }
         return taksiran;
+    }
+
+    public void askDataPointFromFile(String path){
+        SPL temp = new SPL();
+        int i,j;
+        try {
+            File inputFile = new File(path);
+            Scanner readFile = new Scanner(inputFile);
+            String line;
+            int row = 0;
+            int column = 2;
+            while (readFile.hasNextLine() && (line = readFile.nextLine()) != null){
+                String[] saved = line.split(" ");
+                int len = saved.length;
+                if (len == 2){
+                    for (i = 0; i < column; i++){
+                        double tempdouble = Double.parseDouble(saved[i]);
+                        temp.getSPL().setMElmt(tempdouble, row, i);
+                    }
+                    row++;
+                } else{
+                    xRequest = Double.parseDouble(saved[0]);
+                }
+            }
+            temp.getSPL().setMatrixRow(row);
+            temp.getSPL().setMatrixCol(column);
+            readFile.close();
+        } catch (FileNotFoundException e){
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        // TODO: handle exception
+        }
+        this.point = new Matrix(temp.spl.getMatrixRow(), 2);
+        for (i = 0; i <= temp.spl.getMatrixRow(); i++ ){
+            for (j = 0; j < 2; j++){
+                point.setElmt(temp.spl.getMElmt(i, j), i, j);
+            }
+        }
+        point.displayMatrix();
     }
 }
