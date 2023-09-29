@@ -241,5 +241,4 @@ public class BicubicSpline {
         }
         function += temp;
     }
-
 }

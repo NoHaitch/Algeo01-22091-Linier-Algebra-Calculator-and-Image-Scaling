@@ -1,11 +1,11 @@
 package models;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.Scanner;
 
 import operations.OBE;
+// import operations.Matrix;
 
 public class SPL {
     public OBE spl;
@@ -16,10 +16,6 @@ public class SPL {
 
     public SPL(int row, int col){
         this.spl = new OBE(row, col);
-    }
-
-    public SPL(SPL newOne){
-        this.spl = new OBE(newOne.spl);
     }
 
     public OBE getSPL(){
@@ -61,8 +57,6 @@ public class SPL {
         //input.close();
     }
 
-
-    //Save the proccesses to Text file
     public void saveToTextFile(String path){
         String fPath = "";
         int i = 0;

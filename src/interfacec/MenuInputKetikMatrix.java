@@ -1,4 +1,4 @@
-package interfaces;
+package interfacec;
 
 import operations.Matrix;
 
@@ -8,11 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MenuInputKetikMatrix extends JFrame{
-    private String input;
-    protected Matrix M = new Matrix();
+    private Matrix M;
     private JPanel mainPanel;
-    private JTextField colInput;
     private JTextField rowInput;
+    private JTextField colInput;
     private JTextArea matrixInput;
     private JButton calculateButton;
     private JButton kembaliButton;
@@ -21,7 +20,9 @@ public class MenuInputKetikMatrix extends JFrame{
     private JLabel sizeLabel;
     private JLabel matrixLabel;
     private JPanel sizePanel;
+    public void setMatrix(){
 
+    }
     public MenuInputKetikMatrix(String lastMenu){
         setContentPane(mainPanel);
         setTitle("Main Application");
@@ -29,7 +30,6 @@ public class MenuInputKetikMatrix extends JFrame{
         setResizable(true);
         setSize(840, 500);
         setVisible(true);
-        matrixInput.setText("1 1\n1 2");
 
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) ((dimension.getWidth() - getWidth()) / 2);
@@ -49,23 +49,50 @@ public class MenuInputKetikMatrix extends JFrame{
                 int rowEff = 0;
                 int colEff = 0;
                 try {
-                    rowEff = Integer.parseInt(rowInput.getText());
-                    colEff = Integer.parseInt(colInput.getText());
+                    rowEff = Integer.parseInt(colInput.getText());
+                    colEff = Integer.parseInt(rowInput.getText());
                     sizeValid = true;
-                    M.setRowEff(rowEff);
-                    M.setColEff(colEff);
-                    System.out.println("Row Input : " + M.getRowEff() + " ,Col Input : " + M.getColEff());
                 }
                 catch (NumberFormatException nfe){
                     ErrorPopOut popOut = new ErrorPopOut("Masukkan salah format","<html>Ukuran Matriks harus dalam bentuk bilangan bulat<br>(pastikan tidak ada spasi di akhir angka)</html>");
                 }
                 if(sizeValid){
+                    Matrix M = new Matrix(rowEff,colEff);
                     String inputText = matrixInput.getText();
                     String[] lines = inputText.split("\n");
-                    if(countElmtInput(lines) == (M.getRowEff() * M.getColEff()) && M.getColEff() == countColInput(lines) && M.getRowEff() == countRowInput(lines)) {
-                        dispose();
-                        MenuResult menuResult = new MenuResult(inputText,"k","SPL");
-                    }else {
+                    if(countElmtInput(lines) == (M.getRowEff() * M.getColEff()) && M.getColEff() == countColInput(lines) && M.getRowEff() == countRowInput(lines)){
+                        int i = 0;
+                        boolean error = false;
+                        for(String line : lines){
+                            String[] splitedInput = line.split(" ");
+                            int j = 0;
+                            for (String s : splitedInput) {
+                                if(s.contains("\n")){
+                                    s = s.replace("\n","");
+                                }
+                                try {
+                                    double elmt = Double.parseDouble(s);
+                                    M.setElmt(elmt,i,j);
+                                }
+                                catch (NumberFormatException nfe){
+                                    ErrorPopOut popOut = new ErrorPopOut("Masukkan salah format","<html>Isi Matriks harus dalam bentuk bilangan atau desimal<br>Pastikan setiap elemen dipisahkan spasi dan setiap baris dipisahkan enter</html>");
+                                    error = true;
+                                }
+                                if(error){
+                                    break;
+                                }
+                                j++;
+                            }
+                            if(error){
+                                break;
+                            }
+                            i++;
+                        }
+                        System.out.println(countColInput(lines) + " col " + M.getColEff());
+                        System.out.println(countRowInput(lines) + " row " + M.getRowEff());
+                        M.displayMatrix();
+                    }
+                    else {
                         ErrorPopOut popOut = new ErrorPopOut("Ukuran Matriks dan masukan isi berbeda jumlahnya","Masukan Matriks harus sesuai dengan ukurannya");
                     }
                 }
@@ -79,14 +106,6 @@ public class MenuInputKetikMatrix extends JFrame{
         return M;
     }
 
-    public void setString(String input){
-        this.input = input;
-    }
-
-    public String getString(){
-        return input;
-    }
-
     public int countElmtInput(String[] lines){
         int count = 0;
         for(String line: lines){
@@ -96,7 +115,7 @@ public class MenuInputKetikMatrix extends JFrame{
         }
         return count;
     }
-    public int countColInput(String[] lines){
+    public int countRowInput(String[] lines){
         int count = 0;
         for(String line: lines){
             for(String elmt: line.split(" ")){
@@ -106,11 +125,12 @@ public class MenuInputKetikMatrix extends JFrame{
         }
         return count;
     }
-    public int countRowInput(String[] lines){
+    public int countColInput(String[] lines){
         int count = 0;
         for(String line: lines){
             count ++;
         }
         return count;
     }
+
 }
