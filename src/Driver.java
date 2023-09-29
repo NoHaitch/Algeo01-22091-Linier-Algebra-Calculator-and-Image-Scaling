@@ -4,11 +4,11 @@ import operations.*;
 
 public class Driver {
     public static void main(String[] args) {
-        ImageBSI temp = new ImageBSI("src/img.png", "test/cobacoba.png");
-        BicubicSpline.setStaticInvX();
-        BicubicSpline.invX.displayMatrix();
+        ImageBSI temp = new ImageBSI("src/gauss.jpeg", "test/gaussScaled.png");
+        //BicubicSpline.setStaticInvX();
+        //BicubicSpline.invX.displayMatrix();
         ImageBSI.setXInvxDMat();
-        ImageBSI.XInvxDMat.displayMatrix();
-        temp.scaleImage(8);
+        //ImageBSI.XInvxDMat.displayMatrix();
+        temp.scaleImage(9.93);
     }
 }

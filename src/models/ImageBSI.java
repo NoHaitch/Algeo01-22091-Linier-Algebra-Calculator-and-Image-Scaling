@@ -196,8 +196,8 @@ public class ImageBSI{
             sourceImg = ImageIO.read(imgFile);
             int height = sourceImg.getHeight();
             int width = sourceImg.getWidth();
-            System.out.println(" ukuran sekarang "+width+" <---> "+height);
-            tempImg = new BufferedImage(width+4, height+4, sourceImg.getType());
+            //System.out.println(" ukuran sekarang "+width+" <---> "+height);
+            tempImg = new BufferedImage(width+4, height+4, BufferedImage.TYPE_INT_RGB);
             for (int i = 0; i < width; i++){
                 for (int j = 0; j < height; j++){
                     tempImg.setRGB(i+2, j+2, sourceImg.getRGB(i, j));
@@ -235,31 +235,28 @@ public class ImageBSI{
                     Aij[i-1][j-1][1] = new Matrix(XInvxDMat.multiplyMatrix(image[1]));
                     Aij[i-1][j-1][2] = new Matrix(XInvxDMat.multiplyMatrix(image[2]));
                     Aij[i-1][j-1][3] = new Matrix(XInvxDMat.multiplyMatrix(image[3]));
-                    if (i == 2 && j == 2){
-                        image[2].displayMatrix();
-                        XInvxDMat.multiplyMatrix(image[2]).displayMatrix();
-                    }
                 }
             }
-            Aij[3][3][1].displayMatrix();
             // Ukuran baru untuk keluaran Image
             int fWidth = (int)(width*scale);
             int fHeight = (int)(height*scale);
-            System.out.println(" ukuran sekarang "+fWidth+" <---> "+fHeight);
+            //System.out.println(" ukuran sekarang "+fWidth+" <---> "+fHeight);
             
-            finalImg = new BufferedImage(fWidth, fHeight, sourceImg.getType());
+            finalImg = new BufferedImage(fWidth, fHeight, BufferedImage.TYPE_INT_RGB);
 
             for (int i = 0; i < fWidth; i++){
                 for (int j = 0; j < fHeight; j++){
-                    double xcon = 0.5 + (2*i + 1)*width/2/fWidth;
-                    double ycon = 0.5 + (2*j + 1)*height/2/fHeight;
+                    double xcon = (double)((1 + (2*i+1)*(double)width/(double)fWidth)/2);
+                    double ycon = (double)((1 + (2*j+1)*(double)height/(double)fHeight)/2);
                     
+
+
                     double Ai = Math.floor(xcon);
                     double Aj = Math.floor(ycon);
 
                     double xtrace = xcon - Ai;
                     double ytrace = ycon - Aj;
-
+                    //System.out.println("x: "+xcon+", y: "+ycon);
                     int rgb = getFValueOf(xtrace, ytrace, Aij[(int)Ai][(int)Aj]);
 
                     finalImg.setRGB(i, j, rgb);
