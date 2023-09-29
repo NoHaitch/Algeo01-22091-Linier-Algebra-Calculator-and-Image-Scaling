@@ -1,9 +1,8 @@
 package models;
 
-import operations.OBE;
-
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.util.Scanner;
 
 import operations.Matrix;
@@ -11,8 +10,10 @@ import operations.Matrix;
 public class BicubicSpline {
     public Matrix initF = new Matrix(16, 1);
     public static Matrix invX;
+    public static Matrix X = new Matrix(16, 16);
     public double[] solveA = new double[16];
     public String function = "";
+    public double[] request = new double[2];
 
     public BicubicSpline(){
     }
@@ -127,6 +128,7 @@ public class BicubicSpline {
             funcFxy(sect[0], sect[1]);
         }
         temp.contents.setAugmented(invX);
+        X.copyMatrix(temp.contents.getCopyAugmented());
         invX.copyMatrix(temp.inversMatrix());
     } 
 
@@ -139,10 +141,15 @@ public class BicubicSpline {
             while (readFile.hasNextLine() && (line = readFile.nextLine()) != null){
                 String[] saved = line.split(" ");
                 int len = saved.length;
-                for (int i = 0; i < len; i++){
-                    double temp = Double.parseDouble(saved[i]);
-                    initF.setElmt(temp, idx, 0);
-                    idx ++;
+                if (len == 4){
+                    for (int i = 0; i < len; i++){
+                        double temp = Double.parseDouble(saved[i]);
+                        initF.setElmt(temp, idx, 0);
+                        idx ++;
+                    }
+                } else {
+                    request[0] = Double.parseDouble(saved[0]);
+                    request[1] = Double.parseDouble(saved[1]);
                 }
             }
             readFile.close();
@@ -153,12 +160,45 @@ public class BicubicSpline {
         }
     }
 
+    public void saveProccessesToText(String path){
+        String fPath = "";
+        int i = 0;
+        while (path.charAt(i) != '.'){
+            fPath += path.charAt(i);
+            i++;
+        }
+        String add = "";
+        int idx = 0;
+        File testFile = new File(fPath+".txt");
+        while (testFile.exists()){
+            idx ++;
+            add = "("+idx+")";
+            testFile = new File(fPath+add+".txt");
+        }
+        fPath += add + ".txt";
+        try {
+            FileWriter writer = new FileWriter(fPath);
+            writer.write(function);
+            writer.close();
+            System.out.println("\nPenyelesaian berhasil disimpan ke :"+fPath+"\n\n");
+        } catch (Exception e) {
+            System.out.println("An error occurred\n");
+            e.printStackTrace();
+            // TODO: handle exception
+        }
+    }
+
     public void solveBicubic(){
         Matrix temp = new Matrix(16, 1);
-        temp.copyMatrix(invX.multiplyMatrix(temp));
+        if (invX == null){
+            setStaticInvX();
+        }
+        temp.copyMatrix(invX.multiplyMatrix(initF));
+        //temp.displayMatrix();
         for (int i = 0; i < 16; i++){
             solveA[i] = temp.getElmt(i, 0);
         }
+        addFunctionText();
     }
 
     public double getFValueOf(double x, double y){
@@ -171,20 +211,35 @@ public class BicubicSpline {
                 idx ++;
             }
         }
+        String temp = "\nf("+x+","+y+") = "+value+"\n";
+        function += temp;
+        return value;
+    }
+
+    public double getRequestAnswer(){
+        double value = 0;
+        int idx = 0;
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < 4; j++){
+                value += solveA[idx]*Math.pow(request[0],j)*Math.pow(request[1],i);
+                idx ++;
+            }
+        }
+        String temp = "\nf("+request[0]+","+request[1]+") = "+value+"\n";
+        function += temp;
         return value;
     }
 
     public void addFunctionText(){
-        String temp = "f(x,y) = ";
+        String temp = "";
         int idx = 0;
         for (int i = 0; i < 4; i++){
             for (int j = 0; j < 4; j++){
-                if (solveA[idx] != 0){
-                    int val = (int)solveA[idx];
-                    if (val == solveA[idx]){
-                        
-                    }
-                }
+                temp += "a" + j+""+i+" = "+solveA[idx]+"\n";
+                idx++;
             }
         }
+        function += temp;
     }
+
+}
