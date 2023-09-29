@@ -12,7 +12,7 @@ public class Matrix {
 
     /* ---------- KONSTRUKTOR ---------- */
     public Matrix(int rowEff, int colEff) {
-        matrix = new double[1000][1000];
+        this.matrix = new double[rowEff*2][colEff*2]; 
         this.rowEff = rowEff;
         this.colEff = colEff;
     }
@@ -24,7 +24,7 @@ public class Matrix {
     }
 
     public Matrix(Matrix matrix){
-        this(0,0);
+        this(matrix.getRowEff(),matrix.getColEff());
         this.copyMatrix(matrix);
     }
 
@@ -224,8 +224,8 @@ public class Matrix {
                 this.setElmt(input.getElmt(i, j), i, j);
             }
         }
-        this.setRowEff(input.getRowEff());
-        this.setColEff(input.getColEff());
+        this.rowEff = input.getRowEff();
+        this.colEff = input.getColEff();
     }
 
     public void transposeMatrix(){
