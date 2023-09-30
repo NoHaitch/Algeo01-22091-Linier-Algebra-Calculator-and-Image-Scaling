@@ -13,7 +13,7 @@ public class Matrix {
 
     /* ---------- KONSTRUKTOR ---------- */
     public Matrix(int rowEff, int colEff) {
-        this.matrix = new double[rowEff*2][colEff*2]; 
+        this.matrix = new double[rowEff][colEff*2]; 
         this.rowEff = rowEff;
         this.colEff = colEff;
     }
