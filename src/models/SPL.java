@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.Scanner;
+
+import operations.Matrix;
 import operations.OBE;
 
 /* Class SPL */
@@ -91,5 +93,17 @@ public class SPL {
     /* ---------- SELEKTOR ---------- */
     public OBE getSPL(){
         return new OBE(this.spl);
+    }
+
+    /* ---------- KELOMPOK Operasi Utama ---------- */
+    public void cramer(){
+        /* Penyelesaian dengan kaidah cramer */
+        /* Prekondisi: Matriks persegi */
+        int len = spl.getMatrixCol();
+        for(int col = 0; col < len-1; col++){
+            Matrix cramer = spl.getMatrixCramer(col);
+            cramer.displayMatrix();
+            System.out.printf("res : " + (col+1) + " ->" + cramer.determinant() + "\n");
+        }
     }
 }

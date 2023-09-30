@@ -36,7 +36,6 @@ public class OBE {
         this.stepByStep = newOBE.stepByStep;
     }
 
-
     /* ----------- KELOMPOK Interaksi dengan IO ----------- */
     @Override
     public String toString(){
@@ -158,6 +157,20 @@ public class OBE {
 
     public double determinant(){
         return Augmented.determinant();
+    }
+
+    public Matrix getMatrixCramer(int col){
+        /* Mengembalikan Matriks Cramer, dengan baris col diganti dengan b, pada ax=b */
+        Matrix cramer = new Matrix(Augmented.getRowEff(),Augmented.getColEff()-1);
+        for(int i = 0; i < Augmented.getRowEff();i++){
+            for(int j = 0; j< Augmented.getColEff()-1;j++){
+                cramer.setElmt(Augmented.getElmt(i,j),i,j);
+            }
+        }
+        for(int i = 0; i < Augmented.getRowEff();i++){
+            cramer.setElmt(Augmented.getElmt(i, Augmented.getColEff()-1),i,col);
+        }
+        return cramer;
     }
 
     /* ----------- KELOMPOK TEST ----------- */
