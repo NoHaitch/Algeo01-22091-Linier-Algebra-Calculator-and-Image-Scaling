@@ -1,11 +1,10 @@
-import models.DeterminanInvers;
-import models.SPL;
-import operations.Matrix;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Objects;
 import java.util.Scanner;
+import models.DeterminanInvers;
+import models.SPL;
+import operations.Matrix;
 
 public class Main {
     public static void println(String str){
@@ -80,12 +79,12 @@ public class Main {
                                                                     /* Baca Isi Matrix */
                                                                     boolean isInputMatrixValid = true;
                                                                     int i = 0;
-                                                                    while(i < row && isInputMatrixValid){
+                                                                    while(i < row && isInputMatrixValid) {
                                                                         int j = 0;
-                                                                        while(j < col && isInputMatrixValid) {
+                                                                        while (j < col && isInputMatrixValid) {
                                                                             try {
                                                                                 double elmt = scanner.nextDouble();
-                                                                                spl.spl.setMElmt(elmt,i,j);
+                                                                                spl.spl.setMElmt(elmt, i, j);
                                                                             } catch (Exception InputMismatchException) {
                                                                                 println("Isi Matrix salah. Pastikan isi matriks adalah angka desimal");
                                                                                 isInputMatrixValid = false;
@@ -94,10 +93,9 @@ public class Main {
                                                                         }
                                                                         i++;
                                                                     }
-                                                                    scanner.nextLine();
                                                                     if(isInputMatrixValid) {
                                                                         spl.spl.gaussAndSolutions();
-                                                                        println(" ================== HASIL ================== ");
+                                                                        println("\n ================== HASIL ================== ");
                                                                         println(spl.spl.getStep());
                                                                         isInputUkuranValid = false;
                                                                         isInputMenu = false;
@@ -570,12 +568,12 @@ public class Main {
                                                         boolean isInputUkuranValid = true;
                                                         while(isInputUkuranValid) {
                                                             println("\n ===== Metode Ketik ===== ");
-                                                            println("Ketik -1 untuk kembali ");
                                                             try {
                                                                 print(" >>> Masukkan Ukuran Matriks (n x n) : ");
                                                                 int n = Integer.parseInt(scanner.nextLine());
                                                                 if(n <= 0){
                                                                     isInputUkuranValid = false ;
+                                                                    println("Ukuran Matriks salah ( n > 0 )");
                                                                 }
                                                                 else {
                                                                     println(" >>> Masukkan Nilai Matriks :");
@@ -616,7 +614,6 @@ public class Main {
                                                         DeterminanInvers determinan = new DeterminanInvers();
                                                         boolean isinputValid = true;
                                                         while(isinputValid) {
-                                                            boolean isInputMatrixValid = true;
                                                             println("Ketik 0 untuk kembali");
                                                             print(" >>> Masukkan alamat file: ");
                                                             String path = scanner.nextLine();
@@ -643,15 +640,13 @@ public class Main {
                                                                         row++;
                                                                     }
                                                                     readFile.close();
-                                                                    if(isInputMatrixValid) {
-                                                                        determinan.contents.setMatrixRow(row);
-                                                                        determinan.contents.setMatrixCol(column);
-                                                                        println(" ================== HASIL ================== ");
-                                                                        println("   Determinan =   " + determinan.determinanKofaktor());
-                                                                        isinputValid = false;
-                                                                        isInputMenu = false;
-                                                                        isDeterminanMenu = false;
-                                                                    }
+                                                                    determinan.contents.setMatrixRow(row);
+                                                                    determinan.contents.setMatrixCol(column);
+                                                                    println(" ================== HASIL ================== ");
+                                                                    println("   Determinan =   " + determinan.determinanKofaktor());
+                                                                    isinputValid = false;
+                                                                    isInputMenu = false;
+                                                                    isDeterminanMenu = false;
                                                                 } catch (FileNotFoundException e) {
                                                                     println("Alamat file salah. Contoh alamat benar : src/input.txt ");
                                                                 }

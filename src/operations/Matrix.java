@@ -153,7 +153,7 @@ public class Matrix {
         return i >= 0 && i < this.getRowEff() && j >= 0 && j < this.getColEff();
     }
 
-    /* ---------- KELOMPOK Operasi ---------- */
+    /* ---------- KELOMPOK Operasi Utama ---------- */
     public int countElmt(){
         /* Mengembalikan jumlah elemen efektif */
         int i, j, count = 0;
