@@ -282,7 +282,6 @@ public class Main {
                                             }
                                         }
                                         break;
-                                    /* TODO CASE 3 CASE 4*/
                                     case 3:
                                         /* ========== Metode Matriks Balikan ========== */
                                         while(isInputMenu) {

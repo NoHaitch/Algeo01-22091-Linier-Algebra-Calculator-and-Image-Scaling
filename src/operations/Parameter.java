@@ -1,32 +1,43 @@
 package operations;
 
-
+/* Class Parameter */
+/* Berisi fungsi serta variabel untuk mengatasi Hasil Parameter SPL */
 public class Parameter {
+
+    /* ---------- GLOBAL VARIABLES ---------- */
     double number = 0f;
     double[] var = new double[1000];
     boolean terisi = false;
     char symbol = (char)966; // 181
 
+    /* ---------- KONSTRUKTOR ---------- */
     public Parameter(){
     }
-    
+
+    /* ---------- SELEKTOR ---------- */
     public void setParamtr(double number, int idx, double koef, boolean terisi){
-        //System.out.println(number);
-        //System.out.println(idx);
-        //System.out.println(koef);
+        /* Mengisi Parameter */
         this.number += number;
         var[idx] += koef;
         this.terisi = terisi;
     }
 
+    /* ---------- KELOMPOK TEST ---------- */
+    public boolean isTerisi(){
+        /* Mengembalikan apakah Parameter terisi atau tidak */
+        return terisi;
+    }
+
+    /* ---------- KELOMPOK Casting ---------- */
     public String turnIntoString(int first, int last){
+        /* Mengubah Parameter menjadi sebuah String */
         String temp = "";
         for (int i = first; i < last; i++){
             if (var[i] != 0){
                 int val = (int) var[i];
                 if (val == var[i]){
                     if (val == 1){
-                        temp += "X"+(i+1) + " ";
+                        temp += ("X" + (i + 1) + " ");
                     } else if (val == -1){
                         temp += "-X"+(i+1)+" ";
                     } else {
@@ -53,7 +64,6 @@ public class Parameter {
             if (val == number){
                 temp = val +" " + temp;
             } else {
-                //System.out.println("Nilai :"+Math.round(number));
                 String str = Double.toString(number);
                 if (str.length() < 9){
                     temp = str + " " + temp;
@@ -66,7 +76,7 @@ public class Parameter {
                 }
             }
         } else {
-            if (temp == ""){
+            if (temp.isEmpty()){
                 temp += "0";
             }
         }
@@ -75,7 +85,6 @@ public class Parameter {
             if (val == number){
                 temp = val +" " + temp;
             } else {
-                //System.out.println("Nilai :"+Math.round(number));
                 String str = Double.toString(number);
                 if (str.length() < 9){
                     temp = str + " " + temp;
@@ -88,16 +97,10 @@ public class Parameter {
                 }
             }
         } else {
-            if (temp == ""){
+            if (temp.isEmpty()){
                 temp += "0";
             }
         }
         return temp;
-        //return "X"+first+" ";
-    }
-
-    public boolean isTerisi(){
-        return terisi;
     }
 }
-    

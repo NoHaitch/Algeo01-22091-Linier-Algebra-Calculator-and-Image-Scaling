@@ -1,33 +1,35 @@
 package models;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.Scanner;
-
 import operations.OBE;
-// import operations.Matrix;
 
+/* Class SPL */
+/* Membuat objek SPL, untuk permasalahan Sistem Persamaan Linier */
 public class SPL {
+
+    /* ---------- GLOBAL VARIABLES ---------- */
     public OBE spl;
-    
+
+    /* ---------- KONSTRUKTOR ---------- */
     public SPL(){
         this(0,0);
     }
 
+    /* Konstruktor overloading */
     public SPL(int row, int col){
         this.spl = new OBE(row, col);
     }
 
-    public OBE getSPL(){
-        return new OBE(this.spl);
-    }
-
-    //getInput from Text file
-    public void inputSPLText(String path){
-        //String path; 
-        //Scanner input = new Scanner (System.in);
-        //System.out.print("Masukkan source file: ");
-        //path = input.nextLine();
+    /* ---------- KELOMPOK Interaksi dengan IO ---------- */
+    public void inputSPLText(){
+        /* Membaca file txt untuk dilakukan operasi SPL */
+        String path;
+        Scanner input = new Scanner (System.in);
+        System.out.print("Masukkan source file: ");
+        path = input.nextLine();
         try {
             File inputFile = new File(path);
             Scanner readFile = new Scanner(inputFile);
@@ -58,6 +60,7 @@ public class SPL {
     }
 
     public void saveToTextFile(String path){
+        /* Menyimpan hasil Operasi Ke dalam file text */
         String fPath = "";
         int i = 0;
         while (path.charAt(i) != '.'){
@@ -85,4 +88,8 @@ public class SPL {
         }
     }
 
+    /* ---------- SELEKTOR ---------- */
+    public OBE getSPL(){
+        return new OBE(this.spl);
+    }
 }

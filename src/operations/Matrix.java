@@ -3,9 +3,11 @@ package operations;
 import java.util.Scanner;
 
 /* Class Matrix */
-/* Membuat objek matrix, serta berisi fungsi-fungsi operasi matriks */
-/* Seperti inverse, transpose serta determinan kofaktor */
+/* Berisi fungsi-fungsi operasi matriks Seperti inverse, */
+/* transpose serta determinan kofaktor */
 public class Matrix {
+
+    /* ---------- GLOBAL VARIABLES ---------- */
     private double[][] matrix;
     private int rowEff;
     private int colEff;
@@ -35,6 +37,7 @@ public class Matrix {
     public String toString() {
         return "Matrix{row: " + rowEff + ", col: " + getColEff() + "}";
     }
+
     public void readMatrix(int row, int col){
         /* I.S. Matriks terdifinisi dan kosong */
         /* F.S. Matriks bernilai*/
@@ -53,6 +56,7 @@ public class Matrix {
         }
         scanelmt.close();
     }
+
     public void displayMatrix() {
         int i, j;
         for(i = 0; i < this.getRowEff(); ++i) {
@@ -282,6 +286,7 @@ public class Matrix {
         }
         return temp;
     }
+
     public Matrix inversMatrix(){
         /* Mengembalikan Matriks inverse */
         Matrix invers = new Matrix();
@@ -310,16 +315,5 @@ public class Matrix {
             }
         }
         return result;
-    }
-
-    // udah ada multiplyMatrixByConst di atas kiw bisa diganti
-    public void multiplyByConst(int x){
-        /* I.S. */
-        int i,j;
-        for (i = 0; i < this.rowEff; i++){
-            for (j = 0; j < this.colEff; j++){
-                this.matrix[i][j] *= x;
-            }
-        }
     }
 }
