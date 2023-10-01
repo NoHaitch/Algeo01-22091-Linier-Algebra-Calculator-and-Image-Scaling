@@ -288,7 +288,7 @@ public class Matrix {
     }
 
     public Matrix inversMatrix(){
-        /* Mengembalikan Matriks inverse */
+        /* Mengembalikan Matriks inverse metode Adjoin*/
         Matrix invers = new Matrix();
         invers.copyMatrix(this.kofaktorMatrix());
         double det = 1/this.determinant();

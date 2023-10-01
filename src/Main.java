@@ -1,5 +1,6 @@
 import models.DeterminanInvers;
 import models.SPL;
+import operations.Matrix;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -307,7 +308,7 @@ public class Main {
                                         println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
                                     }
                                     if (isInputSPLValid) {
-                                        boolean terisiSPL = false;
+                                        boolean terisiMatriks = false;
                                         switch (opsiMenuDet) {
                                             case 1:
                                                 /* ============ Input Ketik =========== */
@@ -350,7 +351,7 @@ public class Main {
                                                             scanner.nextLine();
                                                             if (isInputMatrixValid) {
                                                                 inputKetik = false;
-                                                                terisiSPL = true;
+                                                                terisiMatriks = true;
                                                             }
                                                         }
                                                     }
@@ -396,7 +397,7 @@ public class Main {
                                                             det.contents.setMatrixRow(row);
                                                             det.contents.setMatrixCol(column);
                                                             inputFile = false;
-                                                            terisiSPL = true;
+                                                            terisiMatriks = true;
                                                         }
                                                     }
                                                 }
@@ -407,19 +408,17 @@ public class Main {
                                             default:
                                                 println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
                                         }
-                                        if (terisiSPL) {
+                                        if (terisiMatriks) {
                                             if (tipeMenuDet.equals("Kofaktor")) {
                                                 println(" ================== HASIL ================== ");
                                                 println(" Determinan = " + det.determinanKofaktor());
-                                                inputDet = false;
-                                                detMenu = false;
                                             } else{
                                                 det.CalculateOBE();
                                                 println(" ================== HASIL ================== ");
                                                 println(det.contents.getStep());
-                                                inputDet = false;
-                                                detMenu = false;
                                             }
+                                            inputDet = false;
+                                            detMenu = false;
                                         }
                                     }
                                 }
@@ -431,28 +430,28 @@ public class Main {
                     boolean BalikanMenu = true;
                     while (BalikanMenu) {
                         println("\n   ========== Pilih Metode Determinan ========== ");
-                        println("1. Metode Ekspansi Kofaktor");
-                        println("2. Metode Reduksi Baris dengan OBE");
+                        println("1. Metode Matriks Balikan");
+                        println("2. Metode Adjoin");
                         println("3. Kembali");
                         print(" >>> Pilih Metode Determinan : ");
 
-                        boolean isInputMenuDetValid = false;
-                        int opsiMenuDet = -1;
+                        boolean isInputMenuBalikanValid = false;
+                        int opsiMenuBalikan = -1;
                         try {
-                            opsiMenuDet = Integer.parseInt(scanner.nextLine());
-                            isInputMenuDetValid = true;
+                            opsiMenuBalikan = Integer.parseInt(scanner.nextLine());
+                            isInputMenuBalikanValid = true;
                         } catch (Exception e) {
                             println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
                         }
 
-                        if (isInputMenuDetValid) {
-                            String tipeMenuDet = "";
-                            switch (opsiMenuDet) {
+                        if (isInputMenuBalikanValid) {
+                            String tipeMenuBalikan = "";
+                            switch (opsiMenuBalikan) {
                                 case 1:
-                                    tipeMenuDet = "Kofaktor";
+                                    tipeMenuBalikan = "Balikan";
                                     break;
                                 case 2:
-                                    tipeMenuDet = "OBE";
+                                    tipeMenuBalikan = "Adjoin";
                                     break;
                                 case 3:
                                     BalikanMenu = false;
@@ -460,11 +459,11 @@ public class Main {
                                 default:
                                     println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
                             }
-                            DeterminanInvers det = new DeterminanInvers(1000,1000);
-                            if (!tipeMenuDet.isEmpty()) {
+                            DeterminanInvers invers = new DeterminanInvers(1000,1000);
+                            if (!tipeMenuBalikan.isEmpty()) {
                                 boolean inputDet = true;
                                 while (inputDet) {
-                                    /* =========== INPUT MATRIKS Determinan =========== */
+                                    /* =========== INPUT MATRIKS Balikan =========== */
                                     println("\n ========== Pilih Metode Masukkan ==========");
                                     println("1. Masukkan Ketik");
                                     println("2. Masukkan dalam bentuk File");
@@ -472,14 +471,14 @@ public class Main {
                                     print(" >>> Pilih Metode Masukkan : ");
                                     boolean isInputSPLValid = false;
                                     try {
-                                        opsiMenuDet = Integer.parseInt(scanner.nextLine());
+                                        opsiMenuBalikan = Integer.parseInt(scanner.nextLine());
                                         isInputSPLValid = true;
                                     } catch (Exception e) {
                                         println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
                                     }
                                     if (isInputSPLValid) {
-                                        boolean terisiSPL = false;
-                                        switch (opsiMenuDet) {
+                                        boolean terisiMatriks = false;
+                                        switch (opsiMenuBalikan) {
                                             case 1:
                                                 /* ============ Input Ketik =========== */
                                                 boolean inputKetik = true;
@@ -499,7 +498,7 @@ public class Main {
                                                         if (row <= 1) {
                                                             println("Ukuran Matriks harus bilangan bulat positif");
                                                         } else {
-                                                            det = new DeterminanInvers(row, col);
+                                                            invers = new DeterminanInvers(row, col);
                                                             println(">>> Masukkan Isi Matriks " + row + " x " + col + " : ");
                                                             boolean isInputMatrixValid = true;
                                                             int i = 0;
@@ -508,7 +507,7 @@ public class Main {
                                                                 while (j < col && isInputMatrixValid) {
                                                                     try {
                                                                         double elmt = scanner.nextDouble();
-                                                                        det.contents.setMElmt(elmt,i,j);
+                                                                        invers.contents.setMElmt(elmt,i,j);
                                                                     } catch (Exception e) {
                                                                         println(e.toString());
                                                                         println("Isi Matrix salah. Pastikan isi matriks adalah bilangan real");
@@ -521,7 +520,7 @@ public class Main {
                                                             scanner.nextLine();
                                                             if (isInputMatrixValid) {
                                                                 inputKetik = false;
-                                                                terisiSPL = true;
+                                                                terisiMatriks = true;
                                                             }
                                                         }
                                                     }
@@ -560,14 +559,14 @@ public class Main {
                                                                 int i;
                                                                 for (i = 0; i < column; i++) {
                                                                     double temp = Double.parseDouble(saved[i]);
-                                                                    det.contents.setMElmt(temp,row,i);
+                                                                    invers.contents.setMElmt(temp,row,i);
                                                                 }
                                                                 row++;
                                                             }
-                                                            det.contents.setMatrixRow(row);
-                                                            det.contents.setMatrixCol(column);
+                                                            invers.contents.setMatrixRow(row);
+                                                            invers.contents.setMatrixCol(column);
                                                             inputFile = false;
-                                                            terisiSPL = true;
+                                                            terisiMatriks = true;
                                                         }
                                                     }
                                                 }
@@ -578,19 +577,24 @@ public class Main {
                                             default:
                                                 println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
                                         }
-                                        if (terisiSPL) {
-                                            if (tipeMenuDet.equals("Kofaktor")) {
-                                                println(" ================== HASIL ================== ");
-                                                println(" Determinan = " + det.determinanKofaktor());
-                                                inputDet = false;
-                                                BalikanMenu = false;
-                                            } else{
-                                                det.CalculateOBE();
-                                                println(" ================== HASIL ================== ");
-                                                println(det.contents.getStep());
-                                                inputDet = false;
-                                                BalikanMenu = false;
+                                        if (terisiMatriks) {
+                                            println(" ================== HASIL ================== ");
+                                            if(invers.determinanKofaktor() == 0){
+                                                println("  Determinan = 0");
+                                                println("  Matriks Tidak Memiliki Matriks\n");
                                             }
+                                            else if(tipeMenuBalikan.equals("Balikan")){
+                                                Matrix result = invers.inversMatrix();
+                                                println("  Hasil Inverse :");
+                                                result.displayMatrix();
+                                            }
+                                            else{
+                                                Matrix result = invers.contents.getCopyAugmented().inversMatrix();
+                                                println("  Hasil Inverse :");
+                                                result.displayMatrix();
+                                            }
+                                            inputDet = false;
+                                            BalikanMenu = false;
                                         }
                                     }
                                 }
