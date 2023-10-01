@@ -143,7 +143,6 @@ public class regresi {
         System.out.println("taksiran: "+taksiran);
         int k = 1;
         for (i = 1; i < Mnilai.getColEff(); i++){
-            System.out.println("Nilai taksiran: " + Mnilai.getElmt(0, i) + " x " + listnilaivar.getElmt(0, i - 1) + " = " + Mnilai.getElmt(0, i)*listnilaivar.getElmt(0, i - 1));
             taksiran += Mnilai.getElmt(0, i)*listnilaivar.getElmt(0, i - 1);
         }
         return taksiran;
