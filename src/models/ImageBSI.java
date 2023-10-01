@@ -83,6 +83,7 @@ public class ImageBSI{
         XInvxDMat = new Matrix(BicubicSpline.invX.multiplyMatrix(DMat));
     }
 
+    // Bad time complexity - Don't use this!!
     public void proccessImage(float scale){
         if ((scale*10)%5 == 0 && scale > 1){
             //Scanner input = new Scanner(System.in);
@@ -186,7 +187,7 @@ public class ImageBSI{
             }
         }
     }
-
+    // Has better time complexity - Use this!!
     public void scaleImage(double scale){
         BufferedImage sourceImg = null;
         BufferedImage tempImg = null;
@@ -227,6 +228,9 @@ public class ImageBSI{
                 tempImg.setRGB(width+2, j, tempImg.getRGB(width+1, j));
                 tempImg.setRGB(width+3, j, tempImg.getRGB(width+1, j));
             }
+
+            // Menyimpan Aij yang mana merupakan nilai hasil interpolasi bicubic yang akan
+            // dipakai untuk menghitung kualitas gambar yang baru
             Matrix[][][] Aij = new Matrix[width+1][height+1][4];
             for (int i = 1; i < width+2; i++){
                 for (int j = 1; j < height+2; j++){
@@ -246,14 +250,15 @@ public class ImageBSI{
 
             for (int i = 0; i < fWidth; i++){
                 for (int j = 0; j < fHeight; j++){
+                    // calculate the scale position of every pixel
                     double xcon = (double)((1 + (2*i+1)*(double)width/(double)fWidth)/2);
                     double ycon = (double)((1 + (2*j+1)*(double)height/(double)fHeight)/2);
-                    
 
-
+                    // calculate the following solution, which Aij should be used
                     double Ai = Math.floor(xcon);
                     double Aj = Math.floor(ycon);
 
+                    // calculate the xtrace, ytrace used for f(xtrace,ytrace), 0 < xtrace, ytrace < 1
                     double xtrace = xcon - Ai;
                     double ytrace = ycon - Aj;
                     //System.out.println("x: "+xcon+", y: "+ycon);

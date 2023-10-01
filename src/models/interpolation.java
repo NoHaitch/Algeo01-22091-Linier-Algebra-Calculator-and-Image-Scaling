@@ -1,10 +1,11 @@
-package models;
-import operations.Matrix;
-import operations.OBE;
+package operations;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import models.Point;
+import models.SPL;
+
 public class interpolation {
     public Matrix point;
     public double xRequest;
