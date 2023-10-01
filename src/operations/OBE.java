@@ -49,7 +49,9 @@ public class OBE {
         this.Augmented = new Matrix(m);
     }
 
-    
+    public double[] getAllCol(int j){
+        return Augmented.getCol(j);
+    }
 
     /* ----------- KELOMPOK Interaksi dengan IO ----------- */
     @Override
