@@ -22,7 +22,9 @@ public class Matrix {
     /* Konstruktor overloading */
     public Matrix(){
         /* Kasus Matriks kosong */
-        this(0,0);
+        this.matrix = new double[200][400]; 
+        this.rowEff = 0;
+        this.colEff = 0;
     }
 
     public Matrix(Matrix matrix){
