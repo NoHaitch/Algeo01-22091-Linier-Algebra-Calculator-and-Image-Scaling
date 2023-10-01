@@ -1,10 +1,12 @@
-package operations;
+package models;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import models.Point;
 import models.SPL;
+import operations.Matrix;
+import operations.OBE;
 
 public class interpolation {
     public Matrix point;
@@ -101,7 +103,7 @@ public class interpolation {
     }
 
     public void askDataPointFromFile(String path){
-        SPL temp = new SPL();
+        SPL temp = new SPL(1000,501);
         int i,j;
         try {
             File inputFile = new File(path);
@@ -115,6 +117,7 @@ public class interpolation {
                 if (len == 2){
                     for (i = 0; i < column; i++){
                         double tempdouble = Double.parseDouble(saved[i]);
+                        System.out.println("TEMPDOUBLE: "+tempdouble);
                         temp.getSPL().setMElmt(tempdouble, row, i);
                     }
                     row++;

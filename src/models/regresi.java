@@ -16,11 +16,11 @@ public class regresi {
     
     private int banyakSampelValid;
     
-    public regresi(){
-        this(0,0);
-        dataRegresiM = new Matrix (0,0);
-        listnilaivar = new Matrix(0,0);
-    }
+    // public regresi(){
+    //     this(0,0);
+    //     dataRegresiM = new Matrix (0,0);
+    //     listnilaivar = new Matrix(0,0);
+    // }
     
     public regresi(int banyakSampel,int jumlahPeubah){
         jumlahPeubahValid = jumlahPeubah;
@@ -171,6 +171,7 @@ public class regresi {
                     for (i = 0; i < len; i++){
                         double tempdouble = Double.parseDouble(saved[i]);
                         dataRegresiM.setElmt(tempdouble, row, i);
+                        System.out.println("Data berhasil di set: " + dataRegresiM.getElmt(row, i));
                     }
                 } else if (len == var - 1){
                     for (i = 0; i < len; i++){
