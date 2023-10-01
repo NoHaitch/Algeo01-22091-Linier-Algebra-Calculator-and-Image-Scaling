@@ -1,8 +1,9 @@
 import operations.Matrix;
 import operations.OBE;
-import operations.interpolation;
 import models.Point;
 import models.SPL;
+import models.interpolation;
+
 import java.util.Scanner;
 public class driverinterpolation {
     public static void main(String[] args) {
@@ -15,6 +16,7 @@ public class driverinterpolation {
         temp.askDataPointFromFile(path);
         System.out.println();
         System.out.println("Taksiran: " +temp.xRequest);
+        // Matrix mdata = temp.askDataPoint();
         // Matrix mdata2 = temp.convertPtoM(mdata);
         // OBE meselon = new OBE (mdata2.getRowEff(), mdata2.getColEff());
         // for (i = 0; i < mdata2.getRowEff(); i++){
@@ -25,6 +27,7 @@ public class driverinterpolation {
         // meselon.gaussAndSolutions();
         // temp.displayFunction(meselon);
         // System.out.println();
+        // int xRequest = 2;
         // System.out.println("Taksiran: "+temp.taksiran(meselon,xRequest));
     }
 }
