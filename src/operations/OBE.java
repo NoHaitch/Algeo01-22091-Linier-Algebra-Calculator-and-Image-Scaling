@@ -18,7 +18,7 @@ public class OBE {
 
     /* ---------- KONSTRUKTOR ---------- */
     public OBE(){ // Konstruktor
-        this(0,0);
+        this(200,150);
     }
 
     /* Konstruktor overloading */

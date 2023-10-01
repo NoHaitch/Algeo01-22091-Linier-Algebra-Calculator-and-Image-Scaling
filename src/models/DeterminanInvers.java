@@ -21,7 +21,7 @@ public class DeterminanInvers {
 
     /* ---------- KONSTRUKTOR ---------- */
     public DeterminanInvers(){
-        this(0,0);
+        this(200,150);
     }
 
     /* Konstruktor overloading */

@@ -17,7 +17,7 @@ public class SPL {
 
     /* ---------- KONSTRUKTOR ---------- */
     public SPL(){
-        this(0,0);
+        this(200,150);
     }
 
     /* Konstruktor overloading */
