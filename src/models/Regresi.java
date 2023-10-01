@@ -40,7 +40,8 @@ public class Regresi {
     
     public void askDatareg(int sampel,int var){
         // sebelumnya sudah dapat ukuran matrix
-        int i,j,count = 1;
+        int i,j;
+        int count = 1;
         String line;
         Scanner scan = new Scanner(System.in);
         for (i = 0; i < sampel; i++){
