@@ -22,7 +22,7 @@ public class Matrix {
     /* Konstruktor overloading */
     public Matrix(){
         /* Kasus Matriks kosong */
-        this(0,0);
+        this(200,150);
     }
 
     public Matrix(Matrix matrix){
