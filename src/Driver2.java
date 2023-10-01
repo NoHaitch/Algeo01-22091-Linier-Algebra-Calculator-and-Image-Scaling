@@ -1,18 +1,16 @@
-import models.BicubicSpline;
+import models.*;
 
 public class Driver2 {
     public static void main(String[] args) {
-        BicubicSpline bic = new BicubicSpline();
-        bic.inputInitFromText("src/bicInput.txt");
-        bic.initF.displayMatrix();
-        bic.solveBicubic();
-        double[][] xy = new double[][]{{0,0},{0.5,0.5},{0.25,0.75},{0.1,0.9}};
-        double f = 0;
-        //for (double[] temp : xy){
-        //    f = bic.getFValueOf(temp[0], temp[1]);
-        //}
-        f = bic.getRequestAnswer();
-        bic.saveProccessesToText("test/firstBicubicTest.txt");
-        System.out.println(bic.function);
+        DeterminanInvers temp = new DeterminanInvers();
+        temp.inputMatriksFile("src/inputSecond.txt");
+        temp.CalculateOBE();
+        System.out.println(temp.contents.getStep());
+        for (int i = 0; i < temp.countMul; i++){
+            System.out.println(temp.multiply[i]);
+        }
+        System.out.println("\n");
+        System.out.println(temp.sign);
+        System.out.println(temp.result);
     }
 }

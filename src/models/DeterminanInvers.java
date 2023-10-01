@@ -38,6 +38,9 @@ public class DeterminanInvers {
     }
 
     public void inputMatriksFile(String path){
+        if (contents.getMatrixRow() == 0 || contents.getMatrixCol() == 0){
+            contents = new OBE(1000, 1000);
+        }
         try {
             File inputFile = new File(path);
             Scanner readFile = new Scanner(inputFile);
@@ -259,7 +262,7 @@ public class DeterminanInvers {
             for (int i = 0; i < countMul; i++){
                 temp /= multiply[i];
             }
-            result = temp;
+            result = temp*sign;
         }
         contents.addStringToStep("\nDeterminan = "+result+"\n");
 
