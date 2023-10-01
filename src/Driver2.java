@@ -1,19 +1,18 @@
-import models.DeterminanInvers;
-import operations.Matrix;
-import operations.OBE;
+import models.BicubicSpline;
 
 public class Driver2 {
     public static void main(String[] args) {
-        DeterminanInvers m = new DeterminanInvers();
-        m.inputMatriksFile("src/input.txt");;
-        //Matrix x = new Matrix();
-        //x.copyMatrix(m.contents.getCopyAugmented());
-        //x.inversMatrix().displayMatrix();
-        //System.out.println("\n\n");
-        m.inversMatrix().displayMatrix();
-        DeterminanInvers temp = new DeterminanInvers(m);
-        temp.contents.setAugmented(m.inversMatrix());
-        temp.contents.addAugmentedToStep(4);
-        temp.saveToTextFile("test/MatrixForBicubic.txt");
+        BicubicSpline bic = new BicubicSpline();
+        bic.inputInitFromText("src/bicInput.txt");
+        bic.initF.displayMatrix();
+        bic.solveBicubic();
+        double[][] xy = new double[][]{{0,0},{0.5,0.5},{0.25,0.75},{0.1,0.9}};
+        double f = 0;
+        //for (double[] temp : xy){
+        //    f = bic.getFValueOf(temp[0], temp[1]);
+        //}
+        f = bic.getRequestAnswer();
+        bic.saveProccessesToText("test/firstBicubicTest.txt");
+        System.out.println(bic.function);
     }
 }
