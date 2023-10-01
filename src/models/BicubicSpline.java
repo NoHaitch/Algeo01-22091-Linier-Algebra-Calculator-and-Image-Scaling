@@ -8,7 +8,7 @@ import java.util.Scanner;
 import operations.Matrix;
 
 public class BicubicSpline {
-    public Matrix initF = new Matrix(16, 1);
+    public Matrix initF = new Matrix(16, 1); // Meyimpan 16 titik sumber
     public static Matrix invX;
     public static Matrix X = new Matrix(16, 16);
     public double[] solveA = new double[16];

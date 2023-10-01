@@ -1,8 +1,4 @@
-import operations.Matrix;
-import operations.OBE;
-import models.Point;
-import models.SPL;
-import models.interpolation;
+import models.Interpolation;
 
 import java.util.Scanner;
 public class driverinterpolation {
@@ -12,7 +8,7 @@ public class driverinterpolation {
         Scanner input = new Scanner (System.in);
         System.out.print("Masukkan source file: ");
         path = input.nextLine();
-        interpolation temp = new interpolation();
+        Interpolation temp = new Interpolation();
         temp.askDataPointFromFile(path);
         System.out.println();
         System.out.println("Taksiran: " +temp.xRequest);

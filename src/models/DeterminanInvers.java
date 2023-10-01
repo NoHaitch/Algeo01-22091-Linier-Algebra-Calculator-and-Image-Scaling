@@ -4,14 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.Scanner;
+
 import operations.Matrix;
 import operations.OBE;
 
-/* Class DeterminanInvers */
-/* Berisi fungsi-fungsi untuk mencari Determinan dan Inverse dari Matriks */
 public class DeterminanInvers {
-
-    /* ---------- GLOBAL VARIABLES ---------- */
+    //public static Matrix xInvers;
     public OBE contents;
     public boolean isDetZero = false;
     public int sign = 1;
@@ -19,12 +17,10 @@ public class DeterminanInvers {
     public int countMul = 0;
     public double result;
 
-    /* ---------- KONSTRUKTOR ---------- */
     public DeterminanInvers(){
-        this(0,0);
+        this(200,150);
     }
 
-    /* Konstruktor overloading */
     public DeterminanInvers(int row, int col){
         contents = new OBE(row, col);
     }
@@ -41,8 +37,10 @@ public class DeterminanInvers {
         }
     }
 
-    /* ---------- KELOMPOK Interaksi dengan IO ---------- */
     public void inputMatriksFile(String path){
+        if (contents.getMatrixRow() == 0 || contents.getMatrixCol() == 0){
+            contents = new OBE(1000, 1000);
+        }
         try {
             File inputFile = new File(path);
             Scanner readFile = new Scanner(inputFile);
@@ -99,40 +97,6 @@ public class DeterminanInvers {
         }
     }
 
-    /* ---------- KELOMPOK TEST ---------- */
-    public boolean isLanjut(){
-        for (int i = 0; i < contents.getMatrixRow()-1; i++){
-            int pass = contents.getIndexMain(i);
-            if (pass == contents.getMatrixCol()){
-                isDetZero = true;
-                return false;
-            }
-            for (int j = i+1; j < contents.getMatrixRow(); j++){
-                if (pass == contents.getIndexMain(j)){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public boolean isLanjutForInvers(){
-        for (int i = 0; i < contents.getMatrixRow()-1; i++){
-            int pass = contents.getIndexMain(i);
-            if (pass == contents.getMatrixCol()/2){
-                isDetZero = true;
-                return false;
-            }
-            for (int j = i+1; j < contents.getMatrixRow()/2; j++){
-                if (pass == contents.getIndexMain(j)){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    /* ---------- KELOMPOK Pencarian ---------- */
     public int findIMain(int row){
         for (int i = 0; i < contents.getMatrixCol(); i++){
             if(contents.getMElmt(row, i) != 0){
@@ -145,7 +109,6 @@ public class DeterminanInvers {
         return contents.getMatrixCol();
     }
 
-    /* ---------- KELOMPOK Operasi ---------- */
     public void refreshIMain(int start){
         for (int i = start; i < contents.getMatrixRow(); i++){
             findIMain(i);
@@ -184,6 +147,38 @@ public class DeterminanInvers {
         if (wasSwapped){
             contents.addAugmentedToStep(7);
         }
+    }
+
+    public boolean isLanjut(){
+        for (int i = 0; i < contents.getMatrixRow()-1; i++){
+            int pass = contents.getIndexMain(i);
+            if (pass == contents.getMatrixCol()){
+                isDetZero = true;
+                return false;
+            }
+            for (int j = i+1; j < contents.getMatrixRow(); j++){
+                if (pass == contents.getIndexMain(j)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean isLanjutForInvers(){
+        for (int i = 0; i < contents.getMatrixRow()-1; i++){
+            int pass = contents.getIndexMain(i);
+            if (pass == contents.getMatrixCol()/2){
+                isDetZero = true;
+                return false;
+            }
+            for (int j = i+1; j < contents.getMatrixRow()/2; j++){
+                if (pass == contents.getIndexMain(j)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public void makeOneRow(int row){
@@ -267,7 +262,7 @@ public class DeterminanInvers {
             for (int i = 0; i < countMul; i++){
                 temp /= multiply[i];
             }
-            result = temp;
+            result = temp*sign;
         }
         contents.addStringToStep("\nDeterminan = "+result+"\n");
 

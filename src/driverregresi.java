@@ -1,8 +1,6 @@
-import operations.Matrix;
+import models.Regresi;
 import operations.OBE;
-import models.regresi;
-import models.Point;
-import models.SPL;
+
 import java.util.Scanner;
 public class driverregresi {
     public static void main(String[] args){

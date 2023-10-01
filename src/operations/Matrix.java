@@ -14,7 +14,7 @@ public class Matrix {
 
     /* ---------- KONSTRUKTOR ---------- */
     public Matrix(int rowEff, int colEff) {
-        this.matrix = new double[rowEff*2][colEff*2]; 
+        this.matrix = new double[rowEff][colEff*2]; 
         this.rowEff = rowEff;
         this.colEff = colEff;
     }
@@ -22,7 +22,9 @@ public class Matrix {
     /* Konstruktor overloading */
     public Matrix(){
         /* Kasus Matriks kosong */
-        this(0,0);
+        this.matrix = new double[200][400]; 
+        this.rowEff = 0;
+        this.colEff = 0;
     }
 
     public Matrix(Matrix matrix){
@@ -288,8 +290,8 @@ public class Matrix {
     }
 
     public Matrix inversMatrix(){
-        /* Mengembalikan Matriks inverse */
-        Matrix invers = new Matrix();
+        /* Mengembalikan Matriks inverse metode Adjoin*/
+        Matrix invers = new Matrix(this.getRowEff(), this.getColEff());
         invers.copyMatrix(this.kofaktorMatrix());
         double det = 1/this.determinant();
         invers.multiplyMatrixByConst(det);

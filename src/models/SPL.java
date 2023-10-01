@@ -17,13 +17,13 @@ public class SPL {
 
     /* ---------- KONSTRUKTOR ---------- */
     public SPL(){
-        this(0,0);
+        this(200,150);
     }
 
     /* Konstruktor overloading */
     public SPL(int row, int col){
         this.spl = new OBE(row, col);
-    }
+}
 
     /* ---------- KELOMPOK Interaksi dengan IO ---------- */
     public void inputSPLText(){
@@ -93,17 +93,5 @@ public class SPL {
     /* ---------- SELEKTOR ---------- */
     public OBE getSPL(){
         return new OBE(this.spl);
-    }
-
-    /* ---------- KELOMPOK Operasi Utama ---------- */
-    public void cramer(){
-        /* Penyelesaian dengan kaidah cramer */
-        /* Prekondisi: Matriks persegi */
-        int len = spl.getMatrixCol();
-        for(int col = 0; col < len-1; col++){
-            Matrix cramer = spl.getMatrixCramer(col);
-            cramer.displayMatrix();
-            System.out.printf("res : " + (col+1) + " ->" + cramer.determinant() + "\n");
-        }
     }
 }
