@@ -289,7 +289,7 @@ public class Matrix {
 
     public Matrix inversMatrix(){
         /* Mengembalikan Matriks inverse metode Adjoin*/
-        Matrix invers = new Matrix();
+        Matrix invers = new Matrix(this.getRowEff(), this.getColEff());
         invers.copyMatrix(this.kofaktorMatrix());
         double det = 1/this.determinant();
         invers.multiplyMatrixByConst(det);
