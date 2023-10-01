@@ -18,7 +18,7 @@ public class DeterminanInvers {
     public double result;
 
     public DeterminanInvers(){
-        this(0,0);
+        this(200,150);
     }
 
     public DeterminanInvers(int row, int col){

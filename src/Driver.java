@@ -5,7 +5,7 @@ import operations.*;
 public class Driver {
     public static void main(String[] args) {
         ImageBSI.setXInvxDMat();
-        ImageBSI temp = new ImageBSI("src/imgg.jpeg", "test/dog.png");
-        temp.scaleImage(3.31);
+        ImageBSI temp = new ImageBSI("src/waifumatt.jpg", "src/cewematthew.png");
+        temp.scaleImage(1.789);
     }
 }
