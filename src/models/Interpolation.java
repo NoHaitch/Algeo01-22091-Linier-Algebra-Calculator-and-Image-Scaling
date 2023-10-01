@@ -6,14 +6,14 @@ import java.util.Scanner;
 import operations.Matrix;
 import operations.OBE;
 
-public class interpolation {
+public class Interpolation {
     public Matrix point;
     public double xRequest;
-    public interpolation(){
+    public Interpolation(){
         this(0);
     }
 
-    public interpolation(int JmlhPoint){
+    public Interpolation(int JmlhPoint){
         point = new Matrix(JmlhPoint, 2);
     }
 
@@ -136,6 +136,5 @@ public class interpolation {
                 point.setElmt(temp.spl.getMElmt(i, j), i, j);
             }
         }
-        point.displayMatrix();
     }
 }

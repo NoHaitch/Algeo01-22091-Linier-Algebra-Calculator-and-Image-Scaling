@@ -1,6 +1,9 @@
 import models.DeterminanInvers;
+import models.Interpolation;
+import models.Point;
 import models.SPL;
 import operations.Matrix;
+import operations.OBE;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -121,27 +124,29 @@ public class Main {
                                     println("3. Kembali");
                                     print(" >>> Pilih Metode Masukkan : ");
                                     boolean isInputSPLValid = false;
+                                    int opsiMenuInputSPL = -1;
                                     try {
-                                        opsiMenuSPL = Integer.parseInt(scanner.nextLine());
+                                        opsiMenuInputSPL = Integer.parseInt(scanner.nextLine());
                                         isInputSPLValid = true;
                                     } catch (Exception e) {
                                         println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
                                     }
                                     if (isInputSPLValid) {
                                         boolean terisiSPL = false;
-                                        switch (opsiMenuSPL) {
+                                        switch (opsiMenuInputSPL) {
                                             case 1:
                                                 /* ============ Input Ketik =========== */
                                                 boolean inputKetik = true;
                                                 while (inputKetik) {
                                                     println("\n ========== Metode Ketik ==========");
+                                                    println("Ketik -1 untuk kembali");
                                                     if (tipeMenuSPL.equals("Balikan") || tipeMenuSPL.equals("Cramer")) {
                                                         print(" >>> Masukkan Ukuran Matriks (n x n) : ");
                                                     } else {
                                                         print(" >>> Masukkan Ukuran Matriks baris x kolom (m x n) : ");
                                                     }
-                                                    int row = -1;
-                                                    int col = -1;
+                                                    int row = -2;
+                                                    int col = -2;
                                                     try {
                                                         row = scanner.nextInt();
                                                         if (tipeMenuSPL.equals("Balikan") || tipeMenuSPL.equals("Cramer")) {
@@ -153,7 +158,10 @@ public class Main {
                                                         println("Ukuran Matriks harus bilangan bulat positif");
                                                     }
                                                     scanner.nextLine();
-                                                    if (row != -1 && col != -1) {
+                                                    if (row == -1 || col == -1) {
+                                                        inputKetik = false;
+                                                    }
+                                                    else if(row != -2 && col != -2){
                                                         if (row <= 0 || col <= 1) {
                                                             println("Ukuran Matriks harus bilangan bulat positif dan kolom harus lebih dari 1");
                                                         } else {
@@ -265,7 +273,6 @@ public class Main {
                         println("2. Metode Reduksi Baris dengan OBE");
                         println("3. Kembali");
                         print(" >>> Pilih Metode Determinan : ");
-
                         boolean isInputMenuDetValid = false;
                         int opsiMenuDet = -1;
                         try {
@@ -274,7 +281,6 @@ public class Main {
                         } catch (Exception e) {
                             println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
                         }
-
                         if (isInputMenuDetValid) {
                             String tipeMenuDet = "";
                             switch (opsiMenuDet) {
@@ -301,23 +307,25 @@ public class Main {
                                     println("3. Kembali");
                                     print(" >>> Pilih Metode Masukkan : ");
                                     boolean isInputSPLValid = false;
+                                    int opsiMenuInputDet = -1;
                                     try {
-                                        opsiMenuDet = Integer.parseInt(scanner.nextLine());
+                                        opsiMenuInputDet = Integer.parseInt(scanner.nextLine());
                                         isInputSPLValid = true;
                                     } catch (Exception e) {
                                         println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
                                     }
                                     if (isInputSPLValid) {
                                         boolean terisiMatriks = false;
-                                        switch (opsiMenuDet) {
+                                        switch (opsiMenuInputDet) {
                                             case 1:
                                                 /* ============ Input Ketik =========== */
                                                 boolean inputKetik = true;
                                                 while (inputKetik) {
                                                     println("\n ========== Metode Ketik ==========");
+                                                    println("Ketik -1 untuk kembali");
                                                     print(" >>> Masukkan Ukuran Matriks (n x n) : ");
-                                                    int row = -1;
-                                                    int col = -1;
+                                                    int row = -2;
+                                                    int col = -2;
                                                     try {
                                                         row = scanner.nextInt();
                                                         col = row;
@@ -325,9 +333,13 @@ public class Main {
                                                         println("Ukuran Matriks harus bilangan bulat positif");
                                                     }
                                                     scanner.nextLine();
-                                                    if (row != -1) {
+                                                    if(row == -1) {
+                                                        inputKetik = false;
+                                                    } else if (row != -2) {
                                                         if (row <= 1) {
                                                             println("Ukuran Matriks harus bilangan bulat positif");
+                                                        } else if(tipeMenuDet.equals("Kofaktor") && row > 7) {
+                                                            println("Untuk Ukuran lebih dari 7 x 7, Tidak dapat menggunakan kofaktor. \nHal tersebut dikarenakan kurang efisien sehingga lama");
                                                         } else {
                                                             det = new DeterminanInvers(row, col);
                                                             println(">>> Masukkan Isi Matriks " + row + " x " + col + " : ");
@@ -409,12 +421,11 @@ public class Main {
                                                 println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
                                         }
                                         if (terisiMatriks) {
+                                            println(" ================== HASIL ================== ");
                                             if (tipeMenuDet.equals("Kofaktor")) {
-                                                println(" ================== HASIL ================== ");
                                                 println(" Determinan = " + det.determinanKofaktor());
                                             } else{
                                                 det.CalculateOBE();
-                                                println(" ================== HASIL ================== ");
                                                 println(det.contents.getStep());
                                             }
                                             inputDet = false;
@@ -429,12 +440,11 @@ public class Main {
                     /* =========== MENU Matiks Balikan =========== */
                     boolean BalikanMenu = true;
                     while (BalikanMenu) {
-                        println("\n   ========== Pilih Metode Determinan ========== ");
+                        println("\n   ========== Pilih Metode Matriks Balikan ========== ");
                         println("1. Metode Matriks Balikan");
                         println("2. Metode Adjoin");
                         println("3. Kembali");
                         print(" >>> Pilih Metode Determinan : ");
-
                         boolean isInputMenuBalikanValid = false;
                         int opsiMenuBalikan = -1;
                         try {
@@ -461,8 +471,8 @@ public class Main {
                             }
                             DeterminanInvers invers = new DeterminanInvers(1000,1000);
                             if (!tipeMenuBalikan.isEmpty()) {
-                                boolean inputDet = true;
-                                while (inputDet) {
+                                boolean inputBalikan = true;
+                                while (inputBalikan) {
                                     /* =========== INPUT MATRIKS Balikan =========== */
                                     println("\n ========== Pilih Metode Masukkan ==========");
                                     println("1. Masukkan Ketik");
@@ -470,23 +480,25 @@ public class Main {
                                     println("3. Kembali");
                                     print(" >>> Pilih Metode Masukkan : ");
                                     boolean isInputSPLValid = false;
+                                    int opsiMenuInputBalikan = -1;
                                     try {
-                                        opsiMenuBalikan = Integer.parseInt(scanner.nextLine());
+                                        opsiMenuInputBalikan = Integer.parseInt(scanner.nextLine());
                                         isInputSPLValid = true;
                                     } catch (Exception e) {
                                         println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
                                     }
                                     if (isInputSPLValid) {
                                         boolean terisiMatriks = false;
-                                        switch (opsiMenuBalikan) {
+                                        switch (opsiMenuInputBalikan) {
                                             case 1:
                                                 /* ============ Input Ketik =========== */
                                                 boolean inputKetik = true;
                                                 while (inputKetik) {
                                                     println("\n ========== Metode Ketik ==========");
+                                                    println("Ketik -1 Kembali ");
                                                     print(" >>> Masukkan Ukuran Matriks (n x n) : ");
-                                                    int row = -1;
-                                                    int col = -1;
+                                                    int row = -2;
+                                                    int col = -2;
                                                     try {
                                                         row = scanner.nextInt();
                                                         col = row;
@@ -572,7 +584,7 @@ public class Main {
                                                 }
                                                 break;
                                             case 3:
-                                                inputDet = false;
+                                                inputBalikan = false;
                                                 break;
                                             default:
                                                 println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
@@ -593,7 +605,7 @@ public class Main {
                                                 println("  Hasil Inverse :");
                                                 result.displayMatrix();
                                             }
-                                            inputDet = false;
+                                            inputBalikan = false;
                                             BalikanMenu = false;
                                         }
                                     }
@@ -601,8 +613,256 @@ public class Main {
                             }
                         }
                     }
-                }
+                } else if(tipeMenuUtama.equals("Interpolasi")){
+                    /* =========== MENU Interpolasi =========== */
+                    boolean InterpolasiMenu = true;
+                    while (InterpolasiMenu) {
+                        Interpolation invers = new Interpolation(1000);
+                        /* =========== INPUT Interpolasi =========== */
+                        println("\n ========== Pilih Metode Masukkan ==========");
+                        println("1. Masukkan Ketik");
+                        println("2. Masukkan dalam bentuk File");
+                        println("3. Kembali");
+                        print(" >>> Pilih Metode Masukkan : ");
+                        boolean isInputSPLValid = false;
+                        int opsiMenuInputInterpolasi = -1;
+                        try {
+                            opsiMenuInputInterpolasi = Integer.parseInt(scanner.nextLine());
+                            isInputSPLValid = true;
+                        } catch (Exception e) {
+                            println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
+                        }
+                        if (isInputSPLValid) {
+                            boolean terisiMatriks = false;
+                            Interpolation interpolasi = new Interpolation(1000);
+                            Matrix pointMatrix = new Matrix(1000,1000);
+                            double xInterpolasi = 0;
+                            switch (opsiMenuInputInterpolasi) {
+                                case 1:
+                                    /* ============ Input Ketik =========== */
+                                    boolean inputKetik = true;
+                                    while (inputKetik) {
+                                        println("\n ========== Metode Ketik ==========");
+                                        println("Ketik -1 Kembali ");
+                                        print(" >>> Masukkan Jumlah Titik : ");
+                                        int n = -100;
+                                        try {
+                                            n = scanner.nextInt();
+                                            scanner.nextLine();
+                                        } catch (Exception e) {
+                                            println("Jumlah titik harus bilangan bulat positif");
+                                            scanner.nextLine();
+                                        }
+                                        if (n == -1) {
+                                            inputKetik = false;
+                                        } else if(n != -100){
+                                            if (n < 1) {
+                                                println("Jumlah titik harus bilangan bulat positif");
+                                            } else {
+                                                interpolasi = new Interpolation(n);
+                                                println("Masukkan Titik - Titik (format: x y)");
+                                                int i = 0;
+                                                pointMatrix = new Matrix(n, 2);
+                                                while (i < n) {
+                                                    try {
+                                                        double x = scanner.nextDouble();
+                                                        double y = scanner.nextDouble();
+                                                        pointMatrix.setElmt(x, i, 0);
+                                                        pointMatrix.setElmt(y, i, 1);
+                                                        i++;
+                                                    } catch (Exception e) {
+                                                        println("Masukkan Titik salah.");
+                                                        scanner.nextLine();
+                                                    }
+                                                }
+                                                scanner.nextLine();
+                                                boolean isNotvalid = true;
+                                                while (isNotvalid) {
+                                                    print(" >>> Masukkan x yang akan ditaksi : ");
+                                                    try {
+                                                        xInterpolasi = scanner.nextDouble();
+                                                        isNotvalid = false;
+                                                    } catch (Exception e) {
+                                                        println("Masukkan x taksiran salah");
+                                                        scanner.nextLine();
+                                                    }
+                                                }
+                                                scanner.nextLine();
+                                                inputKetik = false;
+                                                terisiMatriks = true;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                case 2:
+                                    /* ============ Input File =========== */
+                                    /* ASUMSI : isi FILE BENAR */
+                                    boolean inputFile = true;
+                                    while (inputFile) {
+                                        println("Ketik 0 untuk kembali");
+                                        print(" >>> Masukkan alamat file: ");
+                                        String path = scanner.nextLine();
+                                        if (path.equals("0")) {
+                                            inputFile = false;
+                                        } else {
+                                            File file;
+                                            Scanner readFile = null;
+                                            boolean filefound = false;
+                                            try {
+                                                file = new File(path);
+                                                readFile = new Scanner(file);
+                                                filefound = true;
+                                            } catch (FileNotFoundException e) {
+                                                println("Alamat file salah. Contoh alamat benar : src/input.txt ");
+                                            }
+                                            if (filefound) {
+                                                interpolasi.askDataPointFromFile(path);
+                                                inputFile = false;
+                                                terisiMatriks = true;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                case 3:
+                                    InterpolasiMenu = false;
+                                    break;
+                                default:
+                                    println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
+                            }
+                            if (terisiMatriks) {
+                                Matrix matrix = interpolasi.convertPtoM(pointMatrix);
+                                OBE mEselon = new OBE (matrix.getRowEff(), matrix.getColEff());
+                                for (int i = 0; i < matrix.getRowEff(); i++){
+                                    for (int j = 0; j < matrix.getColEff();j++){
+                                        mEselon.setMElmt(matrix.getElmt(i,j), i, j);
+                                    }
+                                }
+                                mEselon.gaussAndSolutions();
+                                println(" ================== HASIL ================== ");
+                                print("  Fungsi :  ");
+                                interpolasi.displayFunction(mEselon);
+                                println("\n  Taksiran f(" + xInterpolasi + ") =  " + interpolasi.taksiran(mEselon,xInterpolasi));
+                                InterpolasiMenu = false;
+                            }
+                        }
 
+                    }
+                } else if(tipeMenuUtama.equals("Bicubic")) {
+                    /* =========== MENU Bicubic =========== */
+                    boolean InterpolasiMenu = true;
+                    while (InterpolasiMenu) {
+                        Interpolation invers = new Interpolation(1000);
+                        /* =========== INPUT Bicubic =========== */
+                        println("\n ========== Pilih Metode Masukkan ==========");
+                        println("1. Masukkan Ketik");
+                        println("2. Masukkan dalam bentuk File");
+                        println("3. Kembali");
+                        print(" >>> Pilih Metode Masukkan : ");
+                        boolean isInputSPLValid = false;
+                        int opsiMenuInputInterpolasi = -1;
+                        try {
+                            opsiMenuInputInterpolasi = Integer.parseInt(scanner.nextLine());
+                            isInputSPLValid = true;
+                        } catch (Exception e) {
+                            println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
+                        }
+                        if (isInputSPLValid) {
+                            boolean terisiMatriks = false;
+                            Interpolation interpolasi = new Interpolation(1000);
+                            switch (opsiMenuInputInterpolasi) {
+                                case 1:
+                                    /* ============ Input Ketik =========== */
+                                    boolean inputKetik = true;
+                                    while (inputKetik) {
+                                        println("\n ========== Metode Ketik ==========");
+                                        println("Ketik -1 Kembali ");
+                                        print(" >>> Masukkan Jumlah Titik : ");
+                                        int n = -1;
+                                        try {
+                                            n = scanner.nextInt();
+                                        } catch (Exception e) {
+                                            println("Jumlah titik harus bilangan bulat positif");
+                                        }
+                                        scanner.nextLine();
+                                        if (n == -1) {
+                                            inputKetik = false;
+                                        } else if (n < 1) {
+                                            println("Jumlah titik harus bilangan bulat positif");
+                                        } else {
+                                            interpolasi = new Interpolation(n);
+                                            println(">>> Masukkan titik  ");
+                                            boolean isInputMatrixValid = true;
+                                            int i = 0;
+                                            while (i < n && isInputMatrixValid) {
+                                                // INPUT TITIK
+                                                i++;
+                                            }
+                                            scanner.nextLine();
+                                            if (isInputMatrixValid) {
+                                                inputKetik = false;
+                                                terisiMatriks = true;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                case 2:
+                                    /* ============ Input File =========== */
+                                    /* ASUMSI : isi FILE BENAR */
+                                    boolean inputFile = true;
+                                    while (inputFile) {
+                                        println("Ketik 0 untuk kembali");
+                                        print(" >>> Masukkan alamat file: ");
+                                        String path = scanner.nextLine();
+                                        if (path.equals("0")) {
+                                            inputFile = false;
+                                        } else {
+                                            File file;
+                                            Scanner readFile = null;
+                                            boolean filefound = false;
+                                            try {
+                                                file = new File(path);
+                                                readFile = new Scanner(file);
+                                                filefound = true;
+                                            } catch (FileNotFoundException e) {
+                                                println("Alamat file salah. Contoh alamat benar : src/input.txt ");
+                                            }
+                                            if (filefound) {
+                                                String line;
+                                                int row = 0;
+                                                int column = 0;
+                                                while (readFile.hasNextLine() && (line = readFile.nextLine()) != null) {
+                                                    String[] saved = line.split(" ");
+                                                    if (row == 0) {
+                                                        column = saved.length;
+                                                    }
+                                                    int i;
+                                                    for (i = 0; i < column; i++) {
+                                                        double temp = Double.parseDouble(saved[i]);
+                                                        // set temp
+                                                    }
+                                                    row++;
+                                                }
+
+                                                inputFile = false;
+                                                terisiMatriks = true;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                case 3:
+                                    InterpolasiMenu = false;
+                                    break;
+                                default:
+                                    println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
+                            }
+                            if (terisiMatriks) {
+                                println(" ================== HASIL ================== ");
+                                InterpolasiMenu = false;
+                            }
+                        }
+
+                    }
+                }
             }
         }
 

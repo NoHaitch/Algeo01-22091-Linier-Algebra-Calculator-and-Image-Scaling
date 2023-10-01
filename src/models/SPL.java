@@ -23,7 +23,7 @@ public class SPL {
     /* Konstruktor overloading */
     public SPL(int row, int col){
         this.spl = new OBE(row, col);
-    }
+}
 
     /* ---------- KELOMPOK Interaksi dengan IO ---------- */
     public void inputSPLText(){

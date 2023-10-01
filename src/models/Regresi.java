@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import operations.Matrix;
 import operations.OBE;
-public class regresi {
+public class Regresi {
     public Matrix regresiM;
     
     public Matrix dataRegresiM;
@@ -16,13 +16,13 @@ public class regresi {
     
     private int banyakSampelValid;
     
-    public regresi(){
+    public Regresi(){
         this(0,0);
         dataRegresiM = new Matrix (0,0);
         listnilaivar = new Matrix(0,0);
     }
     
-    public regresi(int banyakSampel,int jumlahPeubah){
+    public Regresi(int banyakSampel, int jumlahPeubah){
         jumlahPeubahValid = jumlahPeubah;
         banyakSampelValid = banyakSampel;
         regresiM = new Matrix(banyakSampel + 1,jumlahPeubah + 2);
@@ -103,7 +103,7 @@ public class regresi {
     }
     
     public OBE convertReg2OBE(Matrix regresiM){
-        // convert matrix regresi menjadi OBE untuk keperluan fungsi gaussAndSolutions agar bisa menjadi matrix eselon
+        // convert matrix Regresi menjadi OBE untuk keperluan fungsi gaussAndSolutions agar bisa menjadi matrix eselon
         int i,j;
         OBE meselon = new OBE(regresiM.getRowEff(), regresiM.getColEff());
         for (i = 0; i < regresiM.getRowEff(); i++){
