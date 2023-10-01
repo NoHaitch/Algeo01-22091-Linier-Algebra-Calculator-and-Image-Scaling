@@ -39,7 +39,7 @@ public class DeterminanInvers {
 
     public void inputMatriksFile(String path){
         if (contents.getMatrixRow() == 0 || contents.getMatrixCol() == 0){
-            contents = new OBE(1000, 1000);
+            contents = new OBE(1000, 500);
         }
         try {
             File inputFile = new File(path);
