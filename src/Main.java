@@ -255,7 +255,7 @@ public class Main {
                                                                 if (!valid) {
                                                                     println("Isi File Salah! Pastikan file adalah text yang diisi oleh matriks berisi bilangan real yang dipisahkan spasi dan enter");
                                                                 } else {
-                                                                    inputText += " >>> Masukkan alamat file: " + path + "\n\n";
+                                                                    inputText += " >>> Masukkan alamat file: " + path + "\n";
                                                                     spl.spl.setMatrixRow(row);
                                                                     spl.spl.setMatrixCol(column);
                                                                     inputFile = false;
@@ -470,7 +470,7 @@ public class Main {
                                                                 if (!valid) {
                                                                     println("Isi File Salah! Pastikan file adalah text yang diisi oleh matriks berisi bilangan real yang dipisahkan spasi dan enter");
                                                                 } else {
-                                                                    inputText += " >>> Masukkan alamat file: " + path + "\n\n";
+                                                                    inputText += " >>> Masukkan alamat file: " + path + "\n";
                                                                     det.contents.setMatrixRow(row);
                                                                     det.contents.setMatrixCol(column);
                                                                     inputFile = false;
@@ -558,6 +558,7 @@ public class Main {
                                 DeterminanInvers invers = new DeterminanInvers(1000, 1000);
                                 if (!tipeMenuBalikan.isEmpty()) {
                                     boolean inputBalikan = true;
+                                    String inputText = "";
                                     while (inputBalikan) {
                                         /* =========== INPUT MATRIKS Balikan =========== */
                                         println("\n ========== Pilih Metode Masukkan ==========");
@@ -565,15 +566,15 @@ public class Main {
                                         println("2. Masukkan dalam bentuk File");
                                         println("3. Kembali");
                                         print(" >>> Pilih Metode Masukkan : ");
-                                        boolean isInputSPLValid = false;
+                                        boolean isInputInvValid = false;
                                         int opsiMenuInputBalikan = -1;
                                         try {
                                             opsiMenuInputBalikan = Integer.parseInt(scanner.nextLine());
-                                            isInputSPLValid = true;
+                                            isInputInvValid = true;
                                         } catch (Exception e) {
                                             println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
                                         }
-                                        if (isInputSPLValid) {
+                                        if (isInputInvValid) {
                                             boolean terisiMatriks = false;
                                             switch (opsiMenuInputBalikan) {
                                                 case 1:
@@ -616,6 +617,16 @@ public class Main {
                                                                 }
                                                                 scanner.nextLine();
                                                                 if (isInputMatrixValid) {
+                                                                    inputText += " >>> Masukkan Ukuran Matriks (n x n) : " + row + "\n";
+                                                                    inputText += " >>> Masukkan Isi Matriks " + row + " x " + col + " : \n";
+                                                                    for (i = 0; i < row; i++) {
+                                                                        for (int j = 0; j < col; j++) {
+                                                                            String temp = String.valueOf(invers.contents.getMElmt(i, j));
+                                                                            inputText += temp;
+                                                                            inputText += " ";
+                                                                        }
+                                                                        inputText += "\n";
+                                                                    }
                                                                     inputKetik = false;
                                                                     terisiMatriks = true;
                                                                 }
@@ -645,25 +656,36 @@ public class Main {
                                                                 println("Alamat file salah. Contoh alamat benar : test/input/spl/test1.txt ");
                                                             }
                                                             if (filefound) {
+                                                                boolean valid = true;
                                                                 String line;
                                                                 int row = 0;
                                                                 int column = 0;
-                                                                while (readFile.hasNextLine() && (line = readFile.nextLine()) != null) {
+                                                                while (readFile.hasNextLine() && (line = readFile.nextLine()) != null && valid) {
                                                                     String[] saved = line.split(" ");
                                                                     if (row == 0) {
                                                                         column = saved.length;
                                                                     }
                                                                     int i;
                                                                     for (i = 0; i < column; i++) {
-                                                                        double temp = Double.parseDouble(saved[i]);
-                                                                        invers.contents.setMElmt(temp, row, i);
+                                                                        try {
+                                                                            double temp = Double.parseDouble(saved[i]);
+                                                                            invers.contents.setMElmt(temp, row, i);
+                                                                        } catch (Exception e) {
+                                                                            valid = false;
+                                                                            break;
+                                                                        }
                                                                     }
                                                                     row++;
                                                                 }
-                                                                invers.contents.setMatrixRow(row);
-                                                                invers.contents.setMatrixCol(column);
-                                                                inputFile = false;
-                                                                terisiMatriks = true;
+                                                                if (!valid) {
+                                                                    println("Isi File Salah! Pastikan file adalah text yang diisi oleh matriks berisi bilangan real yang dipisahkan spasi dan enter");
+                                                                } else {
+                                                                    inputText += " >>> Masukkan alamat file: " + path + "\n";
+                                                                    invers.contents.setMatrixRow(row);
+                                                                    invers.contents.setMatrixCol(column);
+                                                                    inputFile = false;
+                                                                    terisiMatriks = true;
+                                                                }
                                                             }
                                                         }
                                                     }
@@ -676,6 +698,7 @@ public class Main {
                                             }
                                             if (terisiMatriks) {
                                                 println(" ================== HASIL ================== ");
+                                                inputText += "\n\n ================== HASIL ================== \n\n";
                                                 if (invers.determinanKofaktor() == 0) {
                                                     println("  Determinan = 0");
                                                     println("  Matriks Tidak Memiliki Matriks\n");
@@ -687,6 +710,28 @@ public class Main {
                                                     Matrix result = invers.contents.getCopyAugmented().inversMatrix();
                                                     println("  Hasil Inverse :");
                                                     result.displayMatrix();
+                                                    for (int i = 0; i < invers.contents.getMatrixRow(); i++) {
+                                                        for (int j = 0; j < invers.contents.getMatrixCol(); j++) {
+                                                            inputText += result.createString(i, j, 7);
+                                                            inputText += " ";
+                                                        }
+                                                        inputText += "\n";
+                                                    }
+                                                }
+                                                boolean menuSimpan = true;
+                                                while (menuSimpan) {
+                                                    print("\n >>> Apakah ingin disimpan dalam file? [y/n]: ");
+                                                    String opsiSimpan = scanner.nextLine();
+                                                    if (opsiSimpan.equals("y") || opsiSimpan.equals("Y")) {
+                                                        print(" >>> Masukkan nama file hasil: ");
+                                                        String name = scanner.nextLine();
+                                                        invers.saveToTextFile(("test/result/" + name + ".txt"),inputText);
+                                                        menuSimpan = false;
+                                                    } else if (opsiSimpan.equals("n") || opsiSimpan.equals("N")) {
+                                                        menuSimpan = false;
+                                                    } else {
+                                                        println("Masukkan salah pilih y / n");
+                                                    }
                                                 }
                                                 inputBalikan = false;
                                                 BalikanMenu = false;
