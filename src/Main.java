@@ -256,6 +256,21 @@ public class Main {
                                                 }
                                                 println(" ================== HASIL ================== ");
                                                 println(spl.spl.getStep());
+                                                boolean menuSimpan = true;
+                                                while(menuSimpan) {
+                                                    print(" >>> Apakah ingin disimpan dalam file? [y/n]: ");
+                                                    String opsiSimpan = scanner.nextLine();
+                                                    if (opsiSimpan.equals("y") || opsiSimpan.equals("Y")) {
+                                                        print(" >>> Masukkan path tujuan: ");
+                                                        String path = scanner.nextLine();
+                                                        spl.saveToTextFile(path);
+                                                        menuSimpan = false;
+                                                    } else if (opsiSimpan.equals("n") || opsiSimpan.equals("N")) {
+                                                        menuSimpan = false;
+                                                    } else{
+                                                        println("Masukkan salah pilh y / n");
+                                                    }
+                                                }
                                                 inputSPL = false;
                                                 SPLMenu = false;
                                             }
@@ -867,7 +882,6 @@ public class Main {
                                                         }
                                                         i++;
                                                     }
-                                                    scanner.nextLine();
                                                     if (isInputSampleValid) {
                                                         inputKetik = false;
                                                         terisiMatriks = true;
