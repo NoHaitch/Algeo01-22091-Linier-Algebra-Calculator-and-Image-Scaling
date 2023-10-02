@@ -89,7 +89,7 @@ public class ImageBSI{
         BufferedImage sourceImg = null;
         BufferedImage tempImg = null;
         BufferedImage finalImg = null;
-        File imgFile = new File(sPath);
+        File imgFile = new File("../test/imgBSI/input/"+sPath);
         try {
             sourceImg = ImageIO.read(imgFile);
             int height = sourceImg.getHeight();
@@ -169,7 +169,7 @@ public class ImageBSI{
             System.out.println(e);
         }
         try {
-            File output = new File(dPath);
+            File output = new File("../test/imgBSI/output/"+dPath);
             ImageIO.write(finalImg, "png",output);
         } catch (IOException e) {
             System.out.println(e);
@@ -182,7 +182,7 @@ public class ImageBSI{
         BufferedImage sourceImg = null;
         BufferedImage tempImg = null;
         BufferedImage finalImg = null;
-        File imgFile = new File(sPath);
+        File imgFile = new File("../test/imgBSI/input/"+sPath);
         try {
             sourceImg = ImageIO.read(imgFile);
             int height = sourceImg.getHeight();
@@ -267,7 +267,7 @@ public class ImageBSI{
             System.out.println(e);
         }
         try {
-            File output = new File(dPath);
+            File output = new File("../test/imgBSI/output/"+dPath);
             ImageIO.write(finalImg, "png",output);
         } catch (IOException e) {
             System.out.println(e);

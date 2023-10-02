@@ -121,4 +121,8 @@ public class SPL {
             System.out.println("Tidak bisa melakukan kaidah cramer karena Matrix tidak berbentuk persegi.");
         }
     }
+
+    public void solveWithInverse(){
+        
+    }
 }

@@ -535,15 +535,15 @@ public class OBE {
             addNewLineToStep();
             addNoSolutionsToStep();
         }
-        if (isSolusiUnik()){
+        else if (isSolusiUnik()){
             addAugmentedToStep(9);
             setSolusiUnik(true);
-        } else {
-            setParameterSolutions();
-            roundAllElement();
-            addAugmentedToStep(9);
-            addParameterToStep();
-        }
+        } //else {
+        //    setParameterSolutions();
+        //    roundAllElement();
+        //    addAugmentedToStep(9);
+        //    addParameterToStep();
+        //}
         //printAugmented();
     }
     
@@ -668,8 +668,7 @@ public class OBE {
         if (getNoSolusi()){
             addNewLineToStep();
             addNoSolutionsToStep();
-        }
-        if (isSolusiUnik()){
+        } else if (isSolusiUnik()){
             addAugmentedToStep(9);
             setSolusiUnik(true);
             for (int i = getMatrixRow()-2; i >= 0; i--){
@@ -696,6 +695,7 @@ public class OBE {
         int existedVar = getMatrixCol()-1;
         for (int i = getMatrixRow()-1; i >= 0; i--){
             int iMainTemp = findIdxMain(i);
+            //System.out.println(iMainTemp);
             if (iMainTemp == getMatrixCol()-2){
                 if (result[iMainTemp] == null){
                     result[iMainTemp] = new Parameter();
