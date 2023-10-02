@@ -9,7 +9,7 @@ public class driverregresi {
 
         // menerima input dari file
         // String path;
-        // Regresi reg = new Regresi();
+        // Regresi reg = new Regresi(1000,501);
         // System.out.print("Masukkan path: ");
         // path = scan.nextLine();
         // reg.askDataRegFromFile(path);
@@ -22,9 +22,9 @@ public class driverregresi {
         // reg.displayFunction(meselon);
         // System.out.println("");
         // reg.taksiran(reg.listnilaivar, meselon);
-        // menerima input dari keyboard
-
         // reg.listnilaivar.displayMatrix();
+        
+        // menerima input dari keyboard
         System.out.print("Masukkan banyak variabel bebas: ");
         int var = scan.nextInt();
 

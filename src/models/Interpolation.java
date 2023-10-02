@@ -101,7 +101,7 @@ public class Interpolation {
     }
 
     public void askDataPointFromFile(String path){
-        SPL temp = new SPL();
+        SPL temp = new SPL(1000,501);
         int i,j;
         try {
             File inputFile = new File(path);
@@ -115,6 +115,7 @@ public class Interpolation {
                 if (len == 2){
                     for (i = 0; i < column; i++){
                         double tempdouble = Double.parseDouble(saved[i]);
+                        System.out.println("TEMPDOUBLE: "+tempdouble);
                         temp.getSPL().setMElmt(tempdouble, row, i);
                     }
                     row++;

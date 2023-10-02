@@ -14,7 +14,8 @@ public class SPL {
 
     /* ---------- GLOBAL VARIABLES ---------- */
     public OBE spl;
-
+    public Matrix listnilaivar;
+    // public Matrix listnilaivar;
     /* ---------- KONSTRUKTOR ---------- */
     public SPL(){
         this(200,150);
@@ -93,5 +94,31 @@ public class SPL {
     /* ---------- SELEKTOR ---------- */
     public OBE getSPL(){
         return new OBE(this.spl);
+    }
+
+    public void solveWithCramer(OBE mdata){
+        // menerima input matrix yang berisikan data SPL
+        double temp;
+        int i,count = 0;
+        Matrix original = new Matrix (mdata.getCopyAugmented());
+        original.setColEff(3);
+        Matrix dupe = new Matrix(original);
+        listnilaivar = new Matrix(1,dupe.getColEff());
+        if (original.isSquare()){
+            if (original.determinant() != 0){
+                double detcramer = original.determinant();
+                for (i = 0; i < dupe.getColEff(); i++){
+                    dupe.setCol(mdata.getAllCol(original.getColEff()), i);
+                    temp = dupe.determinant()/detcramer;
+                    listnilaivar.setElmt(temp, 0, i);
+                    dupe = new Matrix(original);
+                }
+
+            } else{
+                System.out.println("Tidak bisa melakukan kaidah cramer karena determinant Matrix bernilai 0.");
+            }
+        } else{
+            System.out.println("Tidak bisa melakukan kaidah cramer karena Matrix tidak berbentuk persegi.");
+        }
     }
 }
