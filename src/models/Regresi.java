@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import operations.Matrix;
 import operations.OBE;
-public class regresi {
+public class Regresi {
     public Matrix regresiM;
     
     public Matrix dataRegresiM;
@@ -16,13 +16,8 @@ public class regresi {
     
     private int banyakSampelValid;
     
-    public regresi(){
-        this(0,0);
-        dataRegresiM = new Matrix (0,0);
-        listnilaivar = new Matrix(0,0);
-    }
     
-    public regresi(int banyakSampel,int jumlahPeubah){
+    public Regresi(int banyakSampel, int jumlahPeubah){
         jumlahPeubahValid = jumlahPeubah;
         banyakSampelValid = banyakSampel;
         regresiM = new Matrix(banyakSampel + 1,jumlahPeubah + 2);
@@ -40,7 +35,8 @@ public class regresi {
     
     public void askDatareg(int sampel,int var){
         // sebelumnya sudah dapat ukuran matrix
-        int i,j,count = 1;
+        int i,j;
+        int count = 1;
         String line;
         Scanner scan = new Scanner(System.in);
         for (i = 0; i < sampel; i++){
@@ -103,7 +99,7 @@ public class regresi {
     }
     
     public OBE convertReg2OBE(Matrix regresiM){
-        // convert matrix regresi menjadi OBE untuk keperluan fungsi gaussAndSolutions agar bisa menjadi matrix eselon
+        // convert matrix Regresi menjadi OBE untuk keperluan fungsi gaussAndSolutions agar bisa menjadi matrix eselon
         int i,j;
         OBE meselon = new OBE(regresiM.getRowEff(), regresiM.getColEff());
         for (i = 0; i < regresiM.getRowEff(); i++){
@@ -171,6 +167,7 @@ public class regresi {
                     for (i = 0; i < len; i++){
                         double tempdouble = Double.parseDouble(saved[i]);
                         dataRegresiM.setElmt(tempdouble, row, i);
+                        System.out.println("Data berhasil di set: " + dataRegresiM.getElmt(row, i));
                     }
                 } else if (len == var - 1){
                     for (i = 0; i < len; i++){

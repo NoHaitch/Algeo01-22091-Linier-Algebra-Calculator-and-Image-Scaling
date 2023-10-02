@@ -14,7 +14,8 @@ public class SPL {
 
     /* ---------- GLOBAL VARIABLES ---------- */
     public OBE spl;
-
+    public Matrix listnilaivar;
+    // public Matrix listnilaivar;
     /* ---------- KONSTRUKTOR ---------- */
     public SPL(){
         this(200,150);
@@ -23,7 +24,7 @@ public class SPL {
     /* Konstruktor overloading */
     public SPL(int row, int col){
         this.spl = new OBE(row, col);
-    }
+}
 
     /* ---------- KELOMPOK Interaksi dengan IO ---------- */
     public void inputSPLText(){
@@ -95,15 +96,29 @@ public class SPL {
         return new OBE(this.spl);
     }
 
-    /* ---------- KELOMPOK Operasi Utama ---------- */
-    public void cramer(){
-        /* Penyelesaian dengan kaidah cramer */
-        /* Prekondisi: Matriks persegi */
-        int len = spl.getMatrixCol();
-        for(int col = 0; col < len-1; col++){
-            Matrix cramer = spl.getMatrixCramer(col);
-            cramer.displayMatrix();
-            System.out.printf("res : " + (col+1) + " ->" + cramer.determinant() + "\n");
+    public void solveWithCramer(OBE mdata){
+        // menerima input matrix yang berisikan data SPL
+        double temp;
+        int i,count = 0;
+        Matrix original = new Matrix (mdata.getCopyAugmented());
+        original.setColEff(3);
+        Matrix dupe = new Matrix(original);
+        listnilaivar = new Matrix(1,dupe.getColEff());
+        if (original.isSquare()){
+            if (original.determinant() != 0){
+                double detcramer = original.determinant();
+                for (i = 0; i < dupe.getColEff(); i++){
+                    dupe.setCol(mdata.getAllCol(original.getColEff()), i);
+                    temp = dupe.determinant()/detcramer;
+                    listnilaivar.setElmt(temp, 0, i);
+                    dupe = new Matrix(original);
+                }
+
+            } else{
+                System.out.println("Tidak bisa melakukan kaidah cramer karena determinant Matrix bernilai 0.");
+            }
+        } else{
+            System.out.println("Tidak bisa melakukan kaidah cramer karena Matrix tidak berbentuk persegi.");
         }
     }
 }

@@ -6,14 +6,14 @@ import java.util.Scanner;
 import operations.Matrix;
 import operations.OBE;
 
-public class interpolation {
+public class Interpolation {
     public Matrix point;
     public double xRequest;
-    public interpolation(){
+    public Interpolation(){
         this(0);
     }
 
-    public interpolation(int JmlhPoint){
+    public Interpolation(int JmlhPoint){
         point = new Matrix(JmlhPoint, 2);
     }
 
@@ -101,7 +101,7 @@ public class interpolation {
     }
 
     public void askDataPointFromFile(String path){
-        SPL temp = new SPL();
+        SPL temp = new SPL(1000,501);
         int i,j;
         try {
             File inputFile = new File(path);
@@ -115,6 +115,7 @@ public class interpolation {
                 if (len == 2){
                     for (i = 0; i < column; i++){
                         double tempdouble = Double.parseDouble(saved[i]);
+                        System.out.println("TEMPDOUBLE: "+tempdouble);
                         temp.getSPL().setMElmt(tempdouble, row, i);
                     }
                     row++;
@@ -136,6 +137,5 @@ public class interpolation {
                 point.setElmt(temp.spl.getMElmt(i, j), i, j);
             }
         }
-        point.displayMatrix();
     }
 }
