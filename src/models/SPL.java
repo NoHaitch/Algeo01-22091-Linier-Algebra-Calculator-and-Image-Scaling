@@ -62,7 +62,7 @@ public class SPL {
         //input.close();
     }
 
-    public void saveToTextFile(String path){
+    public void saveToTextFile(String path, String text){
         /* Menyimpan hasil Operasi Ke dalam file text */
         String fPath = "";
         int i = 0;
@@ -81,6 +81,7 @@ public class SPL {
         fPath += add + ".txt";
         try {
             FileWriter writer = new FileWriter(fPath);
+            writer.write(text + "\n\n");
             writer.write(this.spl.getStep());
             writer.close();
             System.out.println("\nPenyelesaian berhasil disimpan ke :"+fPath+"\n\n");
