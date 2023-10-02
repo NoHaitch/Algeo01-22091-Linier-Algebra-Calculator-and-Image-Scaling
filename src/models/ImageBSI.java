@@ -240,12 +240,12 @@ public class ImageBSI{
                     double Aj = Math.floor(ycon);
 
                     if (Ai > (double)currentX){
-                        currentX ++;
+                        currentX = (int)Ai;
                         currentY = -1;
                     }
 
                     if (Aj > (double)currentY){
-                        currentY ++;
+                        currentY = (int)Aj;
                         Matrix []image = get16Points((int)(Ai+1), (int)(Aj+1), tempImg);
                         aUse[currentY][0] = new Matrix(XInvxDMat.multiplyMatrix(image[0]));
                         aUse[currentY][1] = new Matrix(XInvxDMat.multiplyMatrix(image[1]));
