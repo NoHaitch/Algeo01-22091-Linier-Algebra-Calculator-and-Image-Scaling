@@ -30,21 +30,20 @@ public class Parameter {
 
     /* ---------- KELOMPOK Casting ---------- */
     public String turnIntoString(int first, int last){
-        /* Mengubah Parameter menjadi sebuah String */
         String temp = "";
         for (int i = first; i < last; i++){
             if (var[i] != 0){
                 int val = (int) var[i];
                 if (val == var[i]){
                     if (val == 1){
-                        temp += ("X" + (i + 1) + " ");
+                        temp += symbol+Integer.toString(i+1) + " ";
                     } else if (val == -1){
-                        temp += "-X"+(i+1)+" ";
+                        temp += "-"+symbol+Integer.toString(i+1)+" ";
                     } else {
                         if (val < 0 || temp == ""){
-                            temp += val+"X"+(i+1)+" ";
+                            temp += Integer.toString(val)+symbol+Integer.toString(i+1)+" ";
                         } else {
-                            temp += "+ "+val+"X"+(i+1)+" ";
+                            temp += "+ "+Integer.toString(val)+symbol+Integer.toString(i+1)+" ";
                         }
                     }
                 } else {
@@ -52,55 +51,52 @@ public class Parameter {
                     if (number > 0 && temp != ""){
                         temp += "+ ";
                     }
-                    for (int j = 0; j < 9; j++){
-                        temp += str.charAt(j);
+                    if (str.length() < 9){
+                        temp += str;
+                    } else {
+                        for (int j = 0; j < 9; j++){
+                            temp += str.charAt(j);
+                        }
                     }
-                    temp += "X"+(i+1)+" ";
+                    temp += symbol+Integer.toString(i+1)+" ";
                 }
             }
         }
         if (number != 0){
             int val = (int) number;
             if (val == number){
-                temp = val +" " + temp;
+                if (temp.charAt(0) == '-'){
+                    temp = val + " " + temp;
+                } else {
+                    temp = val + " + "+temp;
+                }
             } else {
+                //System.out.println("Nilai :"+Math.round(number));
                 String str = Double.toString(number);
                 if (str.length() < 9){
-                    temp = str + " " + temp;
+                    if (temp.charAt(0) == '-'){
+                        temp = str + " " + temp;
+                    } else {
+                        temp = str + " + "+temp;
+                    }
                 } else {
                     String slice = "";
                     for (int i = 0; i < 9; i++){
                         slice += str.charAt(i);
                     }
-                    temp = slice + " "+temp;
-                }
-            }
-        } else {
-            if (temp.isEmpty()){
-                temp += "0";
-            }
-        }
-        if (number != 0){
-            int val = (int) number;
-            if (val == number){
-                temp = val +" " + temp;
-            } else {
-                String str = Double.toString(number);
-                if (str.length() < 9){
-                    temp = str + " " + temp;
-                } else {
-                    String slice = "";
-                    for (int i = 0; i < 9; i++){
-                        slice += str.charAt(i);
+                    if (temp.charAt(0) == '-'){
+                        temp = slice + " " + temp;
+                    } else {
+                        temp = slice + " + "+temp;
                     }
-                    temp = slice + " "+temp;
                 }
             }
         } else {
-            if (temp.isEmpty()){
+            if (temp == ""){
                 temp += "0";
             }
         }
         return temp;
+        //return symbol+first+" ";
     }
 }
