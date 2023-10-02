@@ -165,6 +165,12 @@ public class DeterminanInvers {
         return false;
     }
 
+    public boolean zeroDeterminan(){
+        DeterminanInvers temp = new DeterminanInvers(this);
+        temp.CalculateOBE();
+        return temp.isDetZero;
+    }
+
     public boolean isLanjutForInvers(){
         for (int i = 0; i < contents.getMatrixRow()-1; i++){
             int pass = contents.getIndexMain(i);
