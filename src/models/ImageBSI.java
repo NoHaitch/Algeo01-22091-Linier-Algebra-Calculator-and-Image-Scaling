@@ -316,9 +316,29 @@ public class ImageBSI{
             }
         }
         al = (int)alpha;
+        if (al > 255){
+            al = 255;
+        } else if (al < 0){
+            al = 0;
+        }
         r = (int)red;
+        if (r > 255){
+            r = 255;
+        } else if (r < 0){
+            r = 0;
+        }
         g = (int)green;
+        if (g > 255){
+            g = 255;
+        } else if (g < 0){
+            g = 0;
+        }
         b = (int)blue;
+        if (b > 255){
+            b = 255;
+        } else if (b < 0){
+            b = 0;
+        }
         int rgb = (al << 24) | (r << 16) | (g << 8) | b ;
         return rgb;
     }
