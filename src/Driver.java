@@ -8,6 +8,6 @@ public class Driver {
         temp.inputSPLText();
         temp.solveWithInverse();
         System.out.println(temp.spl.getStep());
-        temp.saveToTextFile("test/spl/output/testOutput.txt");
+        temp.saveToTextFile("test/spl/output/testOutput.txt","");
     }
 }

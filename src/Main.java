@@ -5,6 +5,8 @@ import operations.OBE;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.regex.*;
+
 
 public class Main {
 
@@ -14,6 +16,18 @@ public class Main {
 
     public static void print(String str) {
         System.out.print(str);
+    }
+
+    public static boolean imageFile(String str)
+    {
+        // Regex to check valid image file extension.
+        String regex = "([^ ]+(\\.(?i)(jpeg|jpg|png|gif|bmp))$)";
+        Pattern p = Pattern.compile(regex);
+        if (str == null) {
+            return false;
+        }
+        Matcher m = p.matcher(str);
+        return m.matches();
     }
 
     public static void main(String[] args) {
@@ -1086,54 +1100,66 @@ public class Main {
                     }
                     case "ImageBSI" -> {
                         /* =========== MENU ImageBSI =========== */
-                        println("\n ========== Masukkan Pembesaran Gambar ==========");
+                        println("\n ========== MENU Pembesaran Gambar ==========");
                         boolean ImageMenu = true;
                         boolean valid = false;
                         String path = null;
                         String outputPath = null;
                         double skala = 0;
                         while (ImageMenu) {
-                            /* =========== INPUT Interpolasi Bicubic Spline =========== */
+                            /* =========== INPUT ImageBSI =========== */
                             println("Ketik 0 untuk kembali");
                             print(" >>> Masukkan alamat file sumber: ");
                             path = scanner.nextLine();
                             if (path.equals("0")) {
                                 ImageMenu = false;
                             } else {
-                                print(" >>> Masukkan alamat dan nama file output: ");
-                                outputPath = scanner.nextLine();
-                                if (outputPath.equals("0")) {
-                                    ImageMenu = false;
-                                } else {
-                                    File file;
-                                    boolean filefound = false;
-                                    try {
-                                        file = new File(path);
-                                        new Scanner(file);
-                                        filefound = true;
-                                    } catch (FileNotFoundException e) {
-                                        println("Alamat file salah. Contoh alamat benar : src/gambar.jpg ");
-                                    }
-                                    if (filefound) {
-                                        boolean isNotSkalaValid = true;
-                                        skala = -1;
-                                        while (isNotSkalaValid) {
-                                            print(" >>> Masukkan skala pembesaran gambar: ");
+                                if(imageFile(path)) {
+                                    print(" >>> Masukkan nama file output: ");
+                                    outputPath = scanner.nextLine();
+                                    if (outputPath.equals("0")) {
+                                        ImageMenu = false;
+                                    } else {
+                                        if(imageFile(outputPath)) {
+                                            File file;
+                                            boolean filefound = false;
                                             try {
-                                                skala = scanner.nextDouble();
-                                            } catch (Exception e) {
-                                                println("Skala harus dalam bentuk bilangan real positif");
+                                                file = new File(path);
+                                                new Scanner(file);
+                                                filefound = true;
+                                            } catch (FileNotFoundException e) {
+                                                println("Alamat file salah. Contoh alamat benar : src/gambar.jpg ");
                                             }
-                                            scanner.nextLine();
-                                            if (skala != -1 && skala < 0) {
-                                                println("Skala harus dalam bentuk bilangan real positif");
-                                            } else {
-                                                isNotSkalaValid = false;
-                                                ImageMenu = false;
-                                                valid = true;
+
+                                            if (filefound) {
+                                                boolean isNotSkalaValid = true;
+                                                skala = -1;
+                                                while (isNotSkalaValid) {
+                                                    print(" >>> Masukkan skala pembesaran gambar: ");
+                                                    try {
+                                                        skala = scanner.nextDouble();
+                                                    } catch (Exception e) {
+                                                        println("Skala harus dalam bentuk bilangan real positif");
+                                                    }
+                                                    scanner.nextLine();
+                                                    if (skala != -1 && skala < 0) {
+                                                        println("Skala harus dalam bentuk bilangan real positif");
+                                                    } else {
+                                                        isNotSkalaValid = false;
+                                                        ImageMenu = false;
+                                                        valid = true;
+                                                    }
+
+                                                }
                                             }
                                         }
+                                        else {
+                                            println("Nama file bukan ciri-ciri suatu gambar pastikan ekstensinya jpg,jpeg,png");
+                                        }
                                     }
+                                }
+                                else {
+                                    println("File bukan gambar. Ciri-ciri gambar adalah ekstensinya jpg,jpeg,png");
                                 }
                             }
                         }
