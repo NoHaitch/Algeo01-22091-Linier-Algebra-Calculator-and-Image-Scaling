@@ -21,7 +21,7 @@ public class Main {
     public static boolean imageFile(String str)
     {
         // Regex to check valid image file extension.
-        String regex = "([^ ]+(\\.(?i)(jpeg|jpg|png|gif|bmp))$)";
+        String regex = "([^ ]+(\\.(?i)(jpeg|jpg|png))$)";
         Pattern p = Pattern.compile(regex);
         if (str == null) {
             return false;
