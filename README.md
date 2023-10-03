@@ -1,10 +1,13 @@
-<div align="center">
+<div align="center" id="readme-top">
 <h1>Tugas Besar 1 IF2123 - Aljabar Linier dan Geometri ITB</h1>
 <h3>TOPIK : Sistem Persamaan Linier, Determinan, dan Aplikasinya</h3>
 </div>
 
+
 Berisi Program mengenai Sistem Persamaan Linier(SPL), Determinan, Interpolasi Polinomial, Regresi Linier Berganda, dan Bicubic Spline Interpolation.
 Untuk cara penyelasaian SPL, menggunakan Metode Eliminiasi Gauss, Gauss-Jordan, Matriks balikan, dan Kaidah Cramer.
+
+
 
 ## Kelompok 20 : Panci Bolong
 
@@ -14,158 +17,93 @@ Untuk cara penyelasaian SPL, menggunakan Metode Eliminiasi Gauss, Gauss-Jordan, 
 | 13522093 |       Matthew Vladimir Hutabarat       |
 | 13522098 |      Suthasoma Mahardhika Munthe       |
 
-## CARA COMPILE BIAR MASUK KE BIN
-
-Untuk Kompile
-
-```shell
-cd src                       // agar masuk ke directory file .java
-javac Main.java -d ../bin    // agar hasil compile masuk ke folder bin
-```
-
-## TEMP LINKS
+## Quick Links
 
 - [Link Spesifikasi](https://docs.google.com/document/d/1evaYvI5PfDij2UlA_mkqUCLK0mg4hbRzbcA461FFnwg)
 - [Link Data Kelompok](https://docs.google.com/spreadsheets/d/1Lnc1Bf3rv3uHc4vgUdWsJcf4bDzlSIeslEvdyR90I3U/edit#gid=0)
 - [Link Pengumpulan](https://forms.gle/af2dFUL4EMNd5ye8A)
 - [Link Laporan](https://itbdsti-my.sharepoint.com/:w:/g/personal/13522091_mahasiswa_itb_ac_id/EWyly9bYWAtOrKQvzYmuzSABl3QzUu26pgnH_ExqqanbPA?e=2zeHK9)
 
-## Links
 
-- Repository: https://github.com/NoHaitch/Tubes_Algeo_1/
-- Spesifikasi Tugas : https://docs.google.com/document/d/1evaYvI5PfDij2UlA_mkqUCLK0mg4hbRzbcA461FFnwg
+## Installing / Getting Started
 
-</br>
-</br>
 
-# ===== Template for README.md =====
 
-## Installing / Getting started
+Di bawah adalah instruksi instalasi dan  penggunaan program
 
-A quick introduction of the minimal setup you need to get a hello world up &
-running.
-
-```shell
-packagemanager install awesome-project
-awesome-project start
-awesome-project "Do something!"  # prints "Nah."
-```
-
-Here you should say what actually happens when you execute the code above.
-
-### Initial Configuration
-
-Some projects require initial configuration (e.g. access tokens or keys, `npm i`).
-This is the section where you would document those requirements.
+1. Clone Repository ke dalam root folder
+   ```bash
+   git clone https://github.com/NoHaitch/Tubes_Algeo_1
+   ```
+2. Ubah Directory Terminal
+   ```bash
+   cd bin 
+   ```
+3. Jalankan Program
+   ```bash
+   java Main
+   ```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Developing
 
-Here's a brief intro about what a developer must do in order to start developing
-the project further:
-
-```shell
-git clone https://github.com/your/awesome-project.git
-cd awesome-project/
-packagemanager install
-```
-
-And state what happens step-by-step.
-
 ### Building
 
-If your project needs some additional steps for the developer to build the
-project after some code changes, state them here:
-
-```shell
-./configure
-make
-make install
+```Shell
+# From root Directory
+# cd ../ to return to last directory
+cd src   
+javac Main.java -d ../bin
 ```
 
-Here again you should state what actually happens when the code above gets
-executed.
-
-### Deploying / Publishing
-
-In case there's some step you have to take that publishes this project to a
-server, this is the right time to state it.
-
-```shell
-packagemanager deploy awesome-project -s server.com -u username -p password
-```
-
-And again you'd need to tell what the previous code actually does.
+Dengan kode ```cd src```, kita masuk ke directory "src"  
+Dengan kode ```javac Main.java -d ../bin ```, Kita mengkompile program dan meletakan hasilnya pada folder bin
+<p align="right">(<a href="#readme-top">back to top</a>)</p>  
 
 ## Features
 
-What's all the bells and whistles this project can perform?
+### 1. Menyelesaikan Sistem Persamaa Linier (SPL)
+- Metode Eliminasi Gauss
+- Metode Eliminasi Gauss-Jordan
+- Metode Matriks Balikan
+- Kaidah Cramer
 
-- What's the main functionality
-- You can also do another thing
-- If you get really randy, you can even do this
+### 2. Menghitung Determinan
+- Metode Ekspansi Kofaktor
+- Metode Reduksi Baris dengan OBE
 
-## Configuration
+### 3. Menghitung Matriks Balikan (Invers)
+### 4. Menghitung Interpolasi Polinomial
+### 5. Menghitung Interpolasi Bicubic Spline
+### 6. Menghitung Regresi Linier Berganda
+### 7. Peningkatan Kualitas Gambar
+- Menggunakan Interpolasi Bicubic Spline sebagai basis
 
-Here you should write what are all of the configurations a user can enter when
-using the project.
+### Other
+- Menerima Input dari Ketikan
+- Menerima Input dari File
+- Menyimpan hasil perhitungan ke dalam File
 
-#### Argument 1
+<p align="right">(<a href="#readme-top">back to top</a>)</p>  
 
-Type: `String`  
-Default: `'default value'`
-
-State what an argument does and how you can use it. If needed, you can provide
-an example below.
-
-Example:
-
-```bash
-awesome-project "Some other value"  # Prints "You're nailing this readme!"
-```
-
-#### Argument 2
-
-Type: `Number|Boolean`  
-Default: 100
-
-Copy-paste as many of these as you need.
 
 ## Contributing
 
-When you publish something open source, one of the greatest motivations is that
-anyone can just jump in and start contributing to your project.
-
-These paragraphs are meant to welcome those kind souls to feel that they are
-needed. You should state something like:
-
-"If you'd like to contribute, please fork the repository and use a feature
-branch. Pull requests are warmly welcome."
-
-If there's anything else the developer needs to know (e.g. the code style
-guide), you should link it here. If there's a lot of things to take into
-consideration, it is common to separate this section to its own file called
-`CONTRIBUTING.md` (or similar). If so, you should say that it exists here.
+Jika Anda ingin berkontribusi atau melanjutkan perkembangan program, silahkan fork repository ini dan gunakan branch fitur.  
+Permintaan Pull sangat diperbolehkan dan diterima dengan hangat.
 
 ## Links
 
-Even though this information can be found inside the project on machine-readable
-format like in a .json file, it's good to include a summary of most useful
-links to humans using your project. You can include links like:
+- [Project homepage](https://github.com/NoHaitch/Tubes_Algeo_1)
+- [Repository](https://github.com/NoHaitch/Tubes_Algeo_1)
+- [Spesifikasi Tugas](https://docs.google.com/document/d/1_-ZaP5vsYfCp17aHCh3ePt27dU7vYmoF2m0DnDNWUFg/edit?usp=sharing)
+- Laporan Tugas
+- [Issue tracker](https://github.com/NoHaitch/Tubes_Algeo_1/issues)
+  - _Jika terdapat kasus bug-bug yang sangat penting dan berbahaya, silahkan gunakan fitur issue pada github. Kami apresiasi semua bantuan dalam memperbaiki dan mengembangkan project ini!_
 
-- Project homepage: https://your.github.com/awesome-project/
-- Repository: https://github.com/your/awesome-project/
-- Issue tracker: https://github.com/your/awesome-project/issues
-  - In case of sensitive bugs like security vulnerabilities, please contact
-    my@email.com directly instead of using issue tracker. We value your effort
-    to improve the security and privacy of this project!
-- Related projects:
-  - Your other project: https://github.com/your/other-project/
-  - Someone else's project: https://github.com/someones/awesome-project/
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 ## Licensing
 
-One really important part: Give your project a proper license. Here you should
-state what the license is and how to find the text version of the license.
-Something like:
-
-"The code in this project is licensed under MIT license."
+The code in this project is licensed under MIT license.
