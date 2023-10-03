@@ -532,6 +532,7 @@ public class OBE {
         }
         mkOneMain();
         if (getNoSolusi()){
+            addAugmentedToStep(9);
             addNewLineToStep();
             addNoSolutionsToStep();
         }
@@ -627,14 +628,20 @@ public class OBE {
             setSolusi();
             //addAugmentedToStep(9);
             addSolutionToStep();
-        } else {
+        } else if (!getNoSolusi()){
             addGaussJordanRejected();
             setParameterSolutions();
             roundAllElement();
             addAugmentedToStep(9);
             addParameterToStep();
             //System.out.println("\nTidak dapat dilakukan metode Gauss-Jordan.\nKarena solusi tidak unik.\n");
+        }else {
+            //addAugmentedToStep(9);
+            addGaussJordanRejected();
+            //addNewLineToStep();
+            //addNoSolutionsToStep();
         }
+
     }
 
     public void gaussAndSolutions(){
