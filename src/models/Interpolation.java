@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 import operations.Matrix;
 import operations.OBE;
+import operations.Point;
 
 public class Interpolation {
     public Matrix point;
