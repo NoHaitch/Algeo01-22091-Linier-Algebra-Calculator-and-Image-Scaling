@@ -1,6 +1,7 @@
 package models;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 import operations.Matrix;
@@ -51,17 +52,7 @@ public class Regresi {
             }
         }
     }
-    // 1 2 3 Y
-    // 4 5 6 Y
-    // 7 8 9 Y
-    // b0   b1  b2  b3  y
-
-    // 1 2 3 4 Y
-    // 5 6 7 8 Y
-    // 9 10 11 12 Y
-    // 13 14 15 16 Y
-    // b0   b1  b2  b3  b4  y
-
+    
     public void convertData2Reg(Matrix dataRegresiM){
         int i,j,k;
         double temp;
@@ -128,23 +119,8 @@ public class Regresi {
         }
     }
 
-    public double taksiran(Matrix listnilaivar, OBE meselon){
-        // listnilaivar itu masukan dari pengguna untuk menaksir y, kalo dari file sudah ada tinggal masukan dari keyboard itu harus ditanya dan dimasukin sendiri
-        int i,j = meselon.getMatrixCol() - 1;
-        Matrix Mnilai = new Matrix(1,meselon.getMatrixRow());
-        for (i = 0; i < meselon.getMatrixRow(); i++){
-            Mnilai.setElmt(meselon.getMElmt(i, j), 0, i);
-        }
-        double taksiran = Mnilai.getElmt(0, 0);
-        System.out.println("taksiran: "+taksiran);
-        int k = 1;
-        for (i = 1; i < Mnilai.getColEff(); i++){
-            taksiran += Mnilai.getElmt(0, i)*listnilaivar.getElmt(0, i - 1);
-        }
-        return taksiran;
-    }
-
     public void askDataRegFromFile(String path){
+
         // 1 2 3 10
         // 4 5 6 20
         // 7 8 9 30
@@ -167,7 +143,6 @@ public class Regresi {
                     for (i = 0; i < len; i++){
                         double tempdouble = Double.parseDouble(saved[i]);
                         dataRegresiM.setElmt(tempdouble, row, i);
-                        System.out.println("Data berhasil di set: " + dataRegresiM.getElmt(row, i));
                     }
                 } else if (len == var - 1){
                     for (i = 0; i < len; i++){
@@ -186,6 +161,37 @@ public class Regresi {
             System.out.println("An error occurred.");
             e.printStackTrace();
         // TODO: handle exception
+        }
+    }
+
+    public double taksiran(Matrix listnilaivar, OBE meselon){
+    // listnilaivar itu masukan dari pengguna untuk menaksir y, kalo dari file sudah ada tinggal masukan dari keyboard itu harus ditanya dan dimasukin sendiri
+        int i,j = meselon.getMatrixCol() - 1;
+        Matrix Mnilai = new Matrix(1,meselon.getMatrixRow());
+        for (i = 0; i < meselon.getMatrixRow(); i++){
+            Mnilai.setElmt(meselon.getMElmt(i, j), 0, i);
+        }
+        Mnilai.setColEff(meselon.getMatrixRow());
+        Mnilai.setRowEff(1);
+        Mnilai.displayMatrix();
+        double taksiran = Mnilai.getElmt(0, 0);
+        System.out.println("taksiran: "+taksiran);
+        int k = 1;
+        for (i = 1; i < Mnilai.getColEff(); i++){
+            System.out.println(Mnilai.getElmt(0, i)+ " x "+listnilaivar.getElmt(0, i - 1) +" = " + Mnilai.getElmt(0, i)*listnilaivar.getElmt(0, i - 1));
+            taksiran += Mnilai.getElmt(0, i)*listnilaivar.getElmt(0, i - 1);
+        }
+        return taksiran;
+    }
+    
+    public void uploadhasil2File(double taksiran,String filehasil){
+        try {
+            PrintWriter write = new PrintWriter(filehasil);
+            write.print(taksiran);
+            write.close();
+            System.out.println("File berhasil tersimpan!");
+        } catch (FileNotFoundException e) {
+            System.out.println("File tidak dapat disimpan");
         }
     }
 }

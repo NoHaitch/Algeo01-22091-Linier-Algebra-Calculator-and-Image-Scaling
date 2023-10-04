@@ -2,6 +2,7 @@ package models;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 import operations.Matrix;
 import operations.OBE;
@@ -41,14 +42,27 @@ public class Interpolation {
     
     public Matrix askDataPoint() {
         // ask how many data and store them in Matrix for Point
-        int i, j, n;
+        int i, j, n,itemp;
+        boolean foundp;
         Point p = new Point();
         Scanner scan = new Scanner(System.in);
         System.out.print("Masukkan banyak titik: ");
         n = scan.nextInt();
         Matrix m = new Matrix(n,2);
         for (i = 0; i < n ; i++){
-            p.readPoint();
+            foundp = false;
+            while (!foundp){
+                p.readPoint();
+                if (i == 0){
+                    foundp = true;
+                }
+                for (itemp = 0; itemp < i; itemp++){
+                    if (p.getX() == m.getElmt(itemp, 0) || p.getY() == m.getElmt(itemp, 1)){
+                        foundp = true;
+                    }
+                }
+
+            }
             m.setElmt(p.getX(), i, 0);
             m.setElmt(p.getY(), i, 1);
         }
@@ -136,6 +150,20 @@ public class Interpolation {
             for (j = 0; j < 2; j++){
                 point.setElmt(temp.spl.getMElmt(i, j), i, j);
             }
+        }
+    }
+
+    public void uploadhasil2File(double taksiran, double xRequest,String filehasil){
+        try {
+            PrintWriter write = new PrintWriter(filehasil);
+            write.print("f(");
+            write.print(xRequest);
+            write.print(") = ");
+            write.print(taksiran);
+            write.close();
+            System.out.println("File berhasil tersimpan!");
+        } catch (FileNotFoundException e) {
+            System.out.println("File tidak dapat disimpan");
         }
     }
 }
