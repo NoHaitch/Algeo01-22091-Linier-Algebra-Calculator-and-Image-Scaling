@@ -79,13 +79,12 @@ public class SPL {
             testFile = new File(fPath+add+".txt");
         }
         fPath += add + ".txt";
-        System.out.println(fPath);
         try {
             FileWriter writer = new FileWriter(fPath);
             writer.write(text + "\n");
             writer.write(this.spl.getStep());
             writer.close();
-            System.out.println("\nPenyelesaian berhasil disimpan ke :"+fPath+"\n\n");
+            System.out.println("\nPenyelesaian berhasil disimpan ke : "+fPath+"\n\n");
         } catch (Exception e) {
             System.out.println("An error occurred\n");
             e.printStackTrace();
@@ -115,19 +114,16 @@ public class SPL {
                     listnilaivar.setElmt(temp, 0, i);
                     dupe = new Matrix(original);
                 }
-
             } else{
-                spl.addStringToStep("\nTidak bisa melakukan kaidah cramer karena determinant Matrix bernilai 0.\n");
                 return false;
             }
         } else{
-            System.out.println("Tidak bisa melakukan kaidah cramer karena Matrix tidak berbentuk persegi.");
             return false;
         }
         return true;
     }
 
-    public void solveWithInverse(){
+    public boolean solveWithInverse(){
         DeterminanInvers temp = new DeterminanInvers(this.spl.getMatrixRow(), this.spl.getMatrixCol()-1);
         for (int i = 0; i < spl.getMatrixRow(); i++){
             for (int j = 0; j < spl.getMatrixCol()-1; j++){
@@ -151,12 +147,12 @@ public class SPL {
                 }
                 spl.addStringToStep(solusi);
             } else {
-                System.out.println("Tidak dapat menghitung solusi karena matriks tidak memiliki Invers.");
+                return false;
             }
         } else {
-            System.out.println("Tidak dapat menghitung solusi karena matriks tidak memiliki Invers.");
+            return false;
         }
-
+        return true;
     }
 
     public static String importToString(Matrix m){

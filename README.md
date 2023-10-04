@@ -52,6 +52,57 @@ Di bawah adalah instruksi instalasi dan  penggunaan program
    ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Input Output Program
+
+Terdapat 2 macam jenis input yang dapat dilakukan tergantung pada fitur
+1. Input dengan Ketik
+2. Input dengan File Text
+
+Hal tersebut dapat dipilih pada menu dibawah
+``` 
+========== Pilih Metode Masukkan ==========
+1. Masukkan Ketik
+2. Masukkan dalam bentuk File
+3. Kembali
+ >>> Pilih Metode Masukkan : 
+ ```
+
+Program yang berhasil akan menunjukan hasil perhitungannya.  
+Program dapat menyimpan hasil perhitungan pada File Text  
+
+Hal tersebut dapat dipilih pada menu dibawah
+
+Program hanya akan membaca file pada folder input yang dijelaskan di bawah ini.
+
+### Lokasi File Input dan Output
+
+#### Struktur Folder test
+```
+    .
+    ├── ...
+    ├── test                     # Test folder
+    │   ├── bicubic              # Test Interpolasi Bicubic Spline
+    │   ├── determinan           # Test Determinan
+    │   ├── imgBSI               # Test Peningkatan Kualitas Gambar
+    │   ├── interpolasi          # Test Interpolasi Polinomial
+    │   ├── inverse              # Test Matriks Balikan 
+    │   ├── regresi              # Test Regresi Linier Berganda
+    │   └── spl                  # Test Sistem Persamaan Linier
+    └── ...
+```
+Untuk setiap folder di atas mulai dari "bicubic" hingga "spl".  
+Terdapat child folder yaitu input dan output.
+
+#### Struktur Folder spl
+```   
+   ├── spl                    # Test 
+   │   ├── input              # Berisi file sebagai input untuk Fitur SPL
+   │   └── output             # Berisi file hasil output dari Fitur SPL
+```
+
+
+
+
 ## Developing
 
 ### Building
@@ -93,8 +144,7 @@ _Menggunakan Interpolasi Bicubic Spline sebagai basis_
 - Menerima Input dari File
 - Menyimpan hasil perhitungan ke dalam File
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>  
-
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Contributing
 

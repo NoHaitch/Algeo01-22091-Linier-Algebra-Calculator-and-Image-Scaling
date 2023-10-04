@@ -186,16 +186,16 @@ public class Regresi {
             PrintWriter write = new PrintWriter(filehasil);
             write.write(input + "\n");
             int i,j = meselon.getMatrixCol() - 1;
-            write.write("f(x) = ");
+            write.write("f(X) = ");
             int count = 1;
             for (i = 0; i < meselon.getMatrixRow(); i++){
                 if (i == 0){
                     write.write("" + meselon.getMElmt(i, j));
                 } else{
                     if (meselon.getMElmt(i, j ) >= 0){
-                        write.write(" + "+ meselon.getMElmt(i, j)+"x"+count);
+                        write.write(" + "+ meselon.getMElmt(i, j)+"X"+count);
                     }else{
-                        write.write(" "+meselon.getMElmt(i, j)+"x"+count);
+                        write.write(" "+meselon.getMElmt(i, j)+"X"+count);
                     }
                     count+=1;
                 }

@@ -73,7 +73,7 @@ public class Interpolation {
         // display f(x)
         int i,j = meselon.getMatrixCol() - 1,n;
         n = meselon.getMatrixRow() - 1;
-        System.out.print("f(x) = ");
+        System.out.print("f(X) = ");
         for (i = 0; i < meselon.getMatrixRow(); i++){
             if (i == meselon.getMatrixRow() - 1 && i != 0){
                 if (meselon.getMElmt(i,j) >= 0){
@@ -82,12 +82,12 @@ public class Interpolation {
                     System.out.print(" "+ meselon.getMElmt(i,j));
                 }
             } else if (i == 0){
-                System.out.print(meselon.getMElmt(i,j) + "x^" + n);
+                System.out.print(meselon.getMElmt(i,j) + "X^" + n);
             } else{
                 if (meselon.getMElmt(i,j) >= 0){
-                    System.out.print(" + " + meselon.getMElmt(i,j) + "x^" + n);
+                    System.out.print(" + " + meselon.getMElmt(i,j) + "X^" + n);
                 } else{
-                    System.out.print(" " + meselon.getMElmt(i,j) + "x^" + n);
+                    System.out.print(" " + meselon.getMElmt(i,j) + "X^" + n);
                 }
             }
             n -= 1;
@@ -114,53 +114,61 @@ public class Interpolation {
         return taksiran;
     }
 
-    public void askDataPointFromFile(String path){
+    public boolean askDataPointFromFile(String path){
         SPL temp = new SPL(1000,501);
         int i,j;
         try {
-            File inputFile = new File(path);
+            File inputFile = new File("../test/interpolasi/input/" + path);
             Scanner readFile = new Scanner(inputFile);
             String line;
             int row = 0;
             int column = 2;
+            boolean isiValid = true;
             while (readFile.hasNextLine() && (line = readFile.nextLine()) != null){
                 String[] saved = line.split(" ");
                 int len = saved.length;
-                if (len == 2){
-                    for (i = 0; i < column; i++){
-                        double tempdouble = Double.parseDouble(saved[i]);
-                        System.out.println("TEMPDOUBLE: "+tempdouble);
-                        temp.getSPL().setMElmt(tempdouble, row, i);
+                try {
+                    if (len == 2) {
+                        for (i = 0; i < column; i++) {
+                            double tempdouble = Double.parseDouble(saved[i]);
+                            temp.getSPL().setMElmt(tempdouble, row, i);
+                        }
+                        row++;
+                    } else {
+                        xRequest = Double.parseDouble(saved[0]);
                     }
-                    row++;
-                } else{
-                    xRequest = Double.parseDouble(saved[0]);
+                } catch (Exception e){
+                    return false;
                 }
             }
             temp.getSPL().setMatrixRow(row);
             temp.getSPL().setMatrixCol(column);
             readFile.close();
         } catch (FileNotFoundException e){
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+            //System.out.println("An error occurred.");
+            //e.printStackTrace();
+            return false;
         // TODO: handle exception
         }
         this.point = new Matrix(temp.spl.getMatrixRow(), 2);
-        for (i = 0; i <= temp.spl.getMatrixRow(); i++ ){
+        for (i = 0; i < temp.spl.getMatrixRow(); i++ ){
             for (j = 0; j < 2; j++){
                 point.setElmt(temp.spl.getMElmt(i, j), i, j);
             }
         }
+        return true;
     }
 
-    public void uploadhasil2File(double taksiran, double xRequest,String filehasil){
+    public void uploadhasil2File(double taksiran, double xRequest,String filehasil, String text){
         try {
             PrintWriter write = new PrintWriter(filehasil);
-            write.print("f(");
+            write.write(text);
+            write.write("f(");
             write.print(xRequest);
-            write.print(") = ");
+            write.write(") = ");
             write.print(taksiran);
             write.close();
+            System.out.println("\nPenyelesaian berhasil disimpan ke : "+filehasil+"\n\n");
         } catch (FileNotFoundException e) {
             System.out.println("File tidak dapat disimpan");
         }

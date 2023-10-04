@@ -124,7 +124,7 @@ public class Main {
                             println("1. Metode Eliminasi Gauss");
                             println("2. Metode Eliminasi Gauss-Jordan");
                             println("3. Metode Matriks Balikan ");
-                            println("4. Kaidah `Cramer`");
+                            println("4. Kaidah Kramer");
                             println("5. Kembali");
                             print(" >>> Pilih Metode : ");
                             boolean isInputMenuSPLValid = false;
@@ -149,7 +149,7 @@ public class Main {
                                         tipeMenuSPL = "Balikan";
                                         break;
                                     case 4:
-                                        tipeMenuSPL = "Cramer";
+                                        tipeMenuSPL = "Kramer";
                                         break;
                                     case 5:
                                         SPLMenu = false;
@@ -185,7 +185,7 @@ public class Main {
                                                     while (inputKetik) {
                                                         println("\n ========== Metode Ketik ==========");
                                                         println("Ketik -1 untuk kembali");
-                                                        if (tipeMenuSPL.equals("Balikan") || tipeMenuSPL.equals("Cramer")) {
+                                                        if (tipeMenuSPL.equals("Balikan") || tipeMenuSPL.equals("Kramer")) {
                                                             print(" >>> Masukkan Ukuran Matriks (n x (n+1)), n : ");
                                                         } else {
                                                             print(" >>> Masukkan Ukuran Matriks baris x kolom (m x n) : ");
@@ -194,7 +194,7 @@ public class Main {
                                                         int col = -2;
                                                         try {
                                                             row = scanner.nextInt();
-                                                            if (tipeMenuSPL.equals("Balikan") || tipeMenuSPL.equals("Cramer")) {
+                                                            if (tipeMenuSPL.equals("Balikan") || tipeMenuSPL.equals("Kramer")) {
                                                                 col = row+1;
                                                             } else if (row != -1) {
                                                                 col = scanner.nextInt();
@@ -230,7 +230,7 @@ public class Main {
                                                                 }
                                                                 scanner.nextLine();
                                                                 if (isInputMatrixValid) {
-                                                                    if (tipeMenuSPL.equals("Balikan") || tipeMenuSPL.equals("Cramer")) {
+                                                                    if (tipeMenuSPL.equals("Balikan") || tipeMenuSPL.equals("Kramer")) {
                                                                         inputText += " >>> Masukkan Ukuran Matriks (n x (n + 1)), n : " + row + "\n";
                                                                     } else {
                                                                         inputText += " >>> Masukkan Ukuran Matriks (m x n) : " + row + " " + col + "\n";
@@ -270,7 +270,7 @@ public class Main {
                                                             Scanner readFile = null;
                                                             boolean filefound = false;
                                                             try {
-                                                                file = new File("../test/spl/input/"+path);
+                                                                file = new File("../test/spl/input/" + path);
                                                                 readFile = new Scanner(file);
                                                                 filefound = true;
                                                             } catch (FileNotFoundException e) {
@@ -319,24 +319,32 @@ public class Main {
                                                     println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
                                             }
                                             if (terisiSPL) {
+                                                boolean inverseSuccess = true;
                                                 boolean cramerSuccess = true;
                                                 switch (tipeMenuSPL) {
                                                     case "Gauss" -> spl.spl.gaussAndSolutions();
                                                     case "Gauss-Jordan" -> spl.spl.obeGaussJordan();
-                                                    case "Balikan" -> {spl.solveWithInverse();}
+                                                    case "Balikan" -> {
+                                                        inverseSuccess = spl.solveWithInverse();}
                                                     default -> {
                                                         cramerSuccess = spl.solveWithCramer(spl.spl);
                                                     }
                                                 }
 
                                                 println(" ================== HASIL ================== ");
-                                                if(tipeMenuSPL.equals("Cramer") && cramerSuccess){
+                                                if(tipeMenuSPL.equals("Kramer") && cramerSuccess){
                                                     spl.spl.addTitleStep();
                                                     for(int i=0;i<spl.listnilaivar.getColEff();i++){
                                                             spl.spl.addStringToStep("---> X" + (i+1) + " = " + spl.listnilaivar.getElmt(0,i) + "\n");
                                                     }
                                                     spl.spl.addNewLineToStep();
                                                     spl.spl.addNewLineToStep();
+                                                }
+                                                else if(!cramerSuccess){
+                                                    spl.spl.addStringToStep("Tidak dapat menghitung solusi karena matriks tidak memiliki Invers.\n");
+                                                }
+                                                if(!inverseSuccess){
+                                                    spl.spl.addStringToStep("Tidak dapat menghitung solusi karena matriks tidak memiliki Invers.\n");
                                                 }
                                                 println(spl.spl.getStep());
                                                 boolean menuSimpan = true;
@@ -349,6 +357,7 @@ public class Main {
                                                         String name = scanner.nextLine();
                                                         while(!textFile(name)){
                                                             println("Nama file salah!");
+                                                            print(" >>> Masukkan nama file hasil: ");
                                                             name = scanner.nextLine();
                                                         }
                                                         spl.saveToTextFile(("../test/spl/output/" + name), inputText);
@@ -566,7 +575,12 @@ public class Main {
                                                         }
                                                         print(" >>> Masukkan nama file hasil: ");
                                                         String name = scanner.nextLine();
-                                                        det.saveToTextFile(("../test/determinan/output/" + name + ".txt"),inputText);
+                                                        while(!textFile(name)){
+                                                            println("Nama file salah!");
+                                                            print(" >>> Masukkan nama file hasil: ");
+                                                            name = scanner.nextLine();
+                                                        }
+                                                        det.saveToTextFile(("../test/determinan/output/" + name),inputText);
                                                         menuSimpan = false;
                                                     } else if (opsiSimpan.equals("n") || opsiSimpan.equals("N")) {
                                                         menuSimpan = false;
@@ -711,7 +725,7 @@ public class Main {
                                                             Scanner readFile = null;
                                                             boolean filefound = false;
                                                             try {
-                                                                file = new File("../test/inverse/output/"+path);
+                                                                file = new File("../test/inverse/input/"+path);
                                                                 readFile = new Scanner(file);
                                                                 filefound = true;
                                                             } catch (FileNotFoundException e) {
@@ -787,7 +801,12 @@ public class Main {
                                                     if (opsiSimpan.equals("y") || opsiSimpan.equals("Y")) {
                                                         print(" >>> Masukkan nama file hasil: ");
                                                         String name = scanner.nextLine();
-                                                        invers.saveToTextFile(("../test/inverse/output/" + name + ".txt"),inputText);
+                                                        while(!textFile(name)){
+                                                            println("Nama file salah!");
+                                                            print(" >>> Masukkan nama file hasil: ");
+                                                            name = scanner.nextLine();
+                                                        }
+                                                        invers.saveToTextFile(("../test/inverse/output/" + name),inputText);
                                                         menuSimpan = false;
                                                     } else if (opsiSimpan.equals("n") || opsiSimpan.equals("N")) {
                                                         menuSimpan = false;
@@ -814,19 +833,20 @@ public class Main {
                             println("2. Masukkan dalam bentuk File");
                             println("3. Kembali");
                             print(" >>> Pilih Metode Masukkan : ");
-                            boolean isInputSPLValid = false;
+                            boolean isInputInterpolasiValid = false;
                             int opsiMenuInputInterpolasi = -1;
                             try {
                                 opsiMenuInputInterpolasi = Integer.parseInt(scanner.nextLine());
-                                isInputSPLValid = true;
+                                isInputInterpolasiValid = true;
                             } catch (Exception e) {
                                 println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
                             }
-                            if (isInputSPLValid) {
+                            if (isInputInterpolasiValid) {
                                 boolean terisiMatriks = false;
                                 Interpolation interpolasi = new Interpolation(1000);
                                 Matrix pointMatrix = new Matrix(1000, 1000);
                                 double xInterpolasi = 0;
+                                String inputText = "";
                                 switch (opsiMenuInputInterpolasi) {
                                     case 1:
                                         /* ============ Input Ketik =========== */
@@ -849,6 +869,7 @@ public class Main {
                                                 if (n < 1) {
                                                     println("Jumlah titik harus bilangan bulat positif");
                                                 } else {
+                                                    inputText = " >>> Masukkan Jumlah Titik : " + n + "\n";
                                                     interpolasi = new Interpolation(n);
                                                     println("Masukkan Titik - Titik (format: x y)");
                                                     int i = 0;
@@ -866,11 +887,12 @@ public class Main {
                                                                 j++;
                                                             }
                                                             if(!foundp) {
+                                                                inputText += x + " " + y + "\n";
                                                                 pointMatrix.setElmt(x, i, 0);
                                                                 pointMatrix.setElmt(y, i, 1);
                                                                 i++;
                                                             } else{
-                                                                println("Titik sudah pernah diberikan. Pastikan Titik berbeda");
+                                                                println("Titik dengan absis " + x + " sudah pernah diberikan. Masukkan titik lain.");
                                                             }
                                                         } catch (Exception e) {
                                                             println("Masukkan Titik salah.");
@@ -881,10 +903,11 @@ public class Main {
                                                     scanner.nextLine();
                                                     boolean isNotvalid = true;
                                                     while (isNotvalid) {
-                                                        print(" >>> Masukkan x yang akan ditaksi : ");
+                                                        print(" >>> Masukkan x yang akan ditaksir : ");
                                                         try {
                                                             xInterpolasi = scanner.nextDouble();
                                                             isNotvalid = false;
+                                                            inputText += " >>> Masukkan x yang akan ditaksir : " + xInterpolasi + "\n";
                                                         } catch (Exception e) {
                                                             println("Masukkan x taksiran salah");
                                                             scanner.nextLine();
@@ -902,7 +925,7 @@ public class Main {
                                         boolean inputFile = true;
                                         while (inputFile) {
                                             println("Ketik 0 untuk kembali");
-                                            print(" >>> Masukkan alamat file: ");
+                                            print(" >>> Masukkan nama file: ");
                                             String path = scanner.nextLine();
                                             if (path.equals("0")) {
                                                 inputFile = false;
@@ -912,16 +935,20 @@ public class Main {
                                                 File file;
                                                 boolean filefound = false;
                                                 try {
-                                                    file = new File(path);
+                                                    file = new File("../test/interpolasi/input/" +path);
                                                     new Scanner(file);
                                                     filefound = true;
+                                                    inputText = " >>> Masukkan nama file: " + path + "\n";
                                                 } catch (FileNotFoundException e) {
-                                                    println("Alamat file salah. Contoh alamat benar : test/input/spl/test1.txt ");
+                                                    println("Nama file salah. Contoh nama benar : baby.txt ");
                                                 }
                                                 if (filefound) {
-                                                    interpolasi.askDataPointFromFile(path);
-                                                    inputFile = false;
-                                                    terisiMatriks = true;
+                                                    if(interpolasi.askDataPointFromFile(path)) {
+                                                        println("Isi File Salah! Pastikan formatnya benar.");
+                                                    } else {
+                                                        inputFile = false;
+                                                        terisiMatriks = true;
+                                                    }
                                                 }
                                             }
                                         }
@@ -944,7 +971,28 @@ public class Main {
                                     println(" ================== HASIL ================== ");
                                     print("  Fungsi :  ");
                                     interpolasi.displayFunction(mEselon);
-                                    println("\n  Taksiran f(" + xInterpolasi + ") =  " + interpolasi.taksiran(mEselon, xInterpolasi));
+                                    println("\n  Taksiran f(" + xInterpolasi + ") =  " + interpolasi.taksiran(mEselon, xInterpolasi) + "\n\n");
+                                    boolean menuSimpan = true;
+                                    while (menuSimpan) {
+                                        print(" >>> Apakah ingin disimpan dalam file? [y/n]: ");
+                                        String opsiSimpan = scanner.nextLine();
+                                        if (opsiSimpan.equals("y") || opsiSimpan.equals("Y")) {
+                                            inputText += "\n\n ================== HASIL ================== \n";
+                                            print(" >>> Masukkan nama file hasil: ");
+                                            String name = scanner.nextLine();
+                                            while(!textFile(name)){
+                                                println("Nama file salah!");
+                                                print(" >>> Masukkan nama file hasil: ");
+                                                name = scanner.nextLine();
+                                            }
+                                            interpolasi.uploadhasil2File(interpolasi.taksiran(mEselon, xInterpolasi), xInterpolasi, ("../test/interpolasi/output/" + name), inputText);
+                                            menuSimpan = false;
+                                        } else if (opsiSimpan.equals("n") || opsiSimpan.equals("N")) {
+                                            menuSimpan = false;
+                                        } else {
+                                            println("Masukkan salah pilih y / n");
+                                        }
+                                    }
                                     InterpolasiMenu = false;
                                 }
                             }
@@ -957,11 +1005,12 @@ public class Main {
                         boolean BicubicMenu = true;
                         BicubicSpline bicubic = new BicubicSpline();
                         boolean isiValid = true;
-                        String inputText = " >>> Masukkan alamat file: ";
+                        boolean valid = false;
+                        String inputText = " >>> Masukkan nama file: ";
                         while (BicubicMenu) {
                             /* =========== INPUT Interpolasi Bicubic Spline =========== */
                             println("Ketik 0 untuk kembali");
-                            print(" >>> Masukkan alamat file: ");
+                            print(" >>> Masukkan nama file: ");
                             String path = scanner.nextLine();
                             if (path.equals("0")) {
                                 BicubicMenu = false;
@@ -972,11 +1021,11 @@ public class Main {
                                 Scanner readFile = null;
                                 boolean filefound = false;
                                 try {
-                                    file = new File(path);
+                                    file = new File("../test/bicubic/input/" + path);
                                     readFile = new Scanner(file);
                                     filefound = true;
                                 } catch (FileNotFoundException e) {
-                                    println("Alamat file salah. Contoh alamat benar : test/input/spl/test1.txt ");
+                                    println("Nama file salah. Contoh nama benar : baby.txt ");
                                 }
                                 if (filefound) {
                                     inputText += path + "\n";
@@ -1004,11 +1053,12 @@ public class Main {
                                     }
                                     if(isiValid) {
                                         BicubicMenu = false;
+                                        valid = true;
                                     }
                                 }
                             }
                         }
-                        if (isiValid) {
+                        if (isiValid && valid) {
                             inputText += "\n\n ================== HASIL ================== \n";
                             println(" ================== HASIL ================== ");
                             bicubic.solveBicubic();
@@ -1021,7 +1071,12 @@ public class Main {
                                 if (opsiSimpan.equals("y") || opsiSimpan.equals("Y")) {
                                     print(" >>> Masukkan nama file hasil: ");
                                     String name = scanner.nextLine();
-                                    bicubic.saveProccessesToText(("../test/bicubic/output/" + name + ".txt"), inputText);
+                                    while(!textFile(name)){
+                                        println("Nama file salah!");
+                                        print(" >>> Masukkan nama file hasil: ");
+                                        name = scanner.nextLine();
+                                    }
+                                    bicubic.saveProccessesToText(("../test/bicubic/output/" + name), inputText);
                                     menuSimpan = false;
                                 } else if (opsiSimpan.equals("n") || opsiSimpan.equals("N")) {
                                     menuSimpan = false;
@@ -1070,25 +1125,25 @@ public class Main {
                                                     inputKetik = false;
                                                 } else {
                                                     scanner.nextLine();
-                                                    print(" >>> Masukkan jumlah sample : ");
+                                                    print(" >>> Masukkan jumlah sampel : ");
                                                     m = scanner.nextInt();
                                                     if (m == -1) {
                                                         inputKetik = false;
                                                     }
                                                 }
                                             } catch (Exception e) {
-                                                println("Jumlah peubah dan sample harus bilangan bulat positif");
+                                                println("Jumlah peubah dan sampel harus bilangan bulat positif");
                                             }
                                             scanner.nextLine();
                                             if (n != -2 && m != -2 && m != -1) {
                                                 if (n < 1 || m < 1) {
-                                                    println("Jumlah peubah dan sample harus bilangan bulat positif");
+                                                    println("Jumlah peubah dan sampel harus bilangan bulat positif");
                                                 } else {
                                                     inputText += n + "\n";
-                                                    inputText += " >>> Masukkan jumlah sample : " + m + "\n";
-                                                    inputText += "Masukkan Nilai-Nilai Sample (" + m + " x " + (n+1) + "): \n";
+                                                    inputText += " >>> Masukkan jumlah sampel : " + m + "\n";
+                                                    inputText += "Masukkan Nilai-Nilai sampel (" + m + " x " + (n+1) + "): \n";
                                                     regresi = new Regresi(m, n);
-                                                    println("Masukkan Nilai-Nilai Sample (" + m + " x " + (n+1) + "): ");
+                                                    println("Masukkan Nilai-Nilai sampel (" + m + " x " + (n+1) + "): ");
                                                     boolean isInputSampleValid = true;
                                                     int i = 0;
                                                     while (i < m && isInputSampleValid) {
@@ -1119,9 +1174,9 @@ public class Main {
                                         /* ============ Input File =========== */
                                         boolean inputFile = true;
                                         while (inputFile) {
-                                            inputText = " >>> Masukkan alamat file: ";
+                                            inputText = " >>> Masukkan nama file: ";
                                             println("Ketik 0 untuk kembali");
-                                            print(" >>> Masukkan alamat file: ");
+                                            print(" >>> Masukkan nama file: ");
                                             String path = scanner.nextLine();
                                             if (path.equals("0")) {
                                                 inputFile = false;
@@ -1132,11 +1187,11 @@ public class Main {
                                                 Scanner readFile = null;
                                                 boolean filefound = false;
                                                 try {
-                                                    file = new File(path);
+                                                    file = new File("../test/regresi/input/" + path);
                                                     readFile = new Scanner(file);
                                                     filefound = true;
                                                 } catch (FileNotFoundException e) {
-                                                    println("Alamat file salah. Contoh alamat benar : test/input/spl/test1.txt ");
+                                                    println("Nama file salah. Contoh nama benar : baby.txt ");
                                                 }
                                                 if (filefound) {
                                                     String line;
@@ -1172,6 +1227,7 @@ public class Main {
                                                         }
                                                     }
                                                     if(isiValid) {
+                                                        inputText += path + "\n";
                                                         regresi.dataRegresiM.setColEff(var);
                                                         regresi.dataRegresiM.setRowEff(row - 1);
                                                         inputFile = false;
@@ -1204,7 +1260,12 @@ public class Main {
                                         if (opsiSimpan.equals("y") || opsiSimpan.equals("Y")) {
                                             print(" >>> Masukkan nama file hasil: ");
                                             String name = scanner.nextLine();
-                                            regresi.uploadhasil2File(regresi.taksiran(regresi.listnilaivar, mEselon),mEselon, ("../test/regresi/output/" + name + ".txt"), inputText);
+                                            while(!textFile(name)){
+                                                println("Nama file salah!");
+                                                print(" >>> Masukkan nama file hasil: ");
+                                                name = scanner.nextLine();
+                                            }
+                                            regresi.uploadhasil2File(regresi.taksiran(regresi.listnilaivar, mEselon),mEselon, ("../test/regresi/output/" + name), inputText);
                                             menuSimpan = false;
                                         } else if (opsiSimpan.equals("n") || opsiSimpan.equals("N")) {
                                             menuSimpan = false;
@@ -1228,7 +1289,7 @@ public class Main {
                         while (ImageMenu) {
                             /* =========== INPUT ImageBSI =========== */
                             println("Ketik 0 untuk kembali");
-                            print(" >>> Masukkan alamat file sumber: ");
+                            print(" >>> Masukkan Nama file sumber: ");
                             path = scanner.nextLine();
                             if (path.equals("0")) {
                                 ImageMenu = false;
@@ -1247,7 +1308,7 @@ public class Main {
                                                 new Scanner(file);
                                                 filefound = true;
                                             } catch (FileNotFoundException e) {
-                                                println("Alamat file salah. Contoh alamat benar : src/gambar.jpg ");
+                                                println("Nama file salah. Contoh nama benar : gambar.jpg ");
                                             }
 
                                             if (filefound) {
@@ -1288,7 +1349,7 @@ public class Main {
                             ImageBSI temp = new ImageBSI(path, outputPath);
                             temp.proccessImage(skala);
                             println(" Gambar Berhasil dibesarkan");
-                            println(" Gambar hasil : " + outputPath);
+                            println(" Gambar hasil : ../test/imgBSI/output/" + outputPath);
                             println(" ( Hasil mungkin membutuhkan waktu lama untuk dicetak walau menu baru sudah keluar )");
                             println(" ( Hasil mungkin gagal karena keterbatasan memori )");
                         }

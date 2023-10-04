@@ -1,0 +1,12 @@
+ >>> Masukkan jumlah peubah : 4
+ >>> Masukkan jumlah sample : 3
+Masukkan Nilai-Nilai Sample (3 x 5): 
+1.0 2.0 3.0 4.0 5.0 
+1.0 2.0 3.0 4.0 5.0 
+5.0 4.0 3.0 2.0 1.0 
+
+
+ ================== HASIL ================== 
+
+f(X) = 11.0 + 15.0X1 + 24.0X2 + 33.0X3 + 42.0X4
+Taksiran = 11.0

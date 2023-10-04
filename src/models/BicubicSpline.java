@@ -161,8 +161,8 @@ public class BicubicSpline {
     }
 
     public void saveProccessesToText(String path, String text){
-        String fPath = "";
-        int i = 0;
+        String fPath = "..";
+        int i = 2;
         while (path.charAt(i) != '.'){
             fPath += path.charAt(i);
             i++;
@@ -181,7 +181,7 @@ public class BicubicSpline {
             writer.write(text + "\n");
             writer.write(function);
             writer.close();
-            System.out.println("\nPenyelesaian berhasil disimpan ke :"+fPath+"\n\n");
+            System.out.println("\nPenyelesaian berhasil disimpan ke : "+fPath+"\n\n");
         } catch (Exception e) {
             System.out.println("An error occurred\n");
             e.printStackTrace();

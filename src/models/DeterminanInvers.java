@@ -70,8 +70,8 @@ public class DeterminanInvers {
     }
 
     public void saveToTextFile(String path, String text){
-        String fPath = "";
-        int i = 0;
+        String fPath = "..";
+        int i = 2;
         while (path.charAt(i) != '.'){
             fPath += path.charAt(i);
             i++;
