@@ -30,6 +30,18 @@ public class Main {
         return m.matches();
     }
 
+    public static boolean textFile(String str)
+    {
+        // Regex to check valid image file extension.
+        String regex = "([^ ]+(\\.(?i)(txt))$)";
+        Pattern p = Pattern.compile(regex);
+        if (str == null) {
+            return false;
+        }
+        Matcher m = p.matcher(str);
+        return m.matches();
+    }
+
     public static void main(String[] args) {
         println("\n***** ==================== APLIKASI MULAI ==================== *****");
         println("===== Selamat Datang pada Aplikasi Perhitungan Matriks dan SPL =====");
@@ -128,7 +140,7 @@ public class Main {
                                     default:
                                         println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 5");
                                 }
-                                SPL spl = new SPL(1000, 1000);
+                                SPL spl = new SPL(1000, 500);
                                 if (!tipeMenuSPL.isEmpty()) {
                                     boolean inputSPL = true;
                                     while (inputSPL) {
@@ -157,7 +169,7 @@ public class Main {
                                                         println("\n ========== Metode Ketik ==========");
                                                         println("Ketik -1 untuk kembali");
                                                         if (tipeMenuSPL.equals("Balikan") || tipeMenuSPL.equals("Cramer")) {
-                                                            print(" >>> Masukkan Ukuran Matriks (n x n) : ");
+                                                            print(" >>> Masukkan Ukuran Matriks (n x (n+1)), n : ");
                                                         } else {
                                                             print(" >>> Masukkan Ukuran Matriks baris x kolom (m x n) : ");
                                                         }
@@ -166,7 +178,7 @@ public class Main {
                                                         try {
                                                             row = scanner.nextInt();
                                                             if (tipeMenuSPL.equals("Balikan") || tipeMenuSPL.equals("Cramer")) {
-                                                                col = row;
+                                                                col = row+1;
                                                             } else if (row != -1) {
                                                                 col = scanner.nextInt();
                                                             }
@@ -233,7 +245,10 @@ public class Main {
                                                         String path = scanner.nextLine();
                                                         if (path.equals("0")) {
                                                             inputFile = false;
-                                                        } else {
+                                                        } else if(!textFile(path)){
+                                                            println("File bukan text");
+                                                        }
+                                                        else {
                                                             File file;
                                                             Scanner readFile = null;
                                                             boolean filefound = false;
@@ -244,7 +259,8 @@ public class Main {
                                                             } catch (FileNotFoundException e) {
                                                                 println("Alamat file salah. Contoh alamat benar : test/input/spl/test1.txt ");
                                                             }
-                                                            if (filefound) {
+                                                            if (filefound)
+                                                            {
                                                                 boolean valid = true;
                                                                 String line;
                                                                 int row = 0;
@@ -290,10 +306,10 @@ public class Main {
                                                     case "Gauss" -> spl.spl.gaussAndSolutions();
                                                     case "Gauss-Jordan" -> spl.spl.obeGaussJordan();
                                                     case "Balikan" -> {
-                                                        // OPERASI MATRIKS BALIKAN
+                                                        spl.solveWithInverse();
                                                     }
                                                     default -> {
-                                                        // OPERASI KRAMER
+                                                        spl.solveWithCramer(spl.spl);
                                                     }
                                                 }
                                                 println(" ================== HASIL ================== ");
@@ -448,7 +464,9 @@ public class Main {
                                                         String path = scanner.nextLine();
                                                         if (path.equals("0")) {
                                                             inputFile = false;
-                                                        } else {
+                                                        } else if(!textFile(path)){
+                                                            println("File bukan text");
+                                                        }else {
                                                             File file;
                                                             Scanner readFile = null;
                                                             boolean filefound = false;
@@ -650,7 +668,6 @@ public class Main {
                                                     break;
                                                 case 2:
                                                     /* ============ Input File =========== */
-                                                    /* ASUMSI : isi FILE BENAR */
                                                     boolean inputFile = true;
                                                     while (inputFile) {
                                                         println("Ketik 0 untuk kembali");
@@ -658,6 +675,8 @@ public class Main {
                                                         String path = scanner.nextLine();
                                                         if (path.equals("0")) {
                                                             inputFile = false;
+                                                        } else if(!textFile(path)){
+                                                            println("File bukan text");
                                                         } else {
                                                             File file;
                                                             Scanner readFile = null;
@@ -838,7 +857,6 @@ public class Main {
                                         break;
                                     case 2:
                                         /* ============ Input File =========== */
-                                        /* ASUMSI : isi FILE BENAR */
                                         boolean inputFile = true;
                                         while (inputFile) {
                                             println("Ketik 0 untuk kembali");
@@ -846,6 +864,8 @@ public class Main {
                                             String path = scanner.nextLine();
                                             if (path.equals("0")) {
                                                 inputFile = false;
+                                            } else if(!textFile(path)){
+                                                println("File bukan text");
                                             } else {
                                                 File file;
                                                 boolean filefound = false;
@@ -902,6 +922,8 @@ public class Main {
                             String path = scanner.nextLine();
                             if (path.equals("0")) {
                                 BicubicMenu = false;
+                            } else if(!textFile(path)){
+                                println("File bukan text");
                             } else {
                                 File file;
                                 Scanner readFile = null;
@@ -1021,7 +1043,6 @@ public class Main {
                                         break;
                                     case 2:
                                         /* ============ Input File =========== */
-                                        /* ASUMSI : isi FILE BENAR */
                                         boolean inputFile = true;
                                         while (inputFile) {
                                             println("Ketik 0 untuk kembali");
@@ -1029,6 +1050,8 @@ public class Main {
                                             String path = scanner.nextLine();
                                             if (path.equals("0")) {
                                                 inputFile = false;
+                                            } else if(!textFile(path)){
+                                                println("File bukan text");
                                             } else {
                                                 File file;
                                                 Scanner readFile = null;

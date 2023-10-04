@@ -18,6 +18,14 @@ Untuk cara penyelasaian SPL, menggunakan Metode Eliminiasi Gauss, Gauss-Jordan, 
 | 13522098 |      Suthasoma Mahardhika Munthe       |
 
 ## Quick Links
+- [Getting Started](#installing--getting-started)
+- [Developing](#developing)
+- [Features](#features)
+- [Contributing](#contributing)
+- [Links](#links)
+- [Licensing](#licensing)
+
+## External Links
 
 - [Link Spesifikasi](https://docs.google.com/document/d/1evaYvI5PfDij2UlA_mkqUCLK0mg4hbRzbcA461FFnwg)
 - [Link Data Kelompok](https://docs.google.com/spreadsheets/d/1Lnc1Bf3rv3uHc4vgUdWsJcf4bDzlSIeslEvdyR90I3U/edit#gid=0)
@@ -26,7 +34,6 @@ Untuk cara penyelasaian SPL, menggunakan Metode Eliminiasi Gauss, Gauss-Jordan, 
 
 
 ## Installing / Getting Started
-
 
 
 Di bawah adalah instruksi instalasi dan  penggunaan program
@@ -63,21 +70,23 @@ Dengan kode ```javac Main.java -d ../bin ```, Kita mengkompile program dan melet
 ## Features
 
 ### 1. Menyelesaikan Sistem Persamaa Linier (SPL)
-- Metode Eliminasi Gauss
-- Metode Eliminasi Gauss-Jordan
-- Metode Matriks Balikan
-- Kaidah Cramer
+_Menyelesaikan Sistem Persamaaan Linier Dalam Bentuk Matriks_
+1. Metode Eliminasi Gauss
+2. Metode Eliminasi Gauss-Jordan
+3. Metode Matriks Balikan
+4. Kaidah Cramer
 
 ### 2. Menghitung Determinan
-- Metode Ekspansi Kofaktor
-- Metode Reduksi Baris dengan OBE
+1. Metode Ekspansi Kofaktor
+2. Metode Reduksi Baris dengan OBE
 
 ### 3. Menghitung Matriks Balikan (Invers)
 ### 4. Menghitung Interpolasi Polinomial
 ### 5. Menghitung Interpolasi Bicubic Spline
 ### 6. Menghitung Regresi Linier Berganda
 ### 7. Peningkatan Kualitas Gambar
-- Menggunakan Interpolasi Bicubic Spline sebagai basis
+_Meningkatkan Kualitas Gambar_  
+_Menggunakan Interpolasi Bicubic Spline sebagai basis_
 
 ### Other
 - Menerima Input dari Ketikan
