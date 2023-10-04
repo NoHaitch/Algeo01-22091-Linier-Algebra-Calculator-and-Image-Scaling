@@ -18,8 +18,7 @@ public class Main {
         System.out.print(str);
     }
 
-    public static boolean imageFile(String str)
-    {
+    public static boolean imageFile(String str) {
         // Regex to check valid image file extension.
         String regex = "([^ ]+(\\.(?i)(jpeg|jpg|png))$)";
         Pattern p = Pattern.compile(regex);
@@ -30,8 +29,7 @@ public class Main {
         return m.matches();
     }
 
-    public static boolean textFile(String str)
-    {
+    public static boolean textFile(String str) {
         // Regex to check valid image file extension.
         String regex = "([^ ]+(\\.(?i)(txt))$)";
         Pattern p = Pattern.compile(regex);
@@ -42,7 +40,24 @@ public class Main {
         return m.matches();
     }
 
+    public static void printHeader() {
+        String accum = "\n\n";
+        File input = new File("src/header.txt");
+        try {
+            Scanner readFile = new Scanner(input);
+            String line;
+            while (readFile.hasNextLine() && (line = readFile.nextLine()) != null) {
+                accum += line + "\n";
+            }
+            readFile.close();
+        } catch (FileNotFoundException e) {
+            System.out.println(e);
+        }
+        System.out.println(accum);
+    }
+
     public static void main(String[] args) {
+        printHeader();
         println("\n***** ==================== APLIKASI MULAI ==================== *****");
         println("===== Selamat Datang pada Aplikasi Perhitungan Matriks dan SPL =====");
         Scanner scanner = new Scanner(System.in);
@@ -214,7 +229,7 @@ public class Main {
                                                                 scanner.nextLine();
                                                                 if (isInputMatrixValid) {
                                                                     if (tipeMenuSPL.equals("Balikan") || tipeMenuSPL.equals("Cramer")) {
-                                                                        inputText += " >>> Masukkan Ukuran Matriks (n x n) : " + row + "\n";
+                                                                        inputText += " >>> Masukkan Ukuran Matriks (n x (n + 1)), n : " + row + "\n";
                                                                     } else {
                                                                         inputText += " >>> Masukkan Ukuran Matriks (m x n) : " + row + " " + col + "\n";
                                                                     }
@@ -302,24 +317,32 @@ public class Main {
                                                     println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
                                             }
                                             if (terisiSPL) {
+                                                boolean cramerSuccess = true;
                                                 switch (tipeMenuSPL) {
                                                     case "Gauss" -> spl.spl.gaussAndSolutions();
                                                     case "Gauss-Jordan" -> spl.spl.obeGaussJordan();
-                                                    case "Balikan" -> {
-                                                        spl.solveWithInverse();
-                                                    }
+                                                    case "Balikan" -> {spl.solveWithInverse();}
                                                     default -> {
-                                                        spl.solveWithCramer(spl.spl);
+                                                        cramerSuccess = spl.solveWithCramer(spl.spl);
                                                     }
                                                 }
+
                                                 println(" ================== HASIL ================== ");
+                                                if(tipeMenuSPL.equals("Cramer") && cramerSuccess){
+                                                    spl.spl.addTitleStep();
+                                                    for(int i=0;i<spl.listnilaivar.getColEff();i++){
+                                                            spl.spl.addStringToStep("---> X" + (i+1) + " = " + spl.listnilaivar.getElmt(0,i) + "\n");
+                                                    }
+                                                    spl.spl.addNewLineToStep();
+                                                    spl.spl.addNewLineToStep();
+                                                }
                                                 println(spl.spl.getStep());
                                                 boolean menuSimpan = true;
                                                 while (menuSimpan) {
                                                     print(" >>> Apakah ingin disimpan dalam file? [y/n]: ");
                                                     String opsiSimpan = scanner.nextLine();
                                                     if (opsiSimpan.equals("y") || opsiSimpan.equals("Y")) {
-                                                        inputText += "\n\n ================== HASIL ================== \n\n";
+                                                        inputText += "\n\n ================== HASIL ================== \n";
                                                         print(" >>> Masukkan nama file hasil: ");
                                                         String name = scanner.nextLine();
                                                         spl.saveToTextFile(("test/result/" + name + ".txt"), inputText);

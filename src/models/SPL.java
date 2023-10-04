@@ -97,7 +97,7 @@ public class SPL {
         return new OBE(this.spl);
     }
 
-    public void solveWithCramer(OBE mdata){
+    public Boolean solveWithCramer(OBE mdata){
         // menerima input matrix yang berisikan data SPL
         double temp;
         int i,count = 0;
@@ -116,11 +116,14 @@ public class SPL {
                 }
 
             } else{
-                System.out.println("Tidak bisa melakukan kaidah cramer karena determinant Matrix bernilai 0.");
+                spl.addStringToStep("\nTidak bisa melakukan kaidah cramer karena determinant Matrix bernilai 0.\n");
+                return false;
             }
         } else{
             System.out.println("Tidak bisa melakukan kaidah cramer karena Matrix tidak berbentuk persegi.");
+            return false;
         }
+        return true;
     }
 
     public void solveWithInverse(){
