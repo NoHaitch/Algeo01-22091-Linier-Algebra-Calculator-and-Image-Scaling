@@ -68,9 +68,16 @@ Hal tersebut dapat dipilih pada menu dibawah
  ```
 
 Program yang berhasil akan menunjukan hasil perhitungannya.  
-Program dapat menyimpan hasil perhitungan pada File Text  
+Program dapat menyimpan hasil perhitungan pada File Text
 
 Hal tersebut dapat dipilih pada menu dibawah
+
+``` 
+>>> Apakah ingin disimpan dalam file? [y/n]: y
+>>> Masukkan nama file hasil: test.txt
+
+Penyelesaian berhasil disimpan ke : ../test/spl/output/test.txt
+```
 
 Program hanya akan membaca file pada folder input yang dijelaskan di bawah ini.
 
@@ -95,12 +102,17 @@ Terdapat child folder yaitu input dan output.
 
 #### Struktur Folder spl
 ```   
-   ├── spl                    # Test 
-   │   ├── input              # Berisi file sebagai input untuk Fitur SPL
-   │   └── output             # Berisi file hasil output dari Fitur SPL
+   ├── spl                       # Test 
+   │   ├── input                 # Berisi file sebagai input untuk Fitur SPL
+   │   │   ├── test1.txt         # Contoh file input 
+   │   │   └── test2.txt         # Contoh file input 
+   │   └── output                # Berisi file hasil output dari Fitur SPL
+   │       ├── res1.txt          # Contoh file hasil 
+   │       └── res2.txt          # Contoh file hasil 
 ```
 
-
+"test1.txt" dan "test2.txt" adalah file yang dapat dibaca oleh program saat masuk menu input file dari spl.
+Hasil dari program dapat di save dengan nama.txt yang disimpan pada output contohnya "res1.txt" dan "res2.txt".
 
 
 ## Developing
