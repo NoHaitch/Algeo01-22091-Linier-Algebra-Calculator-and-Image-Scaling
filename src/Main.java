@@ -42,7 +42,7 @@ public class Main {
 
     public static void printHeader() {
         String accum = "\n\n";
-        File input = new File("src/header.txt");
+        File input = new File("../src/header.txt");
         try {
             Scanner readFile = new Scanner(input);
             String line;
@@ -57,6 +57,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        BicubicSpline.setStaticInvX();
+        ImageBSI.setXInvxDMat();
         printHeader();
         println("\n***** ==================== APLIKASI MULAI ==================== *****");
         println("===== Selamat Datang pada Aplikasi Perhitungan Matriks dan SPL =====");
@@ -490,6 +492,7 @@ public class Main {
                                                         } else if(!textFile(path)){
                                                             println("File bukan text");
                                                         }else {
+                                                            path = "../" + path;
                                                             File file;
                                                             Scanner readFile = null;
                                                             boolean filefound = false;
@@ -1237,7 +1240,7 @@ public class Main {
                                             File file;
                                             boolean filefound = false;
                                             try {
-                                                file = new File(path);
+                                                file = new File("../test/imgBSI/input/" + path);
                                                 new Scanner(file);
                                                 filefound = true;
                                             } catch (FileNotFoundException e) {
@@ -1279,9 +1282,8 @@ public class Main {
                         if (valid) {
                             println(" ================== HASIL ================== ");
                             println(" Gambar sedang diproses ... ");
-                            ImageBSI.setXInvxDMat();
                             ImageBSI temp = new ImageBSI(path, outputPath);
-                            temp.scaleImage(skala);
+                            temp.proccessImage(skala);
                             println(" Gambar Berhasil dibesarkan");
                             println(" Gambar hasil : " + outputPath);
                             println(" ( Hasil mungkin membutuhkan waktu lama untuk dicetak walau menu baru sudah keluar )");
