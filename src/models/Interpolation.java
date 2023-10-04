@@ -42,14 +42,27 @@ public class Interpolation {
     
     public Matrix askDataPoint() {
         // ask how many data and store them in Matrix for Point
-        int i, j, n;
+        int i, j, n,itemp;
+        boolean foundp;
         Point p = new Point();
         Scanner scan = new Scanner(System.in);
         System.out.print("Masukkan banyak titik: ");
         n = scan.nextInt();
         Matrix m = new Matrix(n,2);
         for (i = 0; i < n ; i++){
-            p.readPoint();
+            foundp = false;
+            while (!foundp){
+                p.readPoint();
+                if (i == 0){
+                    foundp = true;
+                }
+                for (itemp = 0; itemp < i; itemp++){
+                    if (p.getX() == m.getElmt(itemp, 0) || p.getY() == m.getElmt(itemp, 1)){
+                        foundp = true;
+                    }
+                }
+
+            }
             m.setElmt(p.getX(), i, 0);
             m.setElmt(p.getY(), i, 1);
         }
