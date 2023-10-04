@@ -83,122 +83,19 @@ public class ImageBSI{
         XInvxDMat = new Matrix(BicubicSpline.invX.multiplyMatrix(DMat));
     }
 
-    // Bad time complexity - Don't use this!!
-    public void proccessImage(float scale){
-        if ((scale*10)%5 == 0 && scale > 1){
-            //Scanner input = new Scanner(System.in);
-            //System.out.println("Input source path Image: ");
-            //String path = input.nextLine();
-            //sPath = new String(path);
-            //System.out.println("Input destination path Image: ");
-            //path = input.nextLine();
-            //dPath = new String(path);
-            //input.close();
-            BufferedImage sourceImg = null;
-            BufferedImage tempImg = null;
-            BufferedImage finalImg = null;
-
-            File imgFile = new File(sPath);
-
-            try {
-                sourceImg = ImageIO.read(imgFile);
-                int height = sourceImg.getHeight();
-                int width = sourceImg.getWidth();
-                //System.out.println("ukuran :"+height+ ", "+width);
-                tempImg = new BufferedImage(width+2, height+2, sourceImg.getType());
-                int fWidth = ((int)(scale*2))*(width-1) - width + 2;
-                int fHeight = ((int)(scale*2))*(height-1) - height + 2;
-                finalImg = new BufferedImage(fWidth, fHeight, sourceImg.getType());
-
-                for (int i = 0; i < width; i++){
-                    for (int j = 0; j < height; j++){
-                        tempImg.setRGB(i+1, j+1, sourceImg.getRGB(i, j));
-                    }
-                }
-                tempImg.setRGB(0, 0, sourceImg.getRGB(0, 0));
-                tempImg.setRGB(width+1, 0, sourceImg.getRGB(width-1, 0));
-                tempImg.setRGB(0, height+1, sourceImg.getRGB(0, height-1));
-                tempImg.setRGB(width+1, height+1, sourceImg.getRGB(width-1, height-1));
-
-                for (int i = 1; i < width+1; i++){
-                    tempImg.setRGB(i, 0, tempImg.getRGB(i, 1));
-                    tempImg.setRGB(i, height+1, tempImg.getRGB(i, height));
-                }
-                for (int i = 1; i < height+1; i++){
-                    tempImg.setRGB(0, i, tempImg.getRGB(1, i));
-                    tempImg.setRGB(width+1, i, tempImg.getRGB(width, i));
-                }
-                for (int i = 1; i < width; i++){
-                    for (int j = 1; j < height; j++){
-                        //System.out.println("i, j: "+i+", "+j);
-                        Matrix[] temp = get16Points(i, j, tempImg);
-                        Matrix[] hasil = new Matrix[4];
-                        for (int m = 0; m < 4; m++){
-                            hasil[m] = XInvxDMat.multiplyMatrix(temp[m]);
-                        }
-                        if (i == 1 && j == 1){
-                            for (int x = 0; x < (int)(scale*2); x++){
-                                for (int y = 0; y < (int)(scale*2); y++){
-                                    double xx = x/(scale*2 - 1);
-                                    double yy = y/(scale*2 - 1);
-                                    int rgb = getFValueOf(xx, yy, hasil);
-                                    finalImg.setRGB((i-1)*((int)(scale*2)-1)+x, (j-1)*((int)(scale*2)-1)+y, rgb);
-                                }
-                            }
-                        } else if (i > 1 && j == 1){
-                            for (int x = 1; x < (int)(scale*2); x++){
-                                for (int y = 0; y < (int)(scale*2); y++){
-                                    double xx = x/(scale*2 - 1);
-                                    double yy = y/(scale*2 - 1);
-                                    int rgb = getFValueOf(xx, yy, hasil);
-                                    finalImg.setRGB((i-1)*((int)(scale*2)-1)+x, (j-1)*((int)(scale*2)-1)+y, rgb);
-                                }
-                            }
-                        } else if (i == 1 && j > 1){
-                            for (int x = 0; x < (int)(scale*2); x++){
-                                for (int y = 1; y < (int)(scale*2); y++){
-                                    double xx = x/(scale*2 - 1);
-                                    double yy = y/(scale*2 - 1);
-                                    int rgb = getFValueOf(xx, yy, hasil);
-                                    finalImg.setRGB((i-1)*((int)(scale*2)-1)+x, (j-1)*((int)(scale*2)-1)+y, rgb);
-                                }
-                            }
-                        } else {
-                            for (int x = 1; x < (int)(scale*2); x++){
-                                for (int y = 1; y < (int)(scale*2); y++){
-                                    double xx = x/(scale*2 - 1);
-                                    double yy = y/(scale*2 - 1);
-                                    int rgb = getFValueOf(xx, yy, hasil);
-                                    finalImg.setRGB((i-1)*((int)(scale*2)-1)+x, (j-1)*((int)(scale*2)-1)+y, rgb);
-                                }
-                            }
-                        }
-                    }
-                }
-
-            } catch (IOException e) {
-                System.out.println(e);
-            }
-            try {
-                File output = new File(dPath);
-                ImageIO.write(finalImg, "png",output);
-            } catch (IOException e) {
-                System.out.println(e);
-            }
-        }
-    }
-    // Has better time complexity - Use this!!
+    // Has better time complexity - Recommended
+    // Bad memory complexity
     public void scaleImage(double scale){
         BufferedImage sourceImg = null;
         BufferedImage tempImg = null;
         BufferedImage finalImg = null;
-        File imgFile = new File(sPath);
+        File imgFile = new File("../test/imgBSI/input/"+sPath);
         try {
             sourceImg = ImageIO.read(imgFile);
             int height = sourceImg.getHeight();
             int width = sourceImg.getWidth();
             //System.out.println(" ukuran sekarang "+width+" <---> "+height);
-            tempImg = new BufferedImage(width+4, height+4, BufferedImage.TYPE_INT_RGB);
+            tempImg = new BufferedImage(width+4, height+4, BufferedImage.TYPE_INT_ARGB);
             for (int i = 0; i < width; i++){
                 for (int j = 0; j < height; j++){
                     tempImg.setRGB(i+2, j+2, sourceImg.getRGB(i, j));
@@ -246,7 +143,7 @@ public class ImageBSI{
             int fHeight = (int)(height*scale);
             //System.out.println(" ukuran sekarang "+fWidth+" <---> "+fHeight);
             
-            finalImg = new BufferedImage(fWidth, fHeight, BufferedImage.TYPE_INT_RGB);
+            finalImg = new BufferedImage(fWidth, fHeight, BufferedImage.TYPE_INT_ARGB);
 
             for (int i = 0; i < fWidth; i++){
                 for (int j = 0; j < fHeight; j++){
@@ -272,7 +169,105 @@ public class ImageBSI{
             System.out.println(e);
         }
         try {
-            File output = new File(dPath);
+            File output = new File("../test/imgBSI/output/"+dPath);
+            ImageIO.write(finalImg, "png",output);
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+
+    // Time complexity and memory complexity are both better
+    // Most Recommended 
+    public void proccessImage(double scale){
+        BufferedImage sourceImg = null;
+        BufferedImage tempImg = null;
+        BufferedImage finalImg = null;
+        File imgFile = new File("../test/imgBSI/input/"+sPath);
+        try {
+            sourceImg = ImageIO.read(imgFile);
+            int height = sourceImg.getHeight();
+            int width = sourceImg.getWidth();
+            //System.out.println(" ukuran sekarang "+width+" <---> "+height);
+            tempImg = new BufferedImage(width+4, height+4, BufferedImage.TYPE_INT_ARGB);
+            for (int i = 0; i < width; i++){
+                for (int j = 0; j < height; j++){
+                    tempImg.setRGB(i+2, j+2, sourceImg.getRGB(i, j));
+                }
+            }
+            for (int i = 0; i < width+4; i++){
+                if (i <= 2){
+                    tempImg.setRGB(i, 0, tempImg.getRGB(2, 2));
+                    tempImg.setRGB(i, 1, tempImg.getRGB(2, 2));
+                    tempImg.setRGB(i, height+2, tempImg.getRGB(2, height+1));
+                    tempImg.setRGB(i, height+3, tempImg.getRGB(2, height+1));
+                } else if (i >= width + 1){
+                    tempImg.setRGB(i, 0, tempImg.getRGB(width+1, 2));
+                    tempImg.setRGB(i, 1, tempImg.getRGB(width+1, 2));
+                    tempImg.setRGB(i, height+2, tempImg.getRGB(width+1, height+1));
+                    tempImg.setRGB(i, height+3, tempImg.getRGB(width+1, height+1));
+                } else {
+                    tempImg.setRGB(i, 0, tempImg.getRGB(i, 2));
+                    tempImg.setRGB(i, 1, tempImg.getRGB(i, 2));
+                    tempImg.setRGB(i, height+2, tempImg.getRGB(i, height+1));
+                    tempImg.setRGB(i, height+3, tempImg.getRGB(i, height+1));
+                }
+            }
+            for (int j = 2; j < height+2; j++){
+                tempImg.setRGB(0, j, tempImg.getRGB(2, j));
+                tempImg.setRGB(1, j, tempImg.getRGB(2,j));
+                tempImg.setRGB(width+2, j, tempImg.getRGB(width+1, j));
+                tempImg.setRGB(width+3, j, tempImg.getRGB(width+1, j));
+            }
+
+            // Ukuran baru untuk keluaran Image
+            int fWidth = (int)(width*scale);
+            int fHeight = (int)(height*scale);
+            //System.out.println(" ukuran sekarang "+fWidth+" <---> "+fHeight);
+            Matrix[][] aUse = new Matrix[height+1][4];
+            int currentX = -1;
+            int currentY = -1;
+            
+            finalImg = new BufferedImage(fWidth, fHeight, BufferedImage.TYPE_INT_ARGB);
+
+            for (int i = 0; i < fWidth; i++){
+                for (int j = 0; j < fHeight; j++){
+                    // calculate the scale position of every pixel
+                    double xcon = (double)((1 + (2*i+1)*(double)width/(double)fWidth)/2);
+                    double ycon = (double)((1 + (2*j+1)*(double)height/(double)fHeight)/2);
+
+                    // calculate the following solution, which Aij should be used
+                    double Ai = Math.floor(xcon);
+                    double Aj = Math.floor(ycon);
+
+                    if (Ai > (double)currentX){
+                        currentX = (int)Ai;
+                        currentY = -1;
+                    }
+
+                    if (Aj > (double)currentY){
+                        currentY = (int)Aj;
+                        Matrix []image = get16Points((int)(Ai+1), (int)(Aj+1), tempImg);
+                        aUse[currentY][0] = new Matrix(XInvxDMat.multiplyMatrix(image[0]));
+                        aUse[currentY][1] = new Matrix(XInvxDMat.multiplyMatrix(image[1]));
+                        aUse[currentY][2] = new Matrix(XInvxDMat.multiplyMatrix(image[2]));
+                        aUse[currentY][3] = new Matrix(XInvxDMat.multiplyMatrix(image[3]));
+                    }
+
+                    // calculate the xtrace, ytrace used for f(xtrace,ytrace), 0 < xtrace, ytrace < 1
+                    double xtrace = xcon - Ai;
+                    double ytrace = ycon - Aj;
+                    //System.out.println("x: "+xcon+", y: "+ycon);
+                    int rgb = getFValueOf(xtrace, ytrace, aUse[(int)Aj]);
+
+                    finalImg.setRGB(i, j, rgb);
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+        try {
+            File output = new File("../test/imgBSI/output/"+dPath);
             ImageIO.write(finalImg, "png",output);
         } catch (IOException e) {
             System.out.println(e);
@@ -321,9 +316,29 @@ public class ImageBSI{
             }
         }
         al = (int)alpha;
+        if (al > 255){
+            al = 255;
+        } else if (al < 0){
+            al = 0;
+        }
         r = (int)red;
+        if (r > 255){
+            r = 255;
+        } else if (r < 0){
+            r = 0;
+        }
         g = (int)green;
+        if (g > 255){
+            g = 255;
+        } else if (g < 0){
+            g = 0;
+        }
         b = (int)blue;
+        if (b > 255){
+            b = 255;
+        } else if (b < 0){
+            b = 0;
+        }
         int rgb = (al << 24) | (r << 16) | (g << 8) | b ;
         return rgb;
     }

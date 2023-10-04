@@ -532,18 +532,19 @@ public class OBE {
         }
         mkOneMain();
         if (getNoSolusi()){
+            addAugmentedToStep(9);
             addNewLineToStep();
             addNoSolutionsToStep();
         }
-        if (isSolusiUnik()){
+        else if (isSolusiUnik()){
             addAugmentedToStep(9);
             setSolusiUnik(true);
-        } else {
-            setParameterSolutions();
-            roundAllElement();
-            addAugmentedToStep(9);
-            addParameterToStep();
-        }
+        } //else {
+        //    setParameterSolutions();
+        //    roundAllElement();
+        //    addAugmentedToStep(9);
+        //    addParameterToStep();
+        //}
         //printAugmented();
     }
     
@@ -627,14 +628,20 @@ public class OBE {
             setSolusi();
             //addAugmentedToStep(9);
             addSolutionToStep();
-        } else {
+        } else if (!getNoSolusi()){
             addGaussJordanRejected();
             setParameterSolutions();
             roundAllElement();
             addAugmentedToStep(9);
             addParameterToStep();
             //System.out.println("\nTidak dapat dilakukan metode Gauss-Jordan.\nKarena solusi tidak unik.\n");
+        }else {
+            //addAugmentedToStep(9);
+            addGaussJordanRejected();
+            //addNewLineToStep();
+            //addNoSolutionsToStep();
         }
+
     }
 
     public void gaussAndSolutions(){
@@ -668,8 +675,7 @@ public class OBE {
         if (getNoSolusi()){
             addNewLineToStep();
             addNoSolutionsToStep();
-        }
-        if (isSolusiUnik()){
+        } else if (isSolusiUnik()){
             addAugmentedToStep(9);
             setSolusiUnik(true);
             for (int i = getMatrixRow()-2; i >= 0; i--){
@@ -696,6 +702,7 @@ public class OBE {
         int existedVar = getMatrixCol()-1;
         for (int i = getMatrixRow()-1; i >= 0; i--){
             int iMainTemp = findIdxMain(i);
+            //System.out.println(iMainTemp);
             if (iMainTemp == getMatrixCol()-2){
                 if (result[iMainTemp] == null){
                     result[iMainTemp] = new Parameter();

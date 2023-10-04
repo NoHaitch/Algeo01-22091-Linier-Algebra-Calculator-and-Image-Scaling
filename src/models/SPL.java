@@ -62,7 +62,7 @@ public class SPL {
         //input.close();
     }
 
-    public void saveToTextFile(String path){
+    public void saveToTextFile(String path, String text){
         /* Menyimpan hasil Operasi Ke dalam file text */
         String fPath = "";
         int i = 0;
@@ -81,6 +81,7 @@ public class SPL {
         fPath += add + ".txt";
         try {
             FileWriter writer = new FileWriter(fPath);
+            writer.write(text + "\n\n");
             writer.write(this.spl.getStep());
             writer.close();
             System.out.println("\nPenyelesaian berhasil disimpan ke :"+fPath+"\n\n");
@@ -120,5 +121,49 @@ public class SPL {
         } else{
             System.out.println("Tidak bisa melakukan kaidah cramer karena Matrix tidak berbentuk persegi.");
         }
+    }
+
+    public void solveWithInverse(){
+        DeterminanInvers temp = new DeterminanInvers(this.spl.getMatrixRow(), this.spl.getMatrixCol()-1);
+        for (int i = 0; i < spl.getMatrixRow(); i++){
+            for (int j = 0; j < spl.getMatrixCol()-1; j++){
+                temp.contents.setMElmt(spl.getMElmt(i, j), i, j);
+            }
+        }
+        if (temp.contents.getMatrixRow() == temp.contents.getMatrixCol()){
+            if (!temp.zeroDeterminan()){
+                Matrix b = new Matrix(spl.getMatrixRow(), 1);
+                for (int i = 0; i < spl.getMatrixRow(); i++){
+                    b.setElmt(spl.getMElmt(i, spl.getMatrixCol()-1), i, 0);
+                }
+                Matrix invers = new Matrix(temp.inversMatrix());
+
+                spl.addStringToStep(" =============== Invers X ===============\n\n");
+                spl.addStringToStep(importToString(invers));
+                String solusi = "";
+                Matrix result = new Matrix(invers.multiplyMatrix(b));
+                for (int i = 0; i < result.getRowEff(); i++){
+                    solusi += "----> X" + (i+1) + " = " + result.getElmt(i, 0)+"\n";
+                }
+                spl.addStringToStep(solusi);
+            } else {
+                System.out.println("Tidak dapat menghitung solusi karena matriks tidak memiliki Invers.");
+            }
+        } else {
+            System.out.println("Tidak dapat menghitung solusi karena matriks tidak memiliki Invers.");
+        }
+
+    }
+
+    public static String importToString(Matrix m){
+        String temp = "";
+        for (int i = 0; i < m.getRowEff(); i++){
+            for (int j = 0; j < m.getColEff(); j++){
+                temp += m.createString(i, j, 8) + " ";
+            }
+            temp += "\n";
+        }
+        temp += "\n";
+        return temp;
     }
 }

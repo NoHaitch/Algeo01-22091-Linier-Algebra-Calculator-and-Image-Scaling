@@ -4,8 +4,10 @@ import operations.*;
 
 public class Driver {
     public static void main(String[] args) {
-        ImageBSI.setXInvxDMat();
-        ImageBSI temp = new ImageBSI("src/waifumatt.jpg", "src/cewematthew.png");
-        temp.scaleImage(1.789);
+        SPL temp = new SPL();
+        temp.inputSPLText();
+        temp.solveWithInverse();
+        System.out.println(temp.spl.getStep());
+        temp.saveToTextFile("test/spl/output/testOutput.txt","");
     }
 }
