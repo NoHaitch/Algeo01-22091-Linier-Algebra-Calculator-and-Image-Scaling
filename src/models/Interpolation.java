@@ -61,7 +61,6 @@ public class Interpolation {
                         foundp = true;
                     }
                 }
-
             }
             m.setElmt(p.getX(), i, 0);
             m.setElmt(p.getY(), i, 1);
@@ -161,7 +160,6 @@ public class Interpolation {
             write.print(") = ");
             write.print(taksiran);
             write.close();
-            System.out.println("File berhasil tersimpan!");
         } catch (FileNotFoundException e) {
             System.out.println("File tidak dapat disimpan");
         }

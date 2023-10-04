@@ -173,23 +173,36 @@ public class Regresi {
         }
         Mnilai.setColEff(meselon.getMatrixRow());
         Mnilai.setRowEff(1);
-        Mnilai.displayMatrix();
         double taksiran = Mnilai.getElmt(0, 0);
-        System.out.println("taksiran: "+taksiran);
         int k = 1;
         for (i = 1; i < Mnilai.getColEff(); i++){
-            System.out.println(Mnilai.getElmt(0, i)+ " x "+listnilaivar.getElmt(0, i - 1) +" = " + Mnilai.getElmt(0, i)*listnilaivar.getElmt(0, i - 1));
             taksiran += Mnilai.getElmt(0, i)*listnilaivar.getElmt(0, i - 1);
         }
         return taksiran;
     }
     
-    public void uploadhasil2File(double taksiran,String filehasil){
+    public void uploadhasil2File(double taksiran, OBE meselon,String filehasil, String input){
         try {
             PrintWriter write = new PrintWriter(filehasil);
-            write.print(taksiran);
+            write.write(input + "\n");
+            int i,j = meselon.getMatrixCol() - 1;
+            write.write("f(x) = ");
+            int count = 1;
+            for (i = 0; i < meselon.getMatrixRow(); i++){
+                if (i == 0){
+                    write.write("" + meselon.getMElmt(i, j));
+                } else{
+                    if (meselon.getMElmt(i, j ) >= 0){
+                        write.write(" + "+ meselon.getMElmt(i, j)+"x"+count);
+                    }else{
+                        write.write(" "+meselon.getMElmt(i, j)+"x"+count);
+                    }
+                    count+=1;
+                }
+            }
+            write.write("\nTaksiran = " + taksiran + "\n");
             write.close();
-            System.out.println("File berhasil tersimpan!");
+            System.out.println("\nPenyelesaian berhasil disimpan ke :"+filehasil+"\n\n");
         } catch (FileNotFoundException e) {
             System.out.println("File tidak dapat disimpan");
         }

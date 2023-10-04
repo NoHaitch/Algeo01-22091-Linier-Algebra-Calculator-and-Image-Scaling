@@ -160,7 +160,7 @@ public class BicubicSpline {
         }
     }
 
-    public void saveProccessesToText(String path){
+    public void saveProccessesToText(String path, String text){
         String fPath = "";
         int i = 0;
         while (path.charAt(i) != '.'){
@@ -178,6 +178,7 @@ public class BicubicSpline {
         fPath += add + ".txt";
         try {
             FileWriter writer = new FileWriter(fPath);
+            writer.write(text + "\n");
             writer.write(function);
             writer.close();
             System.out.println("\nPenyelesaian berhasil disimpan ke :"+fPath+"\n\n");

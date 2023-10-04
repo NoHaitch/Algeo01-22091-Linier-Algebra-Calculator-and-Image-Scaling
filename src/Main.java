@@ -122,7 +122,7 @@ public class Main {
                             println("1. Metode Eliminasi Gauss");
                             println("2. Metode Eliminasi Gauss-Jordan");
                             println("3. Metode Matriks Balikan ");
-                            println("4. Kaidah Cramer");
+                            println("4. Kaidah `Cramer`");
                             println("5. Kembali");
                             print(" >>> Pilih Metode : ");
                             boolean isInputMenuSPLValid = false;
@@ -851,13 +851,26 @@ public class Main {
                                                         try {
                                                             double x = scanner.nextDouble();
                                                             double y = scanner.nextDouble();
-                                                            pointMatrix.setElmt(x, i, 0);
-                                                            pointMatrix.setElmt(y, i, 1);
-                                                            i++;
+                                                            int j = 0;
+                                                            boolean foundp = false;
+                                                            while(j < i && !foundp){
+                                                                if (x == pointMatrix.getElmt(j, 0)){
+                                                                    foundp = true;
+                                                                }
+                                                                j++;
+                                                            }
+                                                            if(!foundp) {
+                                                                pointMatrix.setElmt(x, i, 0);
+                                                                pointMatrix.setElmt(y, i, 1);
+                                                                i++;
+                                                            } else{
+                                                                println("Titik sudah pernah diberikan. Pastikan Titik berbeda");
+                                                            }
                                                         } catch (Exception e) {
                                                             println("Masukkan Titik salah.");
                                                             scanner.nextLine();
                                                         }
+
                                                     }
                                                     scanner.nextLine();
                                                     boolean isNotvalid = true;
@@ -936,8 +949,9 @@ public class Main {
                         /* =========== MENU Bicubic =========== */
                         println("\n ========== Masukkan Bicubic Spline ==========");
                         boolean BicubicMenu = true;
-                        boolean valid = false;
                         BicubicSpline bicubic = new BicubicSpline();
+                        boolean isiValid = true;
+                        String inputText = " >>> Masukkan alamat file: ";
                         while (BicubicMenu) {
                             /* =========== INPUT Interpolasi Bicubic Spline =========== */
                             println("Ketik 0 untuk kembali");
@@ -959,32 +973,56 @@ public class Main {
                                     println("Alamat file salah. Contoh alamat benar : test/input/spl/test1.txt ");
                                 }
                                 if (filefound) {
+                                    inputText += path + "\n";
                                     String line;
                                     int idx = 0;
-                                    while (readFile.hasNextLine() && (line = readFile.nextLine()) != null) {
+                                    while (readFile.hasNextLine() && (line = readFile.nextLine()) != null && isiValid) {
                                         String[] saved = line.split(" ");
                                         int len = saved.length;
-                                        if (len == 4) {
-                                            for (String s : saved) {
-                                                double temp = Double.parseDouble(s);
-                                                bicubic.initF.setElmt(temp, idx, 0);
-                                                idx++;
+                                        try {
+                                            if (len == 4) {
+                                                for (String s : saved) {
+                                                    double temp = Double.parseDouble(s);
+                                                    bicubic.initF.setElmt(temp, idx, 0);
+                                                    idx++;
+                                                }
+                                            } else {
+                                                bicubic.request[0] = Double.parseDouble(saved[0]);
+                                                bicubic.request[1] = Double.parseDouble(saved[1]);
                                             }
-                                        } else {
-                                            bicubic.request[0] = Double.parseDouble(saved[0]);
-                                            bicubic.request[1] = Double.parseDouble(saved[1]);
+                                        }
+                                        catch (Exception e){
+                                            println("Isi File Salah! Pastikan formatnya benar.");
+                                            isiValid = false;
                                         }
                                     }
-                                    BicubicMenu = false;
-                                    valid = true;
+                                    if(isiValid) {
+                                        BicubicMenu = false;
+                                    }
                                 }
                             }
-                            println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
                         }
-                        if (valid) {
+                        if (isiValid) {
+                            inputText += "\n\n ================== HASIL ================== \n";
                             println(" ================== HASIL ================== ");
                             bicubic.solveBicubic();
+                            bicubic.getRequestAnswer();
                             println(bicubic.function);
+                            boolean menuSimpan = true;
+                            while (menuSimpan) {
+                                print("\n >>> Apakah ingin disimpan dalam file? [y/n]: ");
+                                String opsiSimpan = scanner.nextLine();
+                                if (opsiSimpan.equals("y") || opsiSimpan.equals("Y")) {
+                                    print(" >>> Masukkan nama file hasil: ");
+                                    String name = scanner.nextLine();
+                                    bicubic.saveProccessesToText(("test/result/" + name + ".txt"), inputText);
+                                    menuSimpan = false;
+                                } else if (opsiSimpan.equals("n") || opsiSimpan.equals("N")) {
+                                    menuSimpan = false;
+                                } else {
+                                    println("Masukkan salah pilih y / n");
+                                }
+                            }
                         }
                     }
                     case "Regresi" -> {
@@ -1008,11 +1046,13 @@ public class Main {
                             }
                             if (isInputRegresiValid) {
                                 boolean terisiMatriks = false;
+                                String inputText = "";
                                 switch (opsiMenuInputRegresi) {
                                     case 1:
                                         /* ============ Input Ketik =========== */
                                         boolean inputKetik = true;
                                         while (inputKetik) {
+                                            inputText = " >>> Masukkan jumlah peubah : ";
                                             println("\n ========== Metode Ketik ==========");
                                             println("Ketik -1 Kembali ");
                                             print(" >>> Masukkan jumlah peubah : ");
@@ -1038,8 +1078,11 @@ public class Main {
                                                 if (n < 1 || m < 1) {
                                                     println("Jumlah peubah dan sample harus bilangan bulat positif");
                                                 } else {
+                                                    inputText += n + "\n";
+                                                    inputText += " >>> Masukkan jumlah sample : " + m + "\n";
+                                                    inputText += "Masukkan Nilai-Nilai Sample (" + m + " x " + (n+1) + "): \n";
                                                     regresi = new Regresi(m, n);
-                                                    println("Masukkan Nilai-Nilai Sample : ");
+                                                    println("Masukkan Nilai-Nilai Sample (" + m + " x " + (n+1) + "): ");
                                                     boolean isInputSampleValid = true;
                                                     int i = 0;
                                                     while (i < m && isInputSampleValid) {
@@ -1049,11 +1092,13 @@ public class Main {
                                                             for (int j = 0; j < saved.length; j++) {
                                                                 double temp = Double.parseDouble(saved[j]);
                                                                 regresi.dataRegresiM.setElmt(temp, i, j);
+                                                                inputText += temp + " ";
                                                             }
                                                         } catch (Exception e) {
                                                             println("Isi Matrix salah. Pastikan isi matriks adalah bilangan real");
                                                             isInputSampleValid = false;
                                                         }
+                                                        inputText += "\n";
                                                         i++;
                                                     }
                                                     if (isInputSampleValid) {
@@ -1068,6 +1113,7 @@ public class Main {
                                         /* ============ Input File =========== */
                                         boolean inputFile = true;
                                         while (inputFile) {
+                                            inputText = " >>> Masukkan alamat file: ";
                                             println("Ketik 0 untuk kembali");
                                             print(" >>> Masukkan alamat file: ");
                                             String path = scanner.nextLine();
@@ -1091,32 +1137,40 @@ public class Main {
                                                     int row = 0;
                                                     boolean varpeubah = false;
                                                     int var = 0;
-                                                    while (readFile.hasNextLine() && (line = readFile.nextLine()) != null) {
+                                                    boolean isiValid = true;
+                                                    while (readFile.hasNextLine() && (line = readFile.nextLine()) != null && isiValid) {
                                                         String[] saved = line.split(" ");
                                                         int len = saved.length;
                                                         if (!varpeubah) {
                                                             var = saved.length;
                                                             varpeubah = true;
                                                         }
-                                                        if (len == var) {
-                                                            for (int i = 0; i < len; i++) {
-                                                                double tempdouble = Double.parseDouble(saved[i]);
-                                                                regresi.dataRegresiM.setElmt(tempdouble, row, i);
+                                                        try {
+                                                            if (len == var) {
+                                                                for (int i = 0; i < len; i++) {
+                                                                    double tempdouble = Double.parseDouble(saved[i]);
+                                                                    regresi.dataRegresiM.setElmt(tempdouble, row, i);
+                                                                }
+                                                            } else if (len == var - 1) {
+                                                                for (int i = 0; i < len; i++) {
+                                                                    double tempdouble = Double.parseDouble(saved[i]);
+                                                                    regresi.listnilaivar.setElmt(tempdouble, 0, i);
+                                                                }
+                                                                regresi.listnilaivar.setColEff(var - 1);
+                                                                regresi.listnilaivar.setRowEff(1);
                                                             }
-                                                        } else if (len == var - 1) {
-                                                            for (int i = 0; i < len; i++) {
-                                                                double tempdouble = Double.parseDouble(saved[i]);
-                                                                regresi.listnilaivar.setElmt(tempdouble, 0, i);
-                                                            }
-                                                            regresi.listnilaivar.setColEff(var - 1);
-                                                            regresi.listnilaivar.setRowEff(1);
+                                                            row++;
+                                                        } catch (Exception e){
+                                                            println("Isi File Salah! Pastikan format isi file benar!");
+                                                            isiValid = false;
                                                         }
-                                                        row++;
                                                     }
-                                                    regresi.dataRegresiM.setColEff(var);
-                                                    regresi.dataRegresiM.setRowEff(row - 1);
-                                                    inputFile = false;
-                                                    terisiMatriks = true;
+                                                    if(isiValid) {
+                                                        regresi.dataRegresiM.setColEff(var);
+                                                        regresi.dataRegresiM.setRowEff(row - 1);
+                                                        inputFile = false;
+                                                        terisiMatriks = true;
+                                                    }
                                                 }
                                             }
                                         }
@@ -1129,16 +1183,29 @@ public class Main {
                                 }
                                 if (terisiMatriks) {
                                     println(" ================== HASIL ================== ");
+                                    inputText += "\n\n ================== HASIL ================== \n";
                                     regresi.dataRegresiM.displayMatrix();
-                                    regresi.convertData2Reg(regresi.dataRegresiM);
                                     println("");
-                                    regresi.regresiM.displayMatrix();
+                                    regresi.convertData2Reg(regresi.dataRegresiM);
                                     OBE mEselon = regresi.convertReg2OBE(regresi.regresiM);
-                                    mEselon.gaussAndSolutions();
-                                    mEselon.printAugmented();
                                     regresi.displayFunction(mEselon);
                                     println("");
-                                    println(" Taksiran = " + regresi.taksiran(regresi.listnilaivar, mEselon));
+                                    println("Taksiran = " + regresi.taksiran(regresi.listnilaivar, mEselon) + "\n");
+                                    boolean menuSimpan = true;
+                                    while (menuSimpan) {
+                                        print(" >>> Apakah ingin disimpan dalam file? [y/n]: ");
+                                        String opsiSimpan = scanner.nextLine();
+                                        if (opsiSimpan.equals("y") || opsiSimpan.equals("Y")) {
+                                            print(" >>> Masukkan nama file hasil: ");
+                                            String name = scanner.nextLine();
+                                            regresi.uploadhasil2File(regresi.taksiran(regresi.listnilaivar, mEselon),mEselon, ("test/result/" + name + ".txt"), inputText);
+                                            menuSimpan = false;
+                                        } else if (opsiSimpan.equals("n") || opsiSimpan.equals("N")) {
+                                            menuSimpan = false;
+                                        } else {
+                                            println("Masukkan salah pilih y / n");
+                                        }
+                                    }
                                     RegresiMenu = false;
                                 }
                             }

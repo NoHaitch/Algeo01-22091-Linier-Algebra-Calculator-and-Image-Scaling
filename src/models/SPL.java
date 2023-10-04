@@ -81,7 +81,7 @@ public class SPL {
         fPath += add + ".txt";
         try {
             FileWriter writer = new FileWriter(fPath);
-            writer.write(text + "\n\n");
+            writer.write(text + "\n");
             writer.write(this.spl.getStep());
             writer.close();
             System.out.println("\nPenyelesaian berhasil disimpan ke :"+fPath+"\n\n");
