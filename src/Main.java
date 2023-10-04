@@ -258,7 +258,7 @@ public class Main {
                                                     boolean inputFile = true;
                                                     while (inputFile) {
                                                         println("Ketik 0 untuk kembali");
-                                                        print(" >>> Masukkan alamat file: ");
+                                                        print(" >>> Masukkan nama file: ");
                                                         String path = scanner.nextLine();
                                                         if (path.equals("0")) {
                                                             inputFile = false;
@@ -270,11 +270,11 @@ public class Main {
                                                             Scanner readFile = null;
                                                             boolean filefound = false;
                                                             try {
-                                                                file = new File(path);
+                                                                file = new File("../test/spl/input/"+path);
                                                                 readFile = new Scanner(file);
                                                                 filefound = true;
                                                             } catch (FileNotFoundException e) {
-                                                                println("Alamat file salah. Contoh alamat benar : test/input/spl/test1.txt ");
+                                                                println("Nama file salah. Contoh nama benar : baby.txt");
                                                             }
                                                             if (filefound)
                                                             {
@@ -302,7 +302,7 @@ public class Main {
                                                                 if (!valid) {
                                                                     println("Isi File Salah! Pastikan file adalah text yang diisi oleh matriks berisi bilangan real yang dipisahkan spasi dan enter");
                                                                 } else {
-                                                                    inputText += " >>> Masukkan alamat file: " + path + "\n";
+                                                                    inputText += " >>> Masukkan nama file: " + path + "\n";
                                                                     spl.spl.setMatrixRow(row);
                                                                     spl.spl.setMatrixCol(column);
                                                                     inputFile = false;
@@ -347,7 +347,11 @@ public class Main {
                                                         inputText += "\n\n ================== HASIL ================== \n";
                                                         print(" >>> Masukkan nama file hasil: ");
                                                         String name = scanner.nextLine();
-                                                        spl.saveToTextFile(("test/result/" + name + ".txt"), inputText);
+                                                        while(!textFile(name)){
+                                                            println("Nama file salah!");
+                                                            name = scanner.nextLine();
+                                                        }
+                                                        spl.saveToTextFile(("../test/spl/output/" + name), inputText);
                                                         menuSimpan = false;
                                                     } else if (opsiSimpan.equals("n") || opsiSimpan.equals("N")) {
                                                         menuSimpan = false;
@@ -485,23 +489,22 @@ public class Main {
                                                     boolean inputFile = true;
                                                     while (inputFile) {
                                                         println("Ketik 0 untuk kembali");
-                                                        print(" >>> Masukkan alamat file: ");
+                                                        print(" >>> Masukkan nama file: ");
                                                         String path = scanner.nextLine();
                                                         if (path.equals("0")) {
                                                             inputFile = false;
                                                         } else if(!textFile(path)){
                                                             println("File bukan text");
                                                         }else {
-                                                            path = "../" + path;
                                                             File file;
                                                             Scanner readFile = null;
                                                             boolean filefound = false;
                                                             try {
-                                                                file = new File(path);
+                                                                file = new File("../test/determinan/input/"+path);
                                                                 readFile = new Scanner(file);
                                                                 filefound = true;
                                                             } catch (FileNotFoundException e) {
-                                                                println("Alamat file salah. Contoh alamat benar : test/input/spl/test1.txt ");
+                                                                println("Nama file salah. Contoh nama benar : baby.txt ");
                                                             }
                                                             if (filefound) {
                                                                 boolean valid = true;
@@ -528,7 +531,7 @@ public class Main {
                                                                 if (!valid) {
                                                                     println("Isi File Salah! Pastikan file adalah text yang diisi oleh matriks berisi bilangan real yang dipisahkan spasi dan enter");
                                                                 } else {
-                                                                    inputText += " >>> Masukkan alamat file: " + path + "\n";
+                                                                    inputText += " >>> Masukkan nama file: " + path + "\n";
                                                                     det.contents.setMatrixRow(row);
                                                                     det.contents.setMatrixCol(column);
                                                                     inputFile = false;
@@ -563,7 +566,7 @@ public class Main {
                                                         }
                                                         print(" >>> Masukkan nama file hasil: ");
                                                         String name = scanner.nextLine();
-                                                        det.saveToTextFile(("test/result/" + name + ".txt"),inputText);
+                                                        det.saveToTextFile(("../test/determinan/output/" + name + ".txt"),inputText);
                                                         menuSimpan = false;
                                                     } else if (opsiSimpan.equals("n") || opsiSimpan.equals("N")) {
                                                         menuSimpan = false;
@@ -697,7 +700,7 @@ public class Main {
                                                     boolean inputFile = true;
                                                     while (inputFile) {
                                                         println("Ketik 0 untuk kembali");
-                                                        print(" >>> Masukkan alamat file: ");
+                                                        print(" >>> Masukkan nama file: ");
                                                         String path = scanner.nextLine();
                                                         if (path.equals("0")) {
                                                             inputFile = false;
@@ -708,11 +711,11 @@ public class Main {
                                                             Scanner readFile = null;
                                                             boolean filefound = false;
                                                             try {
-                                                                file = new File(path);
+                                                                file = new File("../test/inverse/output/"+path);
                                                                 readFile = new Scanner(file);
                                                                 filefound = true;
                                                             } catch (FileNotFoundException e) {
-                                                                println("Alamat file salah. Contoh alamat benar : test/input/spl/test1.txt ");
+                                                                println("Nama file salah. Contoh nama benar : baby.txt ");
                                                             }
                                                             if (filefound) {
                                                                 boolean valid = true;
@@ -784,7 +787,7 @@ public class Main {
                                                     if (opsiSimpan.equals("y") || opsiSimpan.equals("Y")) {
                                                         print(" >>> Masukkan nama file hasil: ");
                                                         String name = scanner.nextLine();
-                                                        invers.saveToTextFile(("test/result/" + name + ".txt"),inputText);
+                                                        invers.saveToTextFile(("../test/inverse/output/" + name + ".txt"),inputText);
                                                         menuSimpan = false;
                                                     } else if (opsiSimpan.equals("n") || opsiSimpan.equals("N")) {
                                                         menuSimpan = false;
@@ -1018,7 +1021,7 @@ public class Main {
                                 if (opsiSimpan.equals("y") || opsiSimpan.equals("Y")) {
                                     print(" >>> Masukkan nama file hasil: ");
                                     String name = scanner.nextLine();
-                                    bicubic.saveProccessesToText(("test/result/" + name + ".txt"), inputText);
+                                    bicubic.saveProccessesToText(("../test/bicubic/output/" + name + ".txt"), inputText);
                                     menuSimpan = false;
                                 } else if (opsiSimpan.equals("n") || opsiSimpan.equals("N")) {
                                     menuSimpan = false;
@@ -1201,7 +1204,7 @@ public class Main {
                                         if (opsiSimpan.equals("y") || opsiSimpan.equals("Y")) {
                                             print(" >>> Masukkan nama file hasil: ");
                                             String name = scanner.nextLine();
-                                            regresi.uploadhasil2File(regresi.taksiran(regresi.listnilaivar, mEselon),mEselon, ("test/result/" + name + ".txt"), inputText);
+                                            regresi.uploadhasil2File(regresi.taksiran(regresi.listnilaivar, mEselon),mEselon, ("../test/regresi/output/" + name + ".txt"), inputText);
                                             menuSimpan = false;
                                         } else if (opsiSimpan.equals("n") || opsiSimpan.equals("N")) {
                                             menuSimpan = false;

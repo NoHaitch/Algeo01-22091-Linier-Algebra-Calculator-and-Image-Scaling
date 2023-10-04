@@ -64,8 +64,8 @@ public class SPL {
 
     public void saveToTextFile(String path, String text){
         /* Menyimpan hasil Operasi Ke dalam file text */
-        String fPath = "";
-        int i = 0;
+        String fPath = "..";
+        int i = 2;
         while (path.charAt(i) != '.'){
             fPath += path.charAt(i);
             i++;
@@ -79,6 +79,7 @@ public class SPL {
             testFile = new File(fPath+add+".txt");
         }
         fPath += add + ".txt";
+        System.out.println(fPath);
         try {
             FileWriter writer = new FileWriter(fPath);
             writer.write(text + "\n");
