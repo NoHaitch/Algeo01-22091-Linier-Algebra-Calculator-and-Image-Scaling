@@ -2,6 +2,7 @@ package models;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 import operations.Matrix;
 import operations.OBE;
@@ -136,6 +137,20 @@ public class Interpolation {
             for (j = 0; j < 2; j++){
                 point.setElmt(temp.spl.getMElmt(i, j), i, j);
             }
+        }
+    }
+
+    public void uploadhasil2File(double taksiran, double xRequest,String filehasil){
+        try {
+            PrintWriter write = new PrintWriter(filehasil);
+            write.print("f(");
+            write.print(xRequest);
+            write.print(") = ");
+            write.print(taksiran);
+            write.close();
+            System.out.println("File berhasil tersimpan!");
+        } catch (FileNotFoundException e) {
+            System.out.println("File tidak dapat disimpan");
         }
     }
 }
