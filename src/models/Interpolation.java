@@ -114,49 +114,42 @@ public class Interpolation {
         return taksiran;
     }
 
-    public boolean askDataPointFromFile(String path){
-        SPL temp = new SPL(1000,501);
+    public void askDataPointFromFile(String path){
+        Matrix temp = new Matrix(200, 150);
         int i,j;
+        int row = 0;
+        int column = 2;
         try {
-            File inputFile = new File("../test/interpolasi/input/" + path);
+            File inputFile = new File(path);
             Scanner readFile = new Scanner(inputFile);
             String line;
-            int row = 0;
-            int column = 2;
-            boolean isiValid = true;
             while (readFile.hasNextLine() && (line = readFile.nextLine()) != null){
                 String[] saved = line.split(" ");
                 int len = saved.length;
-                try {
-                    if (len == 2) {
-                        for (i = 0; i < column; i++) {
-                            double tempdouble = Double.parseDouble(saved[i]);
-                            temp.getSPL().setMElmt(tempdouble, row, i);
-                        }
-                        row++;
-                    } else {
-                        xRequest = Double.parseDouble(saved[0]);
+                if (len == 2){
+                    for (i = 0; i < 2; i++){
+                        double tempdouble = Double.parseDouble(saved[i]);
+                        temp.setElmt(tempdouble, row, i);
                     }
-                } catch (Exception e){
-                    return false;
+                    row++;
+                } else{
+                    xRequest = Double.parseDouble(saved[0]);
                 }
             }
-            temp.getSPL().setMatrixRow(row);
-            temp.getSPL().setMatrixCol(column);
+            temp.setRowEff(row);
+            temp.setColEff(column);
             readFile.close();
         } catch (FileNotFoundException e){
-            //System.out.println("An error occurred.");
-            //e.printStackTrace();
-            return false;
+            System.out.println("An error occurred.");
+            e.printStackTrace();
         // TODO: handle exception
         }
-        this.point = new Matrix(temp.spl.getMatrixRow(), 2);
-        for (i = 0; i < temp.spl.getMatrixRow(); i++ ){
+        point = new Matrix(temp.getRowEff(), 2);
+        for (i = 0; i < temp.getRowEff(); i++ ){
             for (j = 0; j < 2; j++){
-                point.setElmt(temp.spl.getMElmt(i, j), i, j);
+                point.setElmt(temp.getElmt(i, j), i, j);
             }
         }
-        return true;
     }
 
     public void uploadhasil2File(double taksiran, double xRequest,String filehasil, String text){

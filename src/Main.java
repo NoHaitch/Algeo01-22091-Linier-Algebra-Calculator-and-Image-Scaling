@@ -320,7 +320,6 @@ public class Main {
                                             }
                                             if (terisiSPL) {
                                                 boolean inverseSuccess = true;
-                                                boolean cramerSuccess = true;
                                                 switch (tipeMenuSPL) {
                                                     case "Gauss" : spl.spl.gaussAndSolutions();
                                                     break;
@@ -329,22 +328,18 @@ public class Main {
                                                     case "Balikan" : {
                                                         inverseSuccess = spl.solveWithInverse();}
                                                     break;
-                                                    default : {
-                                                        cramerSuccess = spl.solveWithCramer(spl.spl);
+                                                    default : {spl.solveWithCramer(spl.spl);
                                                     }
                                                 }
 
                                                 println(" ================== HASIL ================== ");
-                                                if(tipeMenuSPL.equals("Kramer") && cramerSuccess){
+                                                if(tipeMenuSPL.equals("Kramer")){
                                                     spl.spl.addStringToStep("\nSolusi : \n");
                                                     for(int i=0;i<spl.listnilaivar.getColEff();i++){
                                                             spl.spl.addStringToStep("--> X" + (i+1) + " = " + spl.listnilaivar.getElmt(0,i) + "\n");
                                                     }
                                                     spl.spl.addNewLineToStep();
                                                     spl.spl.addNewLineToStep();
-                                                }
-                                                else if(!cramerSuccess){
-                                                    spl.spl.addStringToStep("Tidak dapat menghitung solusi karena matriks tidak memiliki Invers.\n");
                                                 }
                                                 if(!inverseSuccess){
                                                     spl.spl.addStringToStep("Tidak dapat menghitung solusi karena matriks tidak memiliki Invers.\n");
@@ -920,12 +915,13 @@ public class Main {
                                                         }
                                                     }
                                                     scanner.nextLine();
+                                                    interpolasi.point = interpolasi.convertPtoM(pointMatrix);
                                                     inputKetik = false;
                                                     terisiMatriks = true;
                                                 }
                                             }
                                         }
-                                        break;
+                                    break;
                                     case 2:
                                         /* ============ Input File =========== */
                                         boolean inputFile = true;
@@ -939,34 +935,33 @@ public class Main {
                                                 println("File bukan text");
                                             } else {
                                                 File file;
+                                                Scanner readFile = null;
                                                 boolean filefound = false;
                                                 try {
-                                                    file = new File("../test/interpolasi/input/" +path);
-                                                    new Scanner(file);
+                                                    file = new File("../test/interpolasi/input/"+path);
+                                                    readFile = new Scanner(file);
                                                     filefound = true;
-                                                    inputText = " >>> Masukkan nama file: " + path + "\n";
+                                                    inputFile = false;
                                                 } catch (FileNotFoundException e) {
                                                     println("Nama file salah. Contoh nama benar : baby.txt ");
                                                 }
                                                 if (filefound) {
-                                                    if(interpolasi.askDataPointFromFile(path)) {
-                                                        println("Isi File Salah! Pastikan formatnya benar.");
-                                                    } else {
-                                                        inputFile = false;
-                                                        terisiMatriks = true;
-                                                    }
+                                                    inputText += ">>> Masukkan nama file: " + path + "\n";
+                                                    interpolasi.askDataPointFromFile("../test/interpolasi/input/" + path);
+                                                    inputFile = false;
+                                                    terisiMatriks = true;
                                                 }
                                             }
                                         }
-                                        break;
+                                    break;
                                     case 3:
                                         InterpolasiMenu = false;
-                                        break;
+                                    break;
                                     default:
                                         println("Masukkan salah. Silahkan memilih angka menu antara 1 dan 3");
                                 }
                                 if (terisiMatriks) {
-                                    Matrix matrix = interpolasi.convertPtoM(pointMatrix);
+                                    Matrix matrix = interpolasi.point;
                                     OBE mEselon = new OBE(matrix.getRowEff(), matrix.getColEff());
                                     for (int i = 0; i < matrix.getRowEff(); i++) {
                                         for (int j = 0; j < matrix.getColEff(); j++) {
@@ -1355,7 +1350,7 @@ public class Main {
                         if (valid) {
                             println(" ================== HASIL ================== ");
                             println(" Gambar sedang diproses ... ");
-                            println("( Hasil mungkin membutuhkan waktu lama untuk dicetak walau menu baru sudah keluar )");
+                            println("( Hasil mungkin membutuhkan waktu lama bergantung pada skale)");
                             ImageBSI temp = new ImageBSI(path, outputPath);
                             temp.proccessImage(skala);
                             println(" Gambar Berhasil dibesarkan");

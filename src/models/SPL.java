@@ -97,13 +97,16 @@ public class SPL {
         return new OBE(this.spl);
     }
 
-    public Boolean solveWithCramer(OBE mdata){
+    public void solveWithCramer(OBE mdata){
         // menerima input matrix yang berisikan data SPL
         double temp;
         int i,count = 0;
         Matrix original = new Matrix (mdata.getCopyAugmented());
-        original.setColEff(spl.getMatrixCol()-1);
+        original.setColEff(mdata.getMatrixCol() - 1);
         Matrix dupe = new Matrix(original);
+        DeterminanInvers duplicate = new DeterminanInvers(200, 100);
+        duplicate.contents = new OBE(mdata);
+        duplicate.contents.setMatrixCol(mdata.getMatrixCol() - 1);
         listnilaivar = new Matrix(1,dupe.getColEff());
         if (original.isSquare()){
             if (original.determinant() != 0){
@@ -114,13 +117,13 @@ public class SPL {
                     listnilaivar.setElmt(temp, 0, i);
                     dupe = new Matrix(original);
                 }
+
             } else{
-                return false;
+                System.out.println("Tidak bisa melakukan kaidah cramer karena determinant Matrix bernilai 0.");
             }
         } else{
-            return false;
+            System.out.println("Tidak bisa melakukan kaidah cramer karena Matrix tidak berbentuk persegi.");
         }
-        return true;
     }
 
     public boolean solveWithInverse(){
