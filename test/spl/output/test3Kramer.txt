@@ -1,0 +1,6 @@
+ >>> Masukkan nama file: test3.txt
+
+
+ ================== HASIL ================== 
+
+Tidak dapat menghitung solusi karena matriks tidak memiliki Invers.

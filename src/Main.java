@@ -198,10 +198,10 @@ public class Main {
                                                                 col = row+1;
                                                             } else if (row != -1) {
                                                                 col = scanner.nextInt();
-                                                            }
+                                                            }                                                            
                                                             scanner.nextLine();
-
                                                         } catch (Exception e) {
+                                                            scanner.nextLine();
                                                             println("Ukuran Matriks harus bilangan bulat positif");
                                                         }
                                                         if (row == -1 || col == -1) {
