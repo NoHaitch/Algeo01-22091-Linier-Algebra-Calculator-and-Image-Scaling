@@ -129,7 +129,6 @@ public class Interpolation {
                 if (len == 2){
                     for (i = 0; i < column; i++){
                         double tempdouble = Double.parseDouble(saved[i]);
-                        System.out.println("TEMPDOUBLE: "+tempdouble);
                         temp.getSPL().setMElmt(tempdouble, row, i);
                     }
                     row++;

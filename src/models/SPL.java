@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 import operations.Matrix;
 import operations.OBE;
-
+import models.DeterminanInvers;
 /* Class SPL */
 /* Membuat objek SPL, untuk permasalahan Sistem Persamaan Linier */
 public class SPL {
@@ -102,8 +102,11 @@ public class SPL {
         double temp;
         int i,count = 0;
         Matrix original = new Matrix (mdata.getCopyAugmented());
-        original.setColEff(3);
+        original.setColEff(mdata.getMatrixCol() - 1);
         Matrix dupe = new Matrix(original);
+        DeterminanInvers duplicate = new DeterminanInvers(200, 100);
+        duplicate.contents = new OBE(mdata);
+        duplicate.contents.setMatrixCol(mdata.getMatrixCol() - 1);
         listnilaivar = new Matrix(1,dupe.getColEff());
         if (original.isSquare()){
             if (original.determinant() != 0){

@@ -12,19 +12,20 @@ public class driverkaidahcramer {
         int count = 1;
         String line;
         int k;
-        System.out.print("Masukkan banyak persamaan: ");
-        sampel = scanInt.nextInt();
+        // System.out.print("Masukkan banyak persamaan: ");
+        // sampel = scanInt.nextInt();
+        // for (i = 0; i < sampel; i++){
+            //     System.out.print("Masukkan nilai nilai persamaan ke-" + count + " : ");
+            //     count+= 1;
+            //     line = scan.nextLine();
+            //     String[] saved = line.split(" ");
+            //     for (k = 0; k < saved.length; k++){
+                //         double tempnilai = Double.parseDouble(saved[k]);
+                //         temp.spl.setMElmt(tempnilai, i, k);
+                //     }
+                // }
+                
         SPL temp = new SPL(sampel,sampel + 1);
-        for (i = 0; i < sampel; i++){
-            System.out.print("Masukkan nilai nilai persamaan ke-" + count + " : ");
-            count+= 1;
-            line = scan.nextLine();
-            String[] saved = line.split(" ");
-            for (k = 0; k < saved.length; k++){
-                double tempnilai = Double.parseDouble(saved[k]);
-                temp.spl.setMElmt(tempnilai, i, k);
-            }
-        }
         temp.spl.printAugmented();
         System.out.println("==============");
         temp.solveWithCramer(temp.spl);
