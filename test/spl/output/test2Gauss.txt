@@ -1,4 +1,4 @@
- >>> Masukkan nama file: inputDeterminan.txt
+ >>> Masukkan nama file: test2.txt
 
 
  ================== HASIL ================== 

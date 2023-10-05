@@ -320,6 +320,7 @@ public class Main {
                                             }
                                             if (terisiSPL) {
                                                 boolean inverseSuccess = true;
+                                                boolean crammerSuccess = true;
                                                 switch (tipeMenuSPL) {
                                                     case "Gauss" : spl.spl.gaussAndSolutions();
                                                     break;
@@ -328,20 +329,21 @@ public class Main {
                                                     case "Balikan" : {
                                                         inverseSuccess = spl.solveWithInverse();}
                                                     break;
-                                                    default : {spl.solveWithCramer(spl.spl);
+                                                    default : {
+                                                        crammerSuccess = spl.solveWithCramer(spl.spl);
                                                     }
                                                 }
 
                                                 println(" ================== HASIL ================== ");
-                                                if(tipeMenuSPL.equals("Kramer")){
+                                                if(tipeMenuSPL.equals("Kramer") && crammerSuccess){
                                                     spl.spl.addStringToStep("\nSolusi : \n");
                                                     for(int i=0;i<spl.listnilaivar.getColEff();i++){
                                                             spl.spl.addStringToStep("--> X" + (i+1) + " = " + spl.listnilaivar.getElmt(0,i) + "\n");
                                                     }
                                                     spl.spl.addNewLineToStep();
                                                     spl.spl.addNewLineToStep();
-                                                }
-                                                if(!inverseSuccess){
+                                                } 
+                                                if(!inverseSuccess || !crammerSuccess){
                                                     spl.spl.addStringToStep("Tidak dapat menghitung solusi karena matriks tidak memiliki Invers.\n");
                                                 }
                                                 println(spl.spl.getStep());
