@@ -972,7 +972,7 @@ public class Main {
                                     println(" ================== HASIL ================== ");
                                     print("  Fungsi :  ");
                                     interpolasi.displayFunction(mEselon);
-                                    println("\n  Taksiran f(" + xInterpolasi + ") =  " + interpolasi.taksiran(mEselon, xInterpolasi) + "\n\n");
+                                    println("\n  Taksiran f(" + interpolasi.xRequest + ") =  " + interpolasi.taksiran(mEselon, interpolasi.xRequest) + "\n\n");
                                     boolean menuSimpan = true;
                                     while (menuSimpan) {
                                         print(" >>> Apakah ingin disimpan dalam file? [y/n]: ");
