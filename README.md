@@ -30,7 +30,7 @@ Untuk cara penyelasaian SPL, menggunakan Metode Eliminiasi Gauss, Gauss-Jordan, 
 - [Link Spesifikasi](https://docs.google.com/document/d/1evaYvI5PfDij2UlA_mkqUCLK0mg4hbRzbcA461FFnwg)
 - [Link Data Kelompok](https://docs.google.com/spreadsheets/d/1Lnc1Bf3rv3uHc4vgUdWsJcf4bDzlSIeslEvdyR90I3U/edit#gid=0)
 - [Link Pengumpulan](https://forms.gle/af2dFUL4EMNd5ye8A)
-- [Link Laporan](https://itbdsti-my.sharepoint.com/:w:/g/personal/13522091_mahasiswa_itb_ac_id/EWyly9bYWAtOrKQvzYmuzSABl3QzUu26pgnH_ExqqanbPA?e=2zeHK9)
+- [Link Laporan](https://itbdsti-my.sharepoint.com/:w:/g/personal/13522093_mahasiswa_itb_ac_id/EXQHfZnWAXROl1JzlOl4zEYB2vNLw-eOo_U-kPE7dmm0aQ?e=dalD5e)
 
 
 ## Installing / Getting Started
@@ -51,6 +51,69 @@ Di bawah adalah instruksi instalasi dan  penggunaan program
    java Main
    ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Input Output Program
+
+Terdapat 2 macam jenis input yang dapat dilakukan tergantung pada fitur
+1. Input dengan Ketik
+2. Input dengan File Text
+
+Hal tersebut dapat dipilih pada menu dibawah
+``` 
+========== Pilih Metode Masukkan ==========
+1. Masukkan Ketik
+2. Masukkan dalam bentuk File
+3. Kembali
+ >>> Pilih Metode Masukkan : 
+ ```
+
+Program yang berhasil akan menunjukan hasil perhitungannya.  
+Program dapat menyimpan hasil perhitungan pada File Text
+
+Hal tersebut dapat dipilih pada menu dibawah
+
+``` 
+>>> Apakah ingin disimpan dalam file? [y/n]: y
+>>> Masukkan nama file hasil: test.txt
+
+Penyelesaian berhasil disimpan ke : ../test/spl/output/test.txt
+```
+
+Program hanya akan membaca file pada folder input yang dijelaskan di bawah ini.
+
+### Lokasi File Input dan Output
+
+#### Struktur Folder test
+```
+    .
+    ├── ...
+    ├── test                     # Test folder
+    │   ├── bicubic              # Test Interpolasi Bicubic Spline
+    │   ├── determinan           # Test Determinan
+    │   ├── imgBSI               # Test Peningkatan Kualitas Gambar
+    │   ├── interpolasi          # Test Interpolasi Polinomial
+    │   ├── inverse              # Test Matriks Balikan 
+    │   ├── regresi              # Test Regresi Linier Berganda
+    │   └── spl                  # Test Sistem Persamaan Linier
+    └── ...
+```
+Untuk setiap folder di atas mulai dari "bicubic" hingga "spl".  
+Terdapat child folder yaitu input dan output.
+
+#### Struktur Folder spl
+```   
+   ├── spl                       # Test 
+   │   ├── input                 # Berisi file sebagai input untuk Fitur SPL
+   │   │   ├── test1.txt         # Contoh file input 
+   │   │   └── test2.txt         # Contoh file input 
+   │   └── output                # Berisi file hasil output dari Fitur SPL
+   │       ├── res1.txt          # Contoh file hasil 
+   │       └── res2.txt          # Contoh file hasil 
+```
+
+"test1.txt" dan "test2.txt" adalah file yang dapat dibaca oleh program saat masuk menu input file dari spl.
+Hasil dari program dapat di save dengan nama.txt yang disimpan pada output contohnya "res1.txt" dan "res2.txt".
+
 
 ## Developing
 
@@ -93,8 +156,7 @@ _Menggunakan Interpolasi Bicubic Spline sebagai basis_
 - Menerima Input dari File
 - Menyimpan hasil perhitungan ke dalam File
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>  
-
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Contributing
 
@@ -106,9 +168,10 @@ Permintaan Pull sangat diperbolehkan dan diterima dengan hangat.
 - [Project homepage](https://github.com/NoHaitch/Tubes_Algeo_1)
 - [Repository](https://github.com/NoHaitch/Tubes_Algeo_1)
 - [Spesifikasi Tugas](https://docs.google.com/document/d/1_-ZaP5vsYfCp17aHCh3ePt27dU7vYmoF2m0DnDNWUFg/edit?usp=sharing)
-- Laporan Tugas
+- [Laporan Tugas](https://itbdsti-my.sharepoint.com/:w:/g/personal/13522093_mahasiswa_itb_ac_id/EXQHfZnWAXROl1JzlOl4zEYB2vNLw-eOo_U-kPE7dmm0aQ?e=dalD5e)
 - [Issue tracker](https://github.com/NoHaitch/Tubes_Algeo_1/issues)
-  - _Jika terdapat kasus bug-bug yang sangat penting dan berbahaya, silahkan gunakan fitur issue pada github. Kami apresiasi semua bantuan dalam memperbaiki dan mengembangkan project ini!_
+  
+_Jika terdapat kasus bug-bug yang sangat penting dan berbahaya, silahkan gunakan fitur issue pada github. Kami apresiasi semua bantuan dalam memperbaiki dan mengembangkan project ini!_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -116,3 +179,8 @@ Permintaan Pull sangat diperbolehkan dan diterima dengan hangat.
 ## Licensing
 
 The code in this project is licensed under MIT license.
+Code dalam projek ini berada di bawah lisensi MIT.
+
+<h4 align="center"><a href="#readme-top">back to top</a></h4>
+<br><br>
+<h1 align="center"> THANK YOU! </h1>

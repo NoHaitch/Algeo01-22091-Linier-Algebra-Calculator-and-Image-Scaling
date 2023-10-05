@@ -1,0 +1,6 @@
+ >>> Masukkan alamat file: test1.txt
+
+
+ ================== HASIL ================== 
+
+

@@ -64,8 +64,8 @@ public class SPL {
 
     public void saveToTextFile(String path, String text){
         /* Menyimpan hasil Operasi Ke dalam file text */
-        String fPath = "";
-        int i = 0;
+        String fPath = "..";
+        int i = 2;
         while (path.charAt(i) != '.'){
             fPath += path.charAt(i);
             i++;
@@ -81,10 +81,10 @@ public class SPL {
         fPath += add + ".txt";
         try {
             FileWriter writer = new FileWriter(fPath);
-            writer.write(text + "\n\n");
+            writer.write(text + "\n");
             writer.write(this.spl.getStep());
             writer.close();
-            System.out.println("\nPenyelesaian berhasil disimpan ke :"+fPath+"\n\n");
+            System.out.println("\nPenyelesaian berhasil disimpan ke : "+fPath+"\n\n");
         } catch (Exception e) {
             System.out.println("An error occurred\n");
             e.printStackTrace();
@@ -97,7 +97,7 @@ public class SPL {
         return new OBE(this.spl);
     }
 
-    public void solveWithCramer(OBE mdata){
+    public Boolean solveWithCramer(OBE mdata){
         // menerima input matrix yang berisikan data SPL
         double temp;
         int i;
@@ -120,16 +120,16 @@ public class SPL {
                     temp = duplicate.result/original1.result;
                     listnilaivar.setElmt(temp, 0, i);
                 }
-
             } else{
-                System.out.println("Tidak bisa melakukan kaidah cramer karena determinant Matrix bernilai 0.");
+                return false;
             }
         } else{
-            System.out.println("Tidak bisa melakukan kaidah cramer karena Matrix tidak berbentuk persegi.");
+            return false;
         }
+        return true;
     }
 
-    public void solveWithInverse(){
+    public boolean solveWithInverse(){
         DeterminanInvers temp = new DeterminanInvers(this.spl.getMatrixRow(), this.spl.getMatrixCol()-1);
         for (int i = 0; i < spl.getMatrixRow(); i++){
             for (int j = 0; j < spl.getMatrixCol()-1; j++){
@@ -153,12 +153,12 @@ public class SPL {
                 }
                 spl.addStringToStep(solusi);
             } else {
-                System.out.println("Tidak dapat menghitung solusi karena matriks tidak memiliki Invers.");
+                return false;
             }
         } else {
-            System.out.println("Tidak dapat menghitung solusi karena matriks tidak memiliki Invers.");
+            return false;
         }
-
+        return true;
     }
 
     public static String importToString(Matrix m){

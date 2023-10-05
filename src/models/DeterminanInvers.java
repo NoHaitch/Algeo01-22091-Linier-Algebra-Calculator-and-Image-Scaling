@@ -70,8 +70,8 @@ public class DeterminanInvers {
     }
 
     public void saveToTextFile(String path, String text){
-        String fPath = "";
-        int i = 0;
+        String fPath = "..";
+        int i = 2;
         while (path.charAt(i) != '.'){
             fPath += path.charAt(i);
             i++;
@@ -87,7 +87,7 @@ public class DeterminanInvers {
         fPath += add + ".txt";
         try {
             FileWriter writer = new FileWriter(fPath);
-            writer.write(text + "\n\n");
+            writer.write(text + "\n");
             writer.write(this.contents.getStep());
             writer.close();
             System.out.println("\nPenyelesaian berhasil disimpan ke :"+fPath+"\n\n");
