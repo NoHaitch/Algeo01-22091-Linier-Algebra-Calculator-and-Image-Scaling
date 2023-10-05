@@ -102,7 +102,7 @@ public class SPL {
         double temp;
         int i,count = 0;
         Matrix original = new Matrix (mdata.getCopyAugmented());
-        original.setColEff(3);
+        original.setColEff(spl.getMatrixCol()-1);
         Matrix dupe = new Matrix(original);
         listnilaivar = new Matrix(1,dupe.getColEff());
         if (original.isSquare()){

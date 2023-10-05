@@ -116,7 +116,7 @@ public class Main {
                 }
 
                 switch (tipeMenuUtama) {
-                    case "SPL" -> {
+                    case "SPL" : {
                         /* =========== MENU SPL =========== */
                         boolean SPLMenu = true;
                         while (SPLMenu) {
@@ -322,20 +322,23 @@ public class Main {
                                                 boolean inverseSuccess = true;
                                                 boolean cramerSuccess = true;
                                                 switch (tipeMenuSPL) {
-                                                    case "Gauss" -> spl.spl.gaussAndSolutions();
-                                                    case "Gauss-Jordan" -> spl.spl.obeGaussJordan();
-                                                    case "Balikan" -> {
+                                                    case "Gauss" : spl.spl.gaussAndSolutions();
+                                                    break;
+                                                    case "Gauss-Jordan" : spl.spl.obeGaussJordan();
+                                                    break;
+                                                    case "Balikan" : {
                                                         inverseSuccess = spl.solveWithInverse();}
-                                                    default -> {
+                                                    break;
+                                                    default : {
                                                         cramerSuccess = spl.solveWithCramer(spl.spl);
                                                     }
                                                 }
 
                                                 println(" ================== HASIL ================== ");
                                                 if(tipeMenuSPL.equals("Kramer") && cramerSuccess){
-                                                    spl.spl.addTitleStep();
+                                                    spl.spl.addStringToStep("\nSolusi : \n");
                                                     for(int i=0;i<spl.listnilaivar.getColEff();i++){
-                                                            spl.spl.addStringToStep("---> X" + (i+1) + " = " + spl.listnilaivar.getElmt(0,i) + "\n");
+                                                            spl.spl.addStringToStep("--> X" + (i+1) + " = " + spl.listnilaivar.getElmt(0,i) + "\n");
                                                     }
                                                     spl.spl.addNewLineToStep();
                                                     spl.spl.addNewLineToStep();
@@ -377,7 +380,8 @@ public class Main {
                             }
                         }
                     }
-                    case "Determinan" -> {
+                    break;
+                    case "Determinan" : {
                         /* =========== MENU Determinan =========== */
                         boolean detMenu = true;
                         while (detMenu) {
@@ -576,7 +580,7 @@ public class Main {
                                                         print(" >>> Masukkan nama file hasil: ");
                                                         String name = scanner.nextLine();
                                                         while(!textFile(name)){
-                                                            println("Nama file salah!");
+                                                            println("Nama file salah. Contoh nama benar : baby.txt ");
                                                             print(" >>> Masukkan nama file hasil: ");
                                                             name = scanner.nextLine();
                                                         }
@@ -597,7 +601,8 @@ public class Main {
                             }
                         }
                     }
-                    case "Balikan" -> {
+                    break;
+                    case "Balikan" : {
                         /* =========== MENU Matiks Balikan =========== */
                         boolean BalikanMenu = true;
                         while (BalikanMenu) {
@@ -802,7 +807,7 @@ public class Main {
                                                         print(" >>> Masukkan nama file hasil: ");
                                                         String name = scanner.nextLine();
                                                         while(!textFile(name)){
-                                                            println("Nama file salah!");
+                                                            println("Nama file salah. Contoh nama benar : baby.txt ");
                                                             print(" >>> Masukkan nama file hasil: ");
                                                             name = scanner.nextLine();
                                                         }
@@ -823,7 +828,8 @@ public class Main {
                             }
                         }
                     }
-                    case "Interpolasi" -> {
+                    break;
+                    case "Interpolasi" : {
                         /* =========== MENU Interpolasi =========== */
                         boolean InterpolasiMenu = true;
                         while (InterpolasiMenu) {
@@ -981,7 +987,7 @@ public class Main {
                                             print(" >>> Masukkan nama file hasil: ");
                                             String name = scanner.nextLine();
                                             while(!textFile(name)){
-                                                println("Nama file salah!");
+                                                println("Nama file salah. Contoh nama benar : baby.txt ");
                                                 print(" >>> Masukkan nama file hasil: ");
                                                 name = scanner.nextLine();
                                             }
@@ -999,7 +1005,8 @@ public class Main {
 
                         }
                     }
-                    case "Bicubic" -> {
+                    break;
+                    case "Bicubic" : {
                         /* =========== MENU Bicubic =========== */
                         println("\n ========== Masukkan Bicubic Spline ==========");
                         boolean BicubicMenu = true;
@@ -1072,7 +1079,7 @@ public class Main {
                                     print(" >>> Masukkan nama file hasil: ");
                                     String name = scanner.nextLine();
                                     while(!textFile(name)){
-                                        println("Nama file salah!");
+                                        println("Nama file salah. Contoh nama benar : baby.txt ");
                                         print(" >>> Masukkan nama file hasil: ");
                                         name = scanner.nextLine();
                                     }
@@ -1086,7 +1093,8 @@ public class Main {
                             }
                         }
                     }
-                    case "Regresi" -> {
+                    break;
+                    case "Regresi" : {
                         /* =========== MENU Regresi Linier Berganda =========== */
                         boolean RegresiMenu = true;
                         while (RegresiMenu) {
@@ -1261,7 +1269,7 @@ public class Main {
                                             print(" >>> Masukkan nama file hasil: ");
                                             String name = scanner.nextLine();
                                             while(!textFile(name)){
-                                                println("Nama file salah!");
+                                                println("Nama file salah. Contoh nama benar : baby.txt ");
                                                 print(" >>> Masukkan nama file hasil: ");
                                                 name = scanner.nextLine();
                                             }
@@ -1278,7 +1286,8 @@ public class Main {
                             }
                         }
                     }
-                    case "ImageBSI" -> {
+                    break;
+                    case "ImageBSI" : {
                         /* =========== MENU ImageBSI =========== */
                         println("\n ========== MENU Pembesaran Gambar ==========");
                         boolean ImageMenu = true;
@@ -1346,19 +1355,18 @@ public class Main {
                         if (valid) {
                             println(" ================== HASIL ================== ");
                             println(" Gambar sedang diproses ... ");
+                            println("( Hasil mungkin membutuhkan waktu lama untuk dicetak walau menu baru sudah keluar )");
                             ImageBSI temp = new ImageBSI(path, outputPath);
                             temp.proccessImage(skala);
                             println(" Gambar Berhasil dibesarkan");
                             println(" Gambar hasil : ../test/imgBSI/output/" + outputPath);
-                            println(" ( Hasil mungkin membutuhkan waktu lama untuk dicetak walau menu baru sudah keluar )");
-                            println(" ( Hasil mungkin gagal karena keterbatasan memori )");
+                            //println(" ( Hasil mungkin gagal karena keterbatasan memori )");
                         }
                     }
+                    break;
                 }
             }
         }
-
-
         scanner.close();
     }
 }
