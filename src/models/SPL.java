@@ -100,22 +100,25 @@ public class SPL {
     public void solveWithCramer(OBE mdata){
         // menerima input matrix yang berisikan data SPL
         double temp;
-        int i,count = 0;
-        Matrix original = new Matrix (mdata.getCopyAugmented());
-        original.setColEff(mdata.getMatrixCol() - 1);
-        Matrix dupe = new Matrix(original);
-        DeterminanInvers duplicate = new DeterminanInvers(200, 100);
-        duplicate.contents = new OBE(mdata);
-        duplicate.contents.setMatrixCol(mdata.getMatrixCol() - 1);
-        listnilaivar = new Matrix(1,dupe.getColEff());
-        if (original.isSquare()){
-            if (original.determinant() != 0){
-                double detcramer = original.determinant();
-                for (i = 0; i < dupe.getColEff(); i++){
-                    dupe.setCol(mdata.getAllCol(original.getColEff()), i);
-                    temp = dupe.determinant()/detcramer;
+        int i;
+        DeterminanInvers original1 = new DeterminanInvers(600, 300);
+        original1.contents = new OBE(mdata);
+        DeterminanInvers original2 = new DeterminanInvers(original1);
+        original1.contents.setMatrixCol(mdata.getMatrixCol()-1);
+        DeterminanInvers duplicate;
+        listnilaivar = new Matrix(1,original1.contents.getMatrixCol());
+        if (original1.contents.getMatrixCol() == original1.contents.getMatrixRow()){
+            original1.CalculateOBE();
+            if (!original1.isDetZero){
+                for (i = 0; i < original2.contents.getMatrixRow(); i++){
+                    duplicate = new DeterminanInvers(original2);
+                    duplicate.contents.setMatrixCol(original2.contents.getMatrixCol()-1);
+                    for (int j = 0; j < original2.contents.getMatrixRow(); j++){
+                        duplicate.contents.setMElmt(original2.contents.getMElmt(j, original2.contents.getMatrixCol()-1), j, i);
+                    }
+                    duplicate.CalculateOBE();
+                    temp = duplicate.result/original1.result;
                     listnilaivar.setElmt(temp, 0, i);
-                    dupe = new Matrix(original);
                 }
 
             } else{

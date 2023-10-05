@@ -53,6 +53,7 @@ public class OBE {
         return Augmented.getCol(j);
     }
 
+
     /* ----------- KELOMPOK Interaksi dengan IO ----------- */
     @Override
     public String toString(){
