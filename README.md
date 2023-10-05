@@ -8,6 +8,11 @@ Berisi Program mengenai Sistem Persamaan Linier(SPL), Determinan, Interpolasi Po
 Untuk cara penyelasaian SPL, menggunakan Metode Eliminiasi Gauss, Gauss-Jordan, Matriks balikan, dan Kaidah Cramer.
 
 
+<br>
+<p align="center">
+<img src="https://github.com/NoHaitch/Algeo01-22091/assets/72493275/6f2a7233-0f47-49a0-b50e-f9f2efd233f5" alt="Kelompok Panci Bolong" width="400"/>
+</p>
+<br>
 
 ## Kelompok 20 : Panci Bolong
 
