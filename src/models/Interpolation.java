@@ -114,7 +114,7 @@ public class Interpolation {
         return taksiran;
     }
 
-    public void askDataPointFromFile(String path){
+    public boolean askDataPointFromFile(String path){
         Matrix temp = new Matrix(200, 150);
         int i,j;
         int row = 0;
@@ -123,7 +123,8 @@ public class Interpolation {
             File inputFile = new File(path);
             Scanner readFile = new Scanner(inputFile);
             String line;
-            while (readFile.hasNextLine() && (line = readFile.nextLine()) != null){
+            boolean endLine = false;
+            while (readFile.hasNextLine() && (line = readFile.nextLine()) != null && !endLine){
                 String[] saved = line.split(" ");
                 int len = saved.length;
                 if (len == 2){
@@ -132,16 +133,26 @@ public class Interpolation {
                         temp.setElmt(tempdouble, row, i);
                     }
                     row++;
-                } else{
+                } else if(len == 1){
                     xRequest = Double.parseDouble(saved[0]);
+                    endLine = true;
+                } else {
+                    return false;
                 }
             }
-            temp.setRowEff(row);
-            temp.setColEff(column);
-            readFile.close();
+            if(endLine && readFile.hasNextLine()){
+                return false;
+            } else if(!endLine){
+                return false; // tidak ada nilai untuk ditaksir
+            } else {
+                temp.setRowEff(row);
+                temp.setColEff(column);
+                readFile.close();
+            }
         } catch (FileNotFoundException e){
             System.out.println("An error occurred.");
             e.printStackTrace();
+            return false;
         // TODO: handle exception
         }
         point = new Matrix(temp.getRowEff(), 2);
@@ -150,6 +161,7 @@ public class Interpolation {
                 point.setElmt(temp.getElmt(i, j), i, j);
             }
         }
+        return true;
     }
 
     public void uploadhasil2File(double taksiran, double xRequest,String filehasil, String text){
