@@ -10,7 +10,7 @@ Untuk cara penyelasaian SPL, menggunakan Metode Eliminiasi Gauss, Gauss-Jordan, 
 
 <br>
 <p align="center">
-<img src="https://github.com/NoHaitch/Algeo01-22091/assets/72493275/6f2a7233-0f47-49a0-b50e-f9f2efd233f5" alt="Kelompok Panci Bolong" width="400"/>
+<img src="./readme-asset/k20PanciBolong.jpg" alt="Kelompok Panci Bolong" width="400"/>
 </p>
 <br>
 
