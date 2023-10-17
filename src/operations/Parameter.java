@@ -47,8 +47,8 @@ public class Parameter {
                         }
                     }
                 } else {
-                    String str = Double.toString(number);
-                    if (number > 0 && temp != ""){
+                    String str = Double.toString(var[i]);
+                    if (var[i] > 0 && temp != ""){
                         temp += "+ ";
                     }
                     if (str.length() < 9){

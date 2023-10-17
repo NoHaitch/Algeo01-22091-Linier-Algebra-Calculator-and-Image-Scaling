@@ -1174,22 +1174,37 @@ public class Main {
                                                     println("Masukkan Nilai-Nilai sampel (" + m + " x " + (n+1) + "): ");
                                                     boolean isInputSampleValid = true;
                                                     int i = 0;
-                                                    while (i < m && isInputSampleValid) {
+                                                    while (i <= m && isInputSampleValid) {
                                                         String line = scanner.nextLine();
                                                         String[] saved = line.split(" ");
-                                                        try {
-                                                            for (int j = 0; j < saved.length; j++) {
-                                                                double temp = Double.parseDouble(saved[j]);
-                                                                regresi.dataRegresiM.setElmt(temp, i, j);
-                                                                inputText += temp + " ";
-                                                            }
-                                                        } catch (Exception e) {
-                                                            println("Isi Matrix salah. Pastikan isi matriks adalah bilangan real");
+                                                        if(saved.length > n+1 || saved.length < n){
                                                             isInputSampleValid = false;
                                                         }
-                                                        inputText += "\n";
-                                                        i++;
+                                                        else{
+                                                            try {
+                                                                if(i < m){
+                                                                    for (int j = 0; j < saved.length; j++) {
+                                                                        double temp = Double.parseDouble(saved[j]);
+                                                                        regresi.dataRegresiM.setElmt(temp, i, j);
+                                                                        inputText += temp + " ";
+                                                                    }
+                                                                } else if(i == m){
+                                                                    for (int j = 0; j < n; j++) {
+                                                                        double tempdouble = Double.parseDouble(saved[j]);
+                                                                        regresi.listnilaivar.setElmt(tempdouble, 0, j);
+                                                                    }
+                                                                    regresi.listnilaivar.setColEff(saved.length - 1);
+                                                                    regresi.listnilaivar.setRowEff(1);
+                                                                }
+                                                            } catch (Exception e) {
+                                                                println("Isi Matrix salah. Pastikan isi matriks adalah bilangan real");
+                                                                isInputSampleValid = false;
+                                                            }
+                                                            inputText += "\n";
+                                                            i++;
+                                                        }
                                                     }
+
                                                     if (isInputSampleValid) {
                                                         inputKetik = false;
                                                         terisiMatriks = true;
@@ -1277,7 +1292,10 @@ public class Main {
                                     regresi.dataRegresiM.displayMatrix();
                                     println("");
                                     regresi.convertData2Reg(regresi.dataRegresiM);
+                                    regresi.regresiM.setElmt(regresi.dataRegresiM.getRowEff(), 0, 0);
+                                    regresi.regresiM.displayMatrix();
                                     OBE mEselon = regresi.convertReg2OBE(regresi.regresiM);
+                                    mEselon.gaussAndSolutions();
                                     regresi.displayFunction(mEselon);
                                     println("");
                                     println("Taksiran = " + regresi.taksiran(regresi.listnilaivar, mEselon) + "\n");
