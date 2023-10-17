@@ -286,6 +286,10 @@ public class Main {
                                                                     String[] saved = line.split(" ");
                                                                     if (row == 0) {
                                                                         column = saved.length;
+                                                                    } else{
+                                                                        if(saved.length != column){
+                                                                            valid = false;
+                                                                        }
                                                                     }
                                                                     int i;
                                                                     for (i = 0; i < column; i++) {
@@ -300,7 +304,7 @@ public class Main {
                                                                     row++;
                                                                 }
                                                                 if (!valid) {
-                                                                    println("Isi File Salah! Pastikan file adalah text yang diisi oleh matriks berisi bilangan real yang dipisahkan spasi dan enter");
+                                                                    println("Isi File Salah!\nPastikan file adalah text yang diisi oleh matriks berisi bilangan real yang dipisahkan spasi dan enter\nPastikan ukuran matriks dalam file benar dan terisi");
                                                                 } else {
                                                                     inputText += " >>> Masukkan nama file: " + path + "\n";
                                                                     spl.spl.setMatrixRow(row);
@@ -525,7 +529,12 @@ public class Main {
                                                                     String[] saved = line.split(" ");
                                                                     if (row == 0) {
                                                                         column = saved.length;
+                                                                    } else{
+                                                                        if(saved.length != column){
+                                                                            valid = false;
+                                                                        }
                                                                     }
+
                                                                     int i;
                                                                     for (i = 0; i < column; i++) {
                                                                         try {
@@ -538,8 +547,11 @@ public class Main {
                                                                     }
                                                                     row++;
                                                                 }
+                                                                if(row != column){
+                                                                    valid = false;
+                                                                }
                                                                 if (!valid) {
-                                                                    println("Isi File Salah! Pastikan file adalah text yang diisi oleh matriks berisi bilangan real yang dipisahkan spasi dan enter");
+                                                                    println("Isi File Salah!\nPastikan file adalah text yang diisi oleh matriks berisi bilangan real yang dipisahkan spasi dan enter\nPastikan ukuran matriks dalam file benar dan terisi");
                                                                 } else {
                                                                     inputText += " >>> Masukkan nama file: " + path + "\n";
                                                                     det.contents.setMatrixRow(row);
@@ -742,6 +754,10 @@ public class Main {
                                                                     String[] saved = line.split(" ");
                                                                     if (row == 0) {
                                                                         column = saved.length;
+                                                                    } else{
+                                                                        if(saved.length != column){
+                                                                            valid = false;
+                                                                        }
                                                                     }
                                                                     int i;
                                                                     for (i = 0; i < column; i++) {
@@ -755,8 +771,11 @@ public class Main {
                                                                     }
                                                                     row++;
                                                                 }
+                                                                if(row != column){
+                                                                    valid = false;
+                                                                }
                                                                 if (!valid) {
-                                                                    println("Isi File Salah! Pastikan file adalah text yang diisi oleh matriks berisi bilangan real yang dipisahkan spasi dan enter");
+                                                                    println("Isi File Salah!\nPastikan file adalah text yang diisi oleh matriks berisi bilangan real yang dipisahkan spasi dan enter\nPastikan ukuran matriks dalam file benar dan terisi");
                                                                 } else {
                                                                     inputText += " >>> Masukkan alamat file: " + path + "\n";
                                                                     invers.contents.setMatrixRow(row);
@@ -948,10 +967,14 @@ public class Main {
                                                     println("Nama file salah. Contoh nama benar : baby.txt ");
                                                 }
                                                 if (filefound) {
-                                                    inputText += ">>> Masukkan nama file: " + path + "\n";
-                                                    interpolasi.askDataPointFromFile("../test/interpolasi/input/" + path);
-                                                    inputFile = false;
-                                                    terisiMatriks = true;
+                                                    boolean berhasil = interpolasi.askDataPointFromFile("../test/interpolasi/input/" + path);
+                                                    if(berhasil){
+                                                        inputText += ">>> Masukkan nama file: " + path + "\n";
+                                                        inputFile = false;
+                                                        terisiMatriks = true;
+                                                    } else{
+                                                        println("Isi File Salah!\nPastikan file adalah text yang diisi oleh Titik(x , y) yang dipisahkan spasi dan enter.\nPastikan Akhir dari file adalah nilai yang akan ditaksir\n");
+                                                    }
                                                 }
                                             }
                                         }
